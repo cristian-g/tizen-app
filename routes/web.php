@@ -20,3 +20,13 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+// Addons test
+Route::get('/individual-purchase', function () {
+    return view('individualPurchase');
+});
+Route::get('/company-purchase', function () {
+    return view('companyPurchase');
+});
+Route::get('/auth', function () {
+    return view('auth');
+});
