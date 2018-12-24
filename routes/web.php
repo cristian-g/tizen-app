@@ -14,4 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/{code}', 'Controller@handleCode');
+//Route::get('/{code}', 'Controller@handleCode');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
