@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class View extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,16 +12,15 @@ class User extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
     ];
 
-    public function views()
+    public function user()
     {
-        return $this->hasMany('App\View');
+        return $this->belongsTo('App\User');
     }
 
-    public function purchase()
+    public function video()
     {
-        return $this->hasMany('App\Purchase');
+        return $this->belongsTo('App\Video');
     }
 }

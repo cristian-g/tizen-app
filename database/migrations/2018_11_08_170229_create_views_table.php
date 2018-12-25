@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserVideoTable extends Migration
+class CreateViewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class CreateUserVideoTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_video', function (Blueprint $table) {
+        Schema::create('views', function (Blueprint $table) {
             $table->increments('id');
 
             // Connected user
@@ -340,12 +340,13 @@ class CreateUserVideoTable extends Migration
                 "thumbnail" => $movies[$i]["thumbnail"],
             ]);
             $video->save();
-            $video->users()->sync([
-                $users[$i*4+0]->id,
-                $users[$i*4+1]->id,
-                $users[$i*4+2]->id,
-                $users[$i*4+3]->id,
-            ]);
+            // Save views
+            for ($j = 0; $j < 4; $j++) {
+                $view = new \App\View();
+                $view->user()->associate($users[$i*4+$j]);
+                $view->video()->associate($video);
+                $view->save();
+            }
         }
     }
 

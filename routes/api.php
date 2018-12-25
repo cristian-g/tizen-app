@@ -19,3 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('videos', 'VideoController@index');
 Route::patch('videos/view/{id}', 'VideoController@view');
+
+
+
+Route::get('views', 'ViewController@index');

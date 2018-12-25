@@ -15,11 +15,13 @@ class Video extends Model
         'title', 'director', 'views', 'description', 'cast', 'minutes', 'source', 'thumbnail'
     ];
 
-    /**
-     * The connected users.
-     */
-    public function users()
+    public function views()
     {
-        return $this->belongsToMany('App\User');
+        return $this->hasMany('App\View');
+    }
+
+    public function purchase()
+    {
+        return $this->hasMany('App\Purchase');
     }
 }
