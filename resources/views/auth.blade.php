@@ -1,39 +1,42 @@
 @extends('layouts.app')
 
+@section('styles')
+    <style>
+        body, .container, #home-view  {
+            text-align: center;
+        }
+        #profile-view, #picture-upload {
+            display: none;
+            margin: 0 auto;
+            text-align: center;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="container">
-        <!-- home view -->
-        <div id="home-view">
-            <h4>Auth</h4>
-            <button id="btn-home-view" class="btn btn-primary btn-margin">
-                Home
-            </button>
-
-            <button id="btn-login" class="btn btn-primary btn-margin">
-                Log In
-            </button>
-
-            <button id="btn-logout" class="btn btn-primary btn-margin">
-                Log Out
-            </button>
-        </div>
-
-        <!-- profile view -->
-        <div id="profile-view" class="panel panel-default profile-area">
-            <div class="panel-heading"><h3>Profile</h3></div>
-            <div class="panel-body">
-                <img class="avatar" alt="avatar">
-                <div>
-                    <label><i class="glyphicon glyphicon-user"></i> Nickname</label>
-                    <h3 class="nickname"></h3>
-                </div>
-                <pre class="full-profile"></pre>
+        <div id="picture-upload">
+            <div class="card-body">
+                <h5 class="card-title">Update your profile image (optional)</h5>
+                <input name="file" type="file" class="cloudinary-fileupload" data-cloudinary-field="image_id" data-form-data="{ &quot;upload_preset&quot;: &quot;tizenapp&quot;, &quot;callback&quot;: &quot;https://www.example.com/cloudinary_cors.html&quot;}" />
+                <div class="preview"></div>
             </div>
-
-
-            <input name="file" type="file" class="cloudinary-fileupload" data-cloudinary-field="image_id" data-form-data="{ &quot;upload_preset&quot;: &quot;tizenapp&quot;, &quot;callback&quot;: &quot;https://www.example.com/cloudinary_cors.html&quot;}" />
-            <div class="preview"></div>
-
+        </div>
+        <div id="profile-view" class="card" style="width: 18rem;">
+            <img class="card-img-top" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <button id="btn-logout" class="btn btn-primary btn-margin">
+                    Log out
+                </button>
+            </div>
+        </div>
+        <div id="home-view">
+            <div class="card-body">
+                <button id="btn-login" class="btn btn-primary">
+                    Log in
+                </button>
+            </div>
         </div>
     </div>
 @endsection
@@ -61,6 +64,11 @@
         });
     </script>
     <script src="https://cdn.auth0.com/js/auth0/9.5.1/auth0.min.js"></script>
+    <script src="public/lib/jquery/jquery.min.js" type="text/javascript"></script>
+    <script src="public/lib/blueimp-file-upload/js/vendor/jquery.ui.widget.js" type="text/javascript"></script>
+    <script src="public/lib/blueimp-file-upload/js/jquery.iframe-transport.js" type="text/javascript"></script>
+    <script src="public/lib/blueimp-file-upload/js/jquery.fileupload.js" type="text/javascript"></script>
+    <script src="public/lib/cloudinary-jquery-file-upload/cloudinary-jquery-file-upload.js" type="text/javascript"></script>
     <script>
         // app.js
         var webAuth = new auth0.WebAuth({
@@ -78,22 +86,37 @@
             webAuth.authorize();
         });
 
-        var loginStatus = document.querySelector('.container h4');
-        var loginView = document.getElementById('login-view');
         var homeView = document.getElementById('home-view');
 
         // buttons and event listeners
-        var homeViewBtn = document.getElementById('btn-home-view');
         var loginBtn = document.getElementById('btn-login');
         var logoutBtn = document.getElementById('btn-logout');
 
-        homeViewBtn.addEventListener('click', function() {
-            homeView.style.display = 'inline-block';
-            loginView.style.display = 'none';
-        });
-
         logoutBtn.addEventListener('click', logout);
 
+        function register() {
+            var accessToken = localStorage.getItem('id_token');
+            console.log('access_token: ' + accessToken);
+            $.ajax({
+                url: '/api/register',
+                method: "POST",
+                dataType: "json",
+                headers: {
+                    "Authorization": "Bearer " + accessToken
+                },
+
+                success: function(response) {
+                    userProfile = response.user;
+                    displayProfile();
+
+                    // Notify pubnub update auth
+                },
+
+                error: function(error, status) {
+                    console.error(error, status);
+                }
+            });
+        }
         function handleAuthentication() {
             webAuth.parseHash(function(err, authResult) {
                 if (authResult && authResult.accessToken && authResult.idToken) {
@@ -102,13 +125,15 @@
                     loginBtn.style.display = 'none';
                     homeView.style.display = 'inline-block';
                     register();
-                    getProfile();
                 } else if (err) {
                     homeView.style.display = 'inline-block';
                     console.log(err);
                     alert(
                         'Error: ' + err.error + '. Check the console for further details.'
                     );
+                } else if (localStorage.getItem("id_token") !== null) {
+                    console.log('empty!!');
+                    register();
                 }
                 displayButtons();
             });
@@ -131,6 +156,8 @@
             localStorage.removeItem('id_token');
             localStorage.removeItem('expires_at');
             displayButtons();
+            $('#profile-view').hide();
+            $('#picture-upload').hide();
         }
 
         function isAuthenticated() {
@@ -144,12 +171,9 @@
             if (isAuthenticated()) {
                 loginBtn.style.display = 'none';
                 logoutBtn.style.display = 'inline-block';
-                loginStatus.innerHTML = 'You are logged in!';
             } else {
                 loginBtn.style.display = 'inline-block';
                 logoutBtn.style.display = 'none';
-                loginStatus.innerHTML =
-                    'You are not logged in! Please log in to continue.';
             }
         }
 
@@ -176,14 +200,14 @@
 
         function displayProfile() {
             // display the profile
-            document.querySelector('#profile-view .nickname').innerHTML =
-                userProfile.nickname;
-
             document.querySelector(
-                '#profile-view .full-profile'
-            ).innerHTML = JSON.stringify(userProfile, null, 2);
+                '#profile-view .card-title'
+            ).innerHTML = userProfile.name;
 
             document.querySelector('#profile-view img').src = userProfile.picture;
+
+            $('#profile-view').show();
+            $('#picture-upload').show();
         }
 
         function updateProfilePicture(userId, url) {
@@ -207,12 +231,6 @@
             });
         }
     </script>
-
-    <script src="public/lib/jquery/jquery.min.js" type="text/javascript"></script>
-    <script src="public/lib/blueimp-file-upload/js/vendor/jquery.ui.widget.js" type="text/javascript"></script>
-    <script src="public/lib/blueimp-file-upload/js/jquery.iframe-transport.js" type="text/javascript"></script>
-    <script src="public/lib/blueimp-file-upload/js/jquery.fileupload.js" type="text/javascript"></script>
-    <script src="public/lib/cloudinary-jquery-file-upload/cloudinary-jquery-file-upload.js" type="text/javascript"></script>
 
     <script>
         $.cloudinary.config({ cloud_name: 'tizenapp', secure: true});
@@ -239,29 +257,5 @@
             }
         });
 
-    </script>
-    <script>
-        function register() {
-            var accessToken = localStorage.getItem('id_token');
-            console.log('access_token: ' + accessToken);
-            $.ajax({
-                url: '/api/register',
-                method: "POST",
-                dataType: "json",
-                headers: {
-                    "Authorization": "Bearer " + accessToken
-                },
-
-                success: function(response) {
-                    var views = response.views;
-                    console.log(views);
-                    console.log(response.user);
-                },
-
-                error: function(error, status) {
-                    console.error(error, status);
-                }
-            });
-        }
     </script>
 @endsection
