@@ -101,6 +101,7 @@
                     setSession(authResult);
                     loginBtn.style.display = 'none';
                     homeView.style.display = 'inline-block';
+                    register();
                     getProfile();
                 } else if (err) {
                     homeView.style.display = 'inline-block';
@@ -238,5 +239,29 @@
             }
         });
 
+    </script>
+    <script>
+        function register() {
+            var accessToken = localStorage.getItem('id_token');
+            console.log('access_token: ' + accessToken);
+            $.ajax({
+                url: '/api/register',
+                method: "POST",
+                dataType: "json",
+                headers: {
+                    "Authorization": "Bearer " + accessToken
+                },
+
+                success: function(response) {
+                    var views = response.views;
+                    console.log(views);
+                    console.log(response.user);
+                },
+
+                error: function(error, status) {
+                    console.error(error, status);
+                }
+            });
+        }
     </script>
 @endsection

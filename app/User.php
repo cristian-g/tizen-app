@@ -12,7 +12,7 @@ class User extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
+        'name', 'sub_auth0', 'picture'
     ];
 
     public function views()
