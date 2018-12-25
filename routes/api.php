@@ -16,3 +16,15 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('videos', 'VideoController@index');
+Route::patch('videos/view/{id}', 'VideoController@view');
+
+
+
+Route::get('views', 'ViewController@index')->middleware('jwt');
+
+// User
+Route::post('register', 'UserController@create')->middleware('jwt');
+Route::get('login', 'UserController@show')->middleware('jwt');
+Route::patch('updatePicture', 'UserController@update')->middleware('jwt');

@@ -1,0 +1,29 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <div id="status">Waiting for payment...</div>
+        <script src="lib/jquery/jquery.min.js"></script>
+        <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.6.js"></script>
+        <script>
+            var pubnub = new PubNub({
+                subscribeKey: "sub-c-e3a6b7dc-ff1f-11e8-a399-32ec39b2e34f",
+                publishKey: "pub-c-94083343-a5ff-4f4b-90d3-d88866bf799b",
+                ssl: true
+            });
+            pubnub.addListener({
+                message: function(message) {
+                    // handle message
+                    $('#status').html('Payment done! Token: ' + message.message.text);
+                },
+                presence: function(presenceEvent) {
+                    // handle presence
+                    console.log(presenceEvent);
+                }
+            });
+            pubnub.subscribe({
+                channels: ['room-1']
+            });
+        </script>
+    </body>
+</html>
