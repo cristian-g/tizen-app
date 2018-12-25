@@ -22,4 +22,4 @@ Route::patch('videos/view/{id}', 'VideoController@view');
 
 
 
-Route::get('views', 'ViewController@index');
+Route::get('views', 'ViewController@index')->middleware('jwt');
