@@ -1,0 +1,77 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <button id="auth">Login or register</button><span id="auth-link-message"></span>
+        <div id="profile-view" class="card" style="width: 18rem;">
+            <img class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+            </div>
+        </div>
+        <hr>
+        
+        <script>
+            function displayProfile(userProfile) {
+                // display the profile
+                document.querySelector(
+                    '#profile-view .card-title'
+                ).innerHTML = userProfile.name;
+
+                document.querySelector('#profile-view img').src = userProfile.picture;
+
+                $('#profile-view').show();
+            }
+        </script>
+        <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.6.js"></script>
+        <script>
+            var pubnub = new PubNub({
+                subscribeKey: "sub-c-e3a6b7dc-ff1f-11e8-a399-32ec39b2e34f",
+                publishKey: "pub-c-94083343-a5ff-4f4b-90d3-d88866bf799b",
+                ssl: true
+            });
+            pubnub.addListener({
+                message: function(message) {
+                    // handle message
+                    if (message.message.action === 'auth') {
+                        localStorage.setItem('id_token', message.message.idToken);
+                        displayProfile(message.message.userInfo);
+                    }
+                },
+                presence: function(presenceEvent) {
+                    // handle presence
+                    console.log(presenceEvent);
+                }
+            });
+        </script>
+        
+        <script src="jquery.min.js"></script>
+        <script>
+            $('#auth').click(function() {
+                $.ajax({
+                    url: '/api/getCode',
+                    method: "POST",
+                    dataType: "json",
+                    data: {
+                        action_code: 'auth'
+                    },
+                    /*headers: {
+                        "Authorization": "Bearer " + accessToken
+                    },*/
+
+                    success: function(response) {
+                        $('#auth-link-message').html('Visit ztudy.dx.am/' + response.code + ' using your smartphone');
+                        
+                        pubnub.subscribe({
+                            channels: [response.code]
+                        });
+                    },
+
+                    error: function(error, status) {
+                        console.error(error, status);
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -29,7 +29,7 @@ class ConnectionController extends Controller
     public function store(Request $request)
     {
         $userInfo = Auth0::jwtUser();
-        
+
         $user = null;
         if ($userInfo !== null) {
             $user = User::where('sub_auth0', $userInfo->sub)->first();

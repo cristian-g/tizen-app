@@ -23,7 +23,7 @@
             </div>
         </div>
         <div id="profile-view" class="card" style="width: 18rem;">
-            <img class="card-img-top" alt="Card image cap">
+            <img class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <button id="btn-logout" class="btn btn-primary btn-margin">
@@ -63,7 +63,7 @@
             }
         });
         pubnub.subscribe({
-            channels: ['room-1']
+            channels: [localStorage.getItem('redirect_code')]
         });
     </script>
     <script src="https://cdn.auth0.com/js/auth0/9.5.1/auth0.min.js"></script>
@@ -98,14 +98,14 @@
         logoutBtn.addEventListener('click', logout);
 
         function register() {
-            var accessToken = localStorage.getItem('id_token');
-            console.log('access_token: ' + accessToken);
+            var idToken = localStorage.getItem('id_token');
+            console.log('access_token: ' + idToken);
             $.ajax({
                 url: '/api/register',
                 method: "POST",
                 dataType: "json",
                 headers: {
-                    "Authorization": "Bearer " + accessToken
+                    "Authorization": "Bearer " + idToken
                 },
 
                 success: function(response) {
@@ -113,6 +113,24 @@
                     displayProfile();
 
                     // Notify pubnub update auth
+                    pubnub.publish(
+                        {
+                            message: {
+                                action: 'auth',
+                                idToken: idToken,
+                                userInfo: userProfile
+                            },
+                            channel: localStorage.getItem('redirect_code')
+                        },
+                        function (status, response) {
+                            // handle status, response
+                            console.log(response);
+                        }
+                    );
+
+
+
+
                 },
 
                 error: function(error, status) {
