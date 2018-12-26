@@ -42,6 +42,9 @@
 @endsection
 
 @section('scripts')
+    <script>
+        localStorage.setItem('redirect_code', '{!! Request::route('code') !!}');
+    </script>
     <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.6.js"></script>
     <script>
         var pubnub = new PubNub({
@@ -76,7 +79,7 @@
             clientID: 'ZkJXvv7dDjS6OeiqbA1pfQ54XfeIhMLy',
             responseType: 'token id_token',
             scope: 'openid profile',
-            redirectUri: window.location.href
+            redirectUri: 'http://' + window.location.host + '/authenticate'
         });
 
         var loginBtn = document.getElementById('btn-login');

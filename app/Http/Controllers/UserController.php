@@ -20,11 +20,12 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Store a newly created resource in storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function store(Request $request)
     {
         $userInfo = Auth0::jwtUser();
         $user = new User([
@@ -40,22 +41,11 @@ class UserController extends Controller
         }
         catch (QueryException $exception) {
             // User already exists
-            $existingUser = User::where('sub_auth0', $userInfo->sub) -> first();
+            $existingUser = User::where('sub_auth0', $userInfo->sub)->first();
             return response()->json([
                 'user' => $existingUser
             ], 200);
         }
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -71,17 +61,6 @@ class UserController extends Controller
         return response()->json([
             'user' => $user
         ], 200);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

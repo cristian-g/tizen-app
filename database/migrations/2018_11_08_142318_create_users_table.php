@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name')->nullable();
             $table->string('sub_auth0')->nullable()->unique();
             $table->string('picture')->nullable();
+            $table->string('current_code')->nullable();
             $table->timestamps();
         });
     }
