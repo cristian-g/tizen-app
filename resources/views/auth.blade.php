@@ -56,6 +56,9 @@
             message: function(message) {
                 // handle message
                 console.log(message);
+                if (message.message.action === 'pageChange') {
+                    window.location.reload(true);
+                }
             },
             presence: function(presenceEvent) {
                 // handle presence
@@ -104,6 +107,9 @@
                 url: '/api/register',
                 method: "POST",
                 dataType: "json",
+                data: {
+                    code: localStorage.getItem('redirect_code')
+                },
                 headers: {
                     "Authorization": "Bearer " + idToken
                 },

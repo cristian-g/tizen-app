@@ -44,13 +44,14 @@ class ConnectionController extends Controller
             $connection->code = $this->randomCode();
             $connection->action_code = $request->action_code;
             $connection->user()->associate($user);
-            if (
-                $request->action === 'individualPurchase' ||
-                $request->action === 'companyPurchase' ||
-                $request->action === 'videoRecommendation'
-            ) $connection->video()->associate(Video::find($request->video_id));
-            $connection->save();
         }
+        $connection->action_code = $request->action_code;
+        if (
+            $request->action === 'individualPurchase' ||
+            $request->action === 'companyPurchase' ||
+            $request->action === 'videoRecommendation'
+        ) $connection->video()->associate(Video::find($request->video_id));
+        $connection->save();
 
         return response()->json([
             'code' => $connection->code

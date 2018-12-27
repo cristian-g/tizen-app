@@ -33,6 +33,9 @@ class OptionalJWT
         $auth0 = \App::make('auth0');
 
         $accessToken = $request->bearerToken();
+        //return response()->json(["message" => $accessToken], 401);
+        //return response()->json(["message" => "dffddf"], 401);
+
         if ($accessToken !== null) {
             try {
                 $tokenInfo = $auth0->decodeJWT($accessToken);

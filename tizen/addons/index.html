@@ -2,6 +2,7 @@
     <head>
     </head>
     <body>
+        <!-- START OF AUTH BLOCK -->
         <button id="auth">Login or register</button><span id="auth-link-message"></span>
         <div id="profile-view" class="card" style="width: 18rem;">
             <img class="card-img-top">
@@ -9,9 +10,30 @@
                 <h5 class="card-title"></h5>
             </div>
         </div>
+        <!-- END OF AUTH BLOCK -->
         <hr>
+        <!-- START OF INDIVIDUAL PURCHASE BLOCK -->
+        <button id="individual-purchase">Individual purchase</button><span id="individual-purchase-link-message"></span>
+        <div id="individual-purchase-view">
+        </div>
+        <!-- END OF INDIVIDUAL PURCHASE BLOCK -->
+        <hr>
+        <!-- START OF COMPANY PURCHASE BLOCK -->
+        <button id="company-purchase">Purchase as a company</button><span id="company-purchase-link-message"></span>
+        <div id="company-purchase-view">
+        </div>
+        <!-- END OF COMPANY PURCHASE BLOCK -->
+        <hr>
+        <!-- START OF VIDEO RECOMMENDATION BLOCK -->
+        <button id="video-recommendation">Recommend this video</button><span id="video-recommendation-link-message"></span>
+        <div id="video-recommendation-view">
+        </div>
+        <!-- END OF VIDEO RECOMMENDATION BLOCK -->
         
         <script>
+            // ------------------------------------------------------
+            // START OF AUTH BLOCK
+            // ------------------------------------------------------
             function displayProfile(userProfile) {
                 // display the profile
                 document.querySelector(
@@ -72,6 +94,149 @@
                     }
                 });
             });
+            // ------------------------------------------------------
+            // END OF AUTH BLOCK
+            // ------------------------------------------------------
+            // ------------------------------------------------------
+            // START OF INDIVIDUAL PURCHASE BLOCK
+            // ------------------------------------------------------
+            $('#individual-purchase').click(function() {
+                var headers = {};
+                if (localStorage.getItem("id_token") !== null) {
+                    alert('id_token exists');
+                    headers = {
+                        "Authorization": "Bearer " + localStorage.getItem("id_token")
+                    };
+                }
+                $.ajax({
+                    url: '/api/getCode',
+                    method: "POST",
+                    dataType: "json",
+                    data: {
+                        action_code: 'individualPurchase'
+                    },
+                    headers: headers,
+
+                    success: function(response) {
+                        $('#individual-purchase-link-message').html('Visit ztudy.dx.am/' + response.code + ' using your smartphone');
+                        pubnub.publish(
+                            {
+                                message: {
+                                    action: 'pageChange'
+                                },
+                                channel: response.code
+                            },
+                            function (status, response) {
+                                // handle status, response
+                                console.log(response);
+                            }
+                        );
+                    },
+
+                    error: function(error, status) {
+                        console.error(error, status);
+                    }
+                });
+            });
+            
+            
+            
+            
+            // ------------------------------------------------------
+            // END OF INDIVIDUAL PURCHASE BLOCK
+            // ------------------------------------------------------
+            // ------------------------------------------------------
+            // START OF COMPANY PURCHASE BLOCK
+            // ------------------------------------------------------
+            $('#company-purchase').click(function() {
+                var headers = {};
+                if (localStorage.getItem("id_token") !== null) {
+                    headers = {
+                        "Authorization": "Bearer " + localStorage.getItem("id_token")
+                    };
+                }
+                $.ajax({
+                    url: '/api/getCode',
+                    method: "POST",
+                    dataType: "json",
+                    data: {
+                        action_code: 'companyPurchase'
+                    },
+                    headers: headers,
+
+                    success: function(response) {
+                        $('#company-purchase-message').html('Visit ztudy.dx.am/' + response.code + ' using your smartphone');
+                        pubnub.publish(
+                            {
+                                message: {
+                                    action: 'pageChange'
+                                },
+                                channel: response.code
+                            },
+                            function (status, response) {
+                                // handle status, response
+                                console.log(response);
+                            }
+                        );
+                    },
+
+                    error: function(error, status) {
+                        console.error(error, status);
+                    }
+                });
+            });
+            
+            
+            // ------------------------------------------------------
+            // END OF COMPANY PURCHASE BLOCK
+            // ------------------------------------------------------
+            // ------------------------------------------------------
+            // START OF VIDEO RECOMMENDATION BLOCK
+            // ------------------------------------------------------
+            $('#video-recommendation').click(function() {
+                var headers = {};
+                if (localStorage.getItem("id_token") === null) {
+                    headers = {
+                        "Authorization": "Bearer " + localStorage.getItem("id_token")
+                    };
+                }
+                $.ajax({
+                    url: '/api/getCode',
+                    method: "POST",
+                    dataType: "json",
+                    data: {
+                        action_code: 'videoRecommendation'
+                    },
+                    headers: headers,
+
+                    success: function(response) {
+                        $('#video-recommendation-message').html('Visit ztudy.dx.am/' + response.code + ' using your smartphone');
+                        pubnub.publish(
+                            {
+                                message: {
+                                    action: 'pageChange'
+                                },
+                                channel: response.code
+                            },
+                            function (status, response) {
+                                // handle status, response
+                                console.log(response);
+                            }
+                        );
+                    },
+
+                    error: function(error, status) {
+                        console.error(error, status);
+                    }
+                });
+            });
+            
+            
+            
+            
+            // ------------------------------------------------------
+            // END OF VIDEO RECOMMENDATION BLOCK
+            // ------------------------------------------------------
         </script>
     </body>
 </html>
