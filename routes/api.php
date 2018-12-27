@@ -22,9 +22,12 @@ Route::patch('videos/view/{id}', 'VideoController@view');
 
 
 
-Route::get('views', 'ViewController@index')->middleware('jwt');
+Route::get('views', 'ViewController@index')->middleware('JWT');
 
 // User
-Route::post('register', 'UserController@create')->middleware('jwt');
-Route::get('login', 'UserController@show')->middleware('jwt');
-Route::patch('updatePicture', 'UserController@update')->middleware('jwt');
+Route::post('register', 'UserController@store')->middleware('JWT');
+Route::get('login', 'UserController@show')->middleware('JWT');
+Route::patch('updatePicture', 'UserController@update')->middleware('JWT');
+
+// Code
+Route::post('getCode', 'ConnectionController@store')->middleware('optionalJWT');

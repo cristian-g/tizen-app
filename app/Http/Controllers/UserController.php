@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Connection;
 use App\User;
 use Auth0\Login\Facade\Auth0;
 use Illuminate\Database\QueryException;
@@ -20,11 +21,12 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Store a newly created resource in storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function store(Request $request)
     {
         $userInfo = Auth0::jwtUser();
         $user = new User([
@@ -34,28 +36,29 @@ class UserController extends Controller
         ]);
         try {
             $user->save();
+
+            // Update connection
+            $connection = Connection::where('code', $request->code)->first();
+            $connection->user()->associate($user);
+            $connection->save();
+
             return response()->json([
                 'user' => $user
             ], 200);
         }
         catch (QueryException $exception) {
             // User already exists
-            $existingUser = User::where('sub_auth0', $userInfo->sub) -> first();
+            $existingUser = User::where('sub_auth0', $userInfo->sub)->first();
+
+            // Update connection
+            $connection = Connection::where('code', $request->code)->first();
+            $connection->user()->associate($existingUser);
+            $connection->save();
+
             return response()->json([
                 'user' => $existingUser
             ], 200);
         }
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -71,17 +74,6 @@ class UserController extends Controller
         return response()->json([
             'user' => $user
         ], 200);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

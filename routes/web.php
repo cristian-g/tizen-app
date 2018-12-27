@@ -20,13 +20,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-// Addons test
-Route::get('/individual-purchase', function () {
-    return view('individualPurchase');
+// Addons
+Route::get('/authenticate', function () {
+    return view('authRedirect');
 });
-Route::get('/company-purchase', function () {
-    return view('companyPurchase');
-});
-Route::get('/auth', function () {
-    return view('auth');
-});
+Route::get('/{code}', 'ConnectionController@show');

@@ -1,0 +1,28 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <script src="jquery.min.js"></script>
+        <script>
+            $.ajax({
+                url: '/api/getCode',
+                method: "POST",
+                dataType: "json",
+                data: {
+                    action_code: 'auth'
+                },
+                /*headers: {
+                    "Authorization": "Bearer " + accessToken
+                },*/
+
+                success: function(response) {
+                    console.log(response);
+                },
+
+                error: function(error, status) {
+                    console.error(error, status);
+                }
+            });
+        </script>
+    </body>
+</html>
