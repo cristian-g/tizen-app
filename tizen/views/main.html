@@ -1,12 +1,25 @@
 <div id="move-container" class="move-container">
     <div class="logo"></div>
     <div class="top-right-area" >
+            
         <div id="btnSetting" focusable data-focusable-depth="1" class="depth1 btn btn-gap btn-setting">
             <div class="btn-icon icon-caph icon-caph-setting"></div>
         </div>
         <div id="btnBack" focusable data-focusable-depth="2" class="depth2 btn btn-gap btn-return">
             <div class="btn-icon icon-caph icon-caph-return"></div>
         </div>
+
+    </div>
+    <div class="top-right-area2">
+    	<div id="selectCtg"  data-focusable-depth="1" class="depth1"><span>Categories &nbsp<div class="fa fa-chevron-up rotate"></div></span>
+    		<div id="ctgOpt" class="select">
+	    		<div id="ctg1" focusable data-focusable-depth="1" class="depth1 select-opt">Technology</div>
+				<div id="ctg2" focusable data-focusable-depth="1" class="depth1 select-opt">Biology</div>
+				<div id="ctg3" focusable data-focusable-depth="1" class="depth1 select-opt">Sociology</div>
+				<div id="ctg4" focusable data-focusable-depth="1" class="depth1 select-opt">Politics</div>
+    		</div>
+			  
+    	</div>
     </div>
     <!-- OVERVIEW -->
     <div class="overview">
@@ -14,7 +27,7 @@
     </div>
     
     <!-- page: INDEX (OVERVIEW) -->
-    <div class="depth1 page">
+    <div id="description" class="depth1 page">
         <div class="overview desc font-body"></div>
     </div>
 
@@ -49,6 +62,11 @@
             <div id="category_2" title="Numbers"></div>
         </div>
     </div>
+</div>
+
+<!-- depth3 -->
+<div id="settingPage" class="depth4 list-wrapper page sub-page">
+    <h1>Settings</h1>
 </div>
 
 <script id="playlist" type="text/template">

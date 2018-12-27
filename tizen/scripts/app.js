@@ -7,7 +7,9 @@ $('document').ready(function(){
         myVideoApp.initDialogSetting();
 
         $('#btnSetting').on('focused', function(){
+        	myVideoApp.hideCategoryList();
             myVideoApp.setOverviewDark(false);
+
         }).on('selected', function(){
             myVideoApp.openDialogSetting();
         });
@@ -15,7 +17,29 @@ $('document').ready(function(){
         $('#btnBack').on('selected', function(){
             myVideoApp.back();
         });
-
+        $('.select-opt').on('focused', function(){
+        	myVideoApp.setOverviewDark(false);
+        	myVideoApp.showCategoryList();
+        });
+        
+        $('#ctg1').on('focused', function(){
+        	$('.select-opt').removeClass('opt-focused');
+        	$('#ctg1').addClass('opt-focused');
+        	
+        });
+        $('#ctg2').on('focused', function(){
+        	$('.select-opt').removeClass('opt-focused');
+        	$('#ctg2').addClass('opt-focused');
+        });
+        $('#ctg3').on('focused', function(){
+        	$('.select-opt').removeClass('opt-focused');
+        	$('#ctg3').addClass('opt-focused');
+        });
+        $('#ctg4').on('focused', function(){
+        	$('.select-opt').removeClass('opt-focused');
+        	$('#ctg4').addClass('opt-focused');
+        });
+        
         $('#btnPlay').on('selected', function(){
             setMediaControllerTimer();
             myVideoApp.changeDepth(myVideoApp._DEPTH.PLAYER);
@@ -49,6 +73,7 @@ $('document').ready(function(){
                 wrapperClass: "list-scroll-wrapper"
             }).on('focused', function($event){
                 focusHandler($event, myVideoApp._CATEGORY.COLORS);
+                myVideoApp.hideCategoryList();
             }).on('selected', function(){
                 selectHandler(myVideoApp._CATEGORY.COLORS);
             }).on('blurred', function(){
@@ -62,6 +87,7 @@ $('document').ready(function(){
                 wrapperClass: "list-scroll-wrapper"
             }).on('focused', function($event){
                 focusHandler($event, myVideoApp._CATEGORY.ALPHABETS);
+                myVideoApp.hideCategoryList();
             }).on('blurred', function(){
                 blurHandler();
             }).on('selected', function($event){
@@ -75,6 +101,7 @@ $('document').ready(function(){
                 wrapperClass: "list-scroll-wrapper"
             }).on('focused', function($event){
                 focusHandler($event, myVideoApp._CATEGORY.NUMBERS)
+                myVideoApp.hideCategoryList();
             }).on('blurred', function(){
                 blurHandler();
             }).on('selected', function($event){

@@ -108,7 +108,13 @@ body {
     height: 82px;
     width: 96px;
 }
-
+.top-right-area2 {
+    position: absolute;
+    top: 25px;
+    right: 450px;
+    height: 82px;
+    width: 96px;
+}
 .overview {
     position: relative;
     width: 1770px;
@@ -180,7 +186,11 @@ body {
     float: left;
     margin-left: 24px; /*48*/
 }
-
+.btn-gap2 {
+    position: relative;
+    float: right;
+    margin-left: 24px; /*48*/
+}
 .list-wrapper {
     position: absolute;
     overflow: hidden;
@@ -655,4 +665,62 @@ body {
 }
 .hide {
     display: none;
+}
+
+.select{
+	background-color: rgba(105, 105, 105, 0.2);
+	position: relative;
+    float: left;
+    font: bold 28px 'SamsungSVD_Latin Medium';
+    color: #FFF;
+    border-radius: 15px;
+    width: 250px;
+    margin-top: 20px;
+}
+#selectCtg{
+	padding-left: 30px;
+}
+#selectCtg span{
+	color: white;
+    font: bold 28px 'SamsungSVD_Latin Medium';
+    background-color: rgba(105, 105, 105, 0.2);
+    position: relative;
+    float: left;
+    border-radius: 15px;
+    width: 190px;
+    height: 42px;
+    padding: 20px 30px;
+}
+
+.select-opt{
+	position: relative;
+    float: left;
+    font: bold 28px 'SamsungSVD_Latin Medium';
+    color: #FFF;
+    padding: 15px 30px;
+}
+
+.select.focused {
+
+}
+.opt-focused {
+    background-color: #1C1CD8;
+    color: #FFF;
+    width: 190px;
+    border-radius: 15px;
+}
+.rotate{
+    -moz-transition: all 0.6s linear;
+    -webkit-transition: all 0.6s linear;
+    transition: all 0.6s linear;
+}
+
+.rotate.down{
+    -moz-transform:rotate(180deg);
+    -webkit-transform:rotate(180deg);
+    transform:rotate(180deg);
+}
+
+.sub-page{
+	margin-left:112px;
 }

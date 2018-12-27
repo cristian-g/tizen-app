@@ -23,7 +23,7 @@ var myVideoApp = {
         setTimeout(function(){
             var welcomeElement = $('.welcome');
             this.updateCategoryListData(CONSTANT.PREPARED_DATA.COLORS, this._CATEGORY.COLORS, true);
-            this.updateCategoryListData(CONSTANT.PREPARED_DATA.ALPHABETS, this._CATEGORY.ALPHABETS, true)
+            this.updateCategoryListData(CONSTANT.PREPARED_DATA.ALPHABETS, this._CATEGORY.ALPHABETS, true);
             this.updateCategoryListData(CONSTANT.PREPARED_DATA.NUMBERS, this._CATEGORY.NUMBERS, true);
             welcomeElement.addClass('fade-out');
             focusController.focus($('#' + this._CATEGORY.COLORS + '-' + CONSTANT.PREPARED_DATA.COLORS[0].id));
@@ -197,5 +197,15 @@ var myVideoApp = {
                 targetDepth = this._DEPTH.INDEX;
         }
         this.changeDepth(targetDepth);
+    },
+    showCategoryList: function(){
+    	$('#ctgOpt').css('opacity','1');
+    	$('#description').css('opacity','0.1');
+    	$('.rotate').addClass("down"); 
+    },
+    hideCategoryList: function(){
+    	$('#ctgOpt').css('opacity','0');
+    	$('#description').css('opacity','1');
+    	$('.rotate').removeClass("down"); 
     }
 };
