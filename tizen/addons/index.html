@@ -82,7 +82,7 @@
                     },*/
 
                     success: function(response) {
-                        $('#auth-link-message').html('Visit ztudy.dx.am/' + response.code + ' using your smartphone');
+                        $('#auth-link-message').html('Visit ztudy.tk/' + response.code + ' using your smartphone');
                         
                         pubnub.subscribe({
                             channels: [response.code]
@@ -118,7 +118,7 @@
                     headers: headers,
 
                     success: function(response) {
-                        $('#individual-purchase-link-message').html('Visit ztudy.dx.am/' + response.code + ' using your smartphone');
+                        $('#individual-purchase-link-message').html('Visit ztudy.tk/' + response.code + ' using your smartphone');
                         pubnub.publish(
                             {
                                 message: {
@@ -165,7 +165,7 @@
                     headers: headers,
 
                     success: function(response) {
-                        $('#company-purchase-message').html('Visit ztudy.dx.am/' + response.code + ' using your smartphone');
+                        $('#company-purchase-message').html('Visit ztudy.tk/' + response.code + ' using your smartphone');
                         pubnub.publish(
                             {
                                 message: {
@@ -210,7 +210,7 @@
                     headers: headers,
 
                     success: function(response) {
-                        $('#video-recommendation-message').html('Visit ztudy.dx.am/' + response.code + ' using your smartphone');
+                        $('#video-recommendation-message').html('Visit ztudy.tk/' + response.code + ' using your smartphone');
                         pubnub.publish(
                             {
                                 message: {
