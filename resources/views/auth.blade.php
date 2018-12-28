@@ -70,11 +70,11 @@
         });
     </script>
     <script src="https://cdn.auth0.com/js/auth0/9.5.1/auth0.min.js"></script>
-    <script src="public/lib/jquery/jquery.min.js" type="text/javascript"></script>
-    <script src="public/lib/blueimp-file-upload/js/vendor/jquery.ui.widget.js" type="text/javascript"></script>
-    <script src="public/lib/blueimp-file-upload/js/jquery.iframe-transport.js" type="text/javascript"></script>
-    <script src="public/lib/blueimp-file-upload/js/jquery.fileupload.js" type="text/javascript"></script>
-    <script src="public/lib/cloudinary-jquery-file-upload/cloudinary-jquery-file-upload.js" type="text/javascript"></script>
+    <script src="lib/jquery/jquery.min.js" type="text/javascript"></script>
+    <script src="lib/blueimp-file-upload/js/vendor/jquery.ui.widget.js" type="text/javascript"></script>
+    <script src="lib/blueimp-file-upload/js/jquery.iframe-transport.js" type="text/javascript"></script>
+    <script src="lib/blueimp-file-upload/js/jquery.fileupload.js" type="text/javascript"></script>
+    <script src="lib/cloudinary-jquery-file-upload/cloudinary-jquery-file-upload.js" type="text/javascript"></script>
     <script>
         // app.js
         var webAuth = new auth0.WebAuth({
