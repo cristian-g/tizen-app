@@ -1,14 +1,25 @@
 <div id="move-container" class="move-container">
     <div class="logo"></div>
     <div class="top-right-area" >
-            
-        <div id="btnSetting" focusable data-focusable-depth="1" class="depth1 btn btn-gap btn-setting">
+        <!-- Depth1 -->  
+        
+        <div id="btnLogIn" focusable data-focusable-depth="1" class="depth1 btn btnSup">
+            <div class="btnSupText">Log In/Sign up</div>
+        </div>  
+        
+        <div id="btnSetting" focusable data-focusable-depth="1" class="depth1 btn btn-gap btn-setting" style="display:none">
             <div class="btn-icon icon-caph icon-caph-setting"></div>
         </div>
+        
         <div id="btnBack" focusable data-focusable-depth="2" class="depth2 btn btn-gap btn-return">
             <div class="btn-icon icon-caph icon-caph-return"></div>
         </div>
-
+        
+        
+        <!-- Settings buttons -->
+		<div id="btnBack4" focusable data-focusable-depth="4" class="depth4 btn btn-gap btn-return">
+            <div class="btn-icon icon-caph icon-caph-return"></div>
+        </div>
     </div>
     <div class="top-right-area2">
     	<div id="selectCtg"  data-focusable-depth="1" class="depth1"><span>Categories &nbsp<div class="fa fa-chevron-up rotate"></div></span>
@@ -37,6 +48,15 @@
         <div id="btnPlay" focusable data-focusable-depth="2" data-focusable-initial-focus="true" data-focusable-name="btnPlay" class="btn btn-gap btn-play">
             <div class="btn-icon icon-caph icon-caph-play"></div>
         </div>
+        <div id="btnPreview" focusable data-focusable-depth="2" data-focusable-initial-focus="true" data-focusable-name="btnPreview" class="btn btn-gap btn-preview">
+            <i class="fa fa-eye icon-buy"></i>
+        </div>
+        <div id="btnBuy" focusable data-focusable-depth="2" data-focusable-initial-focus="true" data-focusable-name="btnBuy" class="btn btn-gap btn-buy">
+            <i class="fa fa-shopping-cart icon-buy"></i>
+        </div>
+        <div id="btnBuyComp" focusable data-focusable-depth="2" data-focusable-initial-focus="true" data-focusable-name="btnBuyComp" class="btn btn-gap btn-buyComp">
+            <i class="fa fa-globe icon-buy"></i>
+        </div>
     </div>
     <!-- page: TALK (LIST) -->
     <div class="depth2 related-play-list">
@@ -64,10 +84,22 @@
     </div>
 </div>
 
-<!-- depth3 -->
+<!-- depth4 -->
 <div id="settingPage" class="depth4 list-wrapper page sub-page">
     <h1>Settings</h1>
 </div>
+
+<!-- LogIn depth5 -->
+<div class="depth5 list-wrapper page sub-page">
+	<button id="auth">Login or register</button><span id="auth-link-message"></span>
+	<div id="profile-view" class="card" style="width: 18rem;">
+	    <img class="card-img-top">
+	    <div class="card-body">
+	        <h5 class="card-title"></h5>
+	    </div>
+	</div>
+</div>
+
 
 <script id="playlist" type="text/template">
     <div id="<%=item.id%>" class="item" ng-class="{'item-blank': item.isBlank === true}" focusable data-focusable-depth="1" data-index="<%= index %>">
@@ -97,3 +129,68 @@
         </div>
     </div>
 </script>
+
+<!-- Auth script -->
+ <script>
+     // ------------------------------------------------------
+     // START OF AUTH BLOCK
+     // ------------------------------------------------------
+     function displayProfile(userProfile) {
+         // display the profile
+         document.querySelector(
+             '#profile-view .card-title'
+         ).innerHTML = userProfile.name;
+
+         document.querySelector('#profile-view img').src = userProfile.picture;
+
+         $('#profile-view').show();
+     }
+ </script>
+ <script>
+     var pubnub = new PubNub({
+         subscribeKey: "sub-c-e3a6b7dc-ff1f-11e8-a399-32ec39b2e34f",
+         publishKey: "pub-c-94083343-a5ff-4f4b-90d3-d88866bf799b",
+         ssl: true
+     });
+     pubnub.addListener({
+         message: function(message) {
+             // handle message
+             if (message.message.action === 'auth') {
+                 localStorage.setItem('id_token', message.message.idToken);
+                 displayProfile(message.message.userInfo);
+             }
+         },
+         presence: function(presenceEvent) {
+             // handle presence
+             console.log(presenceEvent);
+         }
+     });
+ </script>
+ 
+ <script>
+     $('#auth').click(function() {
+         $.ajax({
+             url: '/api/getCode',
+             method: "POST",
+             dataType: "json",
+             data: {
+                 action_code: 'auth'
+             },
+             /*headers: {
+                 "Authorization": "Bearer " + accessToken
+             },*/
+
+             success: function(response) {
+                 $('#auth-link-message').html('Visit ztudy.dx.am/' + response.code + ' using your smartphone');
+                 
+                 pubnub.subscribe({
+                     channels: [response.code]
+                 });
+             },
+
+             error: function(error, status) {
+                 console.error(error, status);
+             }
+         });
+     });
+  </script>

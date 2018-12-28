@@ -9,12 +9,19 @@ $('document').ready(function(){
         $('#btnSetting').on('focused', function(){
         	myVideoApp.hideCategoryList();
             myVideoApp.setOverviewDark(false);
-
         }).on('selected', function(){
-            myVideoApp.openDialogSetting();
+            myVideoApp.changeDepth(4);
         });
 
+        $('#btnLogIn').on('focused', function(){
+        	myVideoApp.hideCategoryList();
+            myVideoApp.setOverviewDark(false);
+        });
+        
         $('#btnBack').on('selected', function(){
+            myVideoApp.back();
+        });
+        $('#btnBack4').on('selected', function(){
             myVideoApp.back();
         });
         $('.select-opt').on('focused', function(){
@@ -121,6 +128,7 @@ $('document').ready(function(){
             });
 
             myVideoApp.changeDepth(myVideoApp._DEPTH.INDEX);
+            $('#btnSetting').hide();
 
             $.caph.focus.controllerProvider.getInstance().focus(
                 $('#' + CONSTANT.PREPARED_DATA.COLORS[0].id)
