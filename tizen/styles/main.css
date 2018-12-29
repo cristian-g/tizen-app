@@ -97,9 +97,10 @@ body {
     font: bold 85px 'SamsungSVD_Latin Medium';
     color: #4984FC;
     text-shadow: 2px 2px white;
+    display: flex;
 }
-.logo:before {
-    content: 'CAPH';
+.logo:after {
+    content: 'TUDY';
 }
 .top-right-area {
     position: absolute;
@@ -679,6 +680,7 @@ body {
 }
 #selectCtg{
 	padding-left: 30px;
+	width: 300px;
 }
 #selectCtg span{
 	color: white;
@@ -762,4 +764,56 @@ body {
 	width: 54px;
     height: 54px;
     opacity: 0.8;
+}
+
+.card-body{
+    width: auto;
+    height: 42px;
+    display: -webkit-inline-box;
+    padding: 10px 30px;
+}
+.card-img-top{
+    width: 60px;
+}
+.card-title{
+	margin: 15px 20px;
+}
+.qr-code{
+	position: absolute;
+    right: 400px;
+    top: 0px;
+}
+.auth-msg{
+    font-size: 60px;
+	width: 900px;
+}
+.auth-url{
+	font-size: 80px;
+    font-weight: bolder;
+}
+.title-header{
+    color: #EEE;
+    text-shadow: -1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff;
+    font: 60px 'SamsungSVD_Latin Medium';
+}
+.select-logout{
+    background-color: #1C1CD8;    
+    position: relative;
+    float: left;
+    font: bold 28px 'SamsungSVD_Latin Medium';
+    color: #FFF;
+    border-radius: 15px;
+    width: 330px;
+    margin-top: 30px;
+    padding-left: 20px;
+}
+#profile-view{
+	width:350px;
+}
+.opt-logout{
+	position: relative;
+    float: left;
+    font: bold 28px 'SamsungSVD_Latin Medium';
+    color: #FFF;
+    padding: 15px 30px;
 }

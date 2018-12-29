@@ -5,7 +5,9 @@ var myVideoApp = {
         INDEX: 1,
         DETAIL: 2,
         PLAYER: 3,
-        SETTING: 4
+        SETTING: 4,
+        LOGIN: 5,
+        CATEGORIES: 6
     },
     _dataCategory: [],
     relatedPlaylistItems: [],
@@ -50,6 +52,28 @@ var myVideoApp = {
             }
         }
         $('.depth' + depth).show();
+        
+        switch (depth) {
+		case 1:
+			if(localStorage.getItem('id_token')){
+				//logged
+				$('.groupNotLogged').hide();
+				$('.groupLogged').show();
+				document.querySelector(
+				        '#profile-view .card-title'
+				    ).innerHTML = localStorage.getItem('user_name');
+				document.querySelector('#profile-view img').src = localStorage.getItem('image');;
+			}else{
+				//not logged
+				$('.groupLogged').hide();
+				$('.groupNotLogged').show();
+			}
+			break;
+
+		default:
+			break;
+		}
+        
         this.lastDepth = this.currentDepth;
         this.currentDepth = depth;
         $.caph.focus.controllerProvider.getInstance().setDepth(depth);
@@ -207,5 +231,30 @@ var myVideoApp = {
     	$('#ctgOpt').css('opacity','0');
     	$('#description').css('opacity','1');
     	$('.rotate').removeClass("down"); 
+    },
+    logOut: function(){
+    	localStorage.removeItem('id_token');
+    	$('.groupLogged').hide();
+		$('.groupNotLogged').show();
+    },
+    changeCategory: function(category){
+    	$('#category-title').html(category);
+    	switch (category) {
+		case 'Technology':
+
+			break;
+		case 'Biology':
+			
+			break;
+		case 'Sociology':
+			
+			break;
+		case 'Politics':
+			
+			break;
+		default:
+			break;
+		}
+    	this.changeDepth(6);
     }
 };

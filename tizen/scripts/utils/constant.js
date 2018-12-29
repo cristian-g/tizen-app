@@ -16,6 +16,23 @@ var CONSTANT = {
         RETURN: 10009,
         ESC: 27
     },
+    VIDEOS: {
+    	TECHNOLOGY: [
+    	      {
+    	    	  description: 'How are batteries made and how they work?',
+    	    	  id: 'tech_0',
+    	    	  name: 'Bateries',
+    	    	  source: 'https://www.dropbox.com/s/p2yl8an601cn150/Bateries-Tech.mp4?dl=1',
+    	    	  photo_urls: [
+    	                       {
+    	                           size: '240x180',
+    	                           url: 'https://www.dropbox.com/s/ajuauuqvgwyuft7/bateries.png?dl=1'
+    	                       }
+    	                   ],
+    	          color: 'rgba(255, 0, 0, .3)'
+    	      }       
+    	             ]
+    },
     PREPARED_DATA: {
         COLORS: [
             {
