@@ -22,6 +22,9 @@ var CONSTANT = {
     	    	  description: 'How are batteries made and how they work?',
     	    	  id: 'tech_0',
     	    	  name: 'Bateries',
+    	    	  author: 'How its made',
+    	    	  date: '09/05/2015',
+    	    	  duration: '5:03',
     	    	  source: 'https://www.dropbox.com/s/p2yl8an601cn150/Bateries-Tech.mp4?dl=1',
     	    	  photo_urls: [
     	                       {
@@ -29,9 +32,71 @@ var CONSTANT = {
     	                           url: 'https://www.dropbox.com/s/ajuauuqvgwyuft7/bateries.png?dl=1'
     	                       }
     	                   ],
-    	          color: 'rgba(255, 0, 0, .3)'
+    	          color: 'rgba(255, 0, 0, .3)',
+    	          price: 3.99,
+    	          business_price: 14.50
     	      }       
-    	             ]
+    	 ],
+    	 BIOLOGY: [
+    	    	      {
+    	    	    	  description: 'Hank explains the extremely complex series of reactions whereby plants feed themselves on sunlight, carbon dioxide and water, and also create some by products we re pretty fond of as well.',
+    	    	    	  id: 'bio_0',
+    	    	    	  name: 'Photosynthesis',
+    	    	    	  author: 'CrashCourse',
+    	    	    	  date: '19/03/2012',
+    	    	    	  duration: '13:14',	 
+    	    	    	  source: 'https://www.dropbox.com/s/3udfzjsran8cymh/Photosynthesis-Bio.mp4?dl=1',
+    	    	    	  photo_urls: [
+    	    	                       {
+    	    	                           size: '240x180',
+    	    	                           url: 'https://www.dropbox.com/s/y1qyh3rmu94h0t0/photosynthesis.png?dl=1'
+    	    	                       }
+    	    	                   ],
+    	    	          color: 'rgba(255, 0, 0, .3)',
+    	    	          price: 4.50,
+    	    	    	  business_price: 20.99
+    	    	      }       
+    	 ],
+    	 SOCIOLOGY: [
+ 	    	      {
+ 	    	    	  description: 'How can an academic discipline like Sociology be life changing? This talk suggests one way by exploring how sociologists teach us to re-imagine our personal problems and ourselves.',
+ 	    	    	  id: 'soci_0',
+ 	    	    	  name: 'The wisdom of sociology: Sam Richards',
+ 	    	    	  author: 'TEDx',
+ 	    	    	  date: '22/04/2012',
+ 	    	    	  duration: '13:59',	 
+ 	    	    	  source: 'https://www.dropbox.com/s/bxid68wrd647815/Sociology-soci.mp4?dl=1',
+ 	    	    	  photo_urls: [
+ 	    	                       {
+ 	    	                           size: '240x180',
+ 	    	                           url: 'https://www.dropbox.com/s/564yd0fj2p3y31e/sociology.png?dl=1'
+ 	    	                       }
+ 	    	                   ],
+ 	    	          color: 'rgba(255, 0, 0, .3)',
+ 	    	          price: 3.50,
+ 	    	    	  business_price: 18.99
+ 	    	      }       
+ 	      ],
+    	 POLITICS: [
+    	      {
+    	    	  description: 'This video shows the borders and populations of each country in Europe, for every year since 400 BC.',
+    	    	  id: 'poli_0',
+    	    	  name: 'The History of Europe',
+    	    	  author: 'Cottereau',
+    	    	  date: '01/01/2018',
+    	    	  duration: '11:44',	 
+    	    	  source: 'https://www.dropbox.com/s/0gxhdts9rbwy5ms/Europe-Poli.mp4?dl=1',
+    	    	  photo_urls: [
+    	                       {
+    	                           size: '240x180',
+    	                           url: 'https://www.dropbox.com/s/5zqctkqdv7numoa/europe.png?dl=1'
+    	                       }
+    	                   ],
+    	          color: 'rgba(255, 0, 0, .3)',
+    	          price: 2.99,
+    	    	  business_price: 10.99
+    	      }       
+    	 ]
     },
     PREPARED_DATA: {
         COLORS: [
