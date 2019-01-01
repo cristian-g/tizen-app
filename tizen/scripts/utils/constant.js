@@ -4,7 +4,7 @@ var CONSTANT = {
     },
     ITEMS: [this.ITEM, this.ITEM, this.ITEM, this.ITEM],
     CATEGORY: {
-        COLORS: 0,
+        TECHNOLOGY: 0,
         ALPHABETS: 1,
         NUMBERS: 2,
         RELATED_PLAY_LIST: 3

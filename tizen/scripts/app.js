@@ -149,14 +149,14 @@ $('document').ready(function(){
             };
 
             $('#category_0').caphList({
-                items: myVideoApp._dataCategory[myVideoApp._CATEGORY.COLORS],
+                items: myVideoApp._dataCategory[myVideoApp._CATEGORY.TECHNOLOGY],
                 template: 'playlist',
                 containerClass: 'list-container',
                 wrapperClass: "list-scroll-wrapper"
             }).on('focused', function($event){
-                focusHandler($event, myVideoApp._CATEGORY.COLORS);
+                focusHandler($event, myVideoApp._CATEGORY.TECHNOLOGY);
             }).on('selected', function(){
-                selectHandler(myVideoApp._CATEGORY.COLORS);
+                selectHandler(myVideoApp._CATEGORY.TECHNOLOGY);
             }).on('blurred', function(){
                 blurHandler();
             });
@@ -187,7 +187,7 @@ $('document').ready(function(){
                 selectHandler(myVideoApp._CATEGORY.NUMBERS);
             });
 
-            relatedPlaylistItems = myVideoApp._dataCategory[myVideoApp._CATEGORY.COLORS];
+            relatedPlaylistItems = myVideoApp._dataCategory[myVideoApp._CATEGORY.TECHNOLOGY];
             $('#related-play-list').caphList({
                 items: relatedPlaylistItems,
                 template: 'relatedPlaylist',
@@ -202,9 +202,9 @@ $('document').ready(function(){
             myVideoApp.changeDepth(myVideoApp._DEPTH.INDEX);
 
             $.caph.focus.controllerProvider.getInstance().focus(
-                $('#' + CONSTANT.PREPARED_DATA.COLORS[0].id)
+                $('#' + CONSTANT.VIDEOS.TECHNOLOGY[0].id)
             );
-            myVideoApp.setListContainer(null, myVideoApp._CATEGORY.COLORS);
+            myVideoApp.setListContainer(null, myVideoApp._CATEGORY.TECHNOLOGY);
         });
     });
 

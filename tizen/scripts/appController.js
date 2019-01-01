@@ -24,7 +24,13 @@ var myVideoApp = {
         var focusController = $.caph.focus.controllerProvider.getInstance();
         setTimeout(function(){
             var welcomeElement = $('.welcome');
-            this.updateCategoryListData(CONSTANT.PREPARED_DATA.COLORS, this._CATEGORY.COLORS, true);
+            /*this.updateCategoryListData(CONSTANT.PREPARED_DATA.COLORS, this._CATEGORY.COLORS, true);
+            this.updateCategoryListData(CONSTANT.PREPARED_DATA.ALPHABETS, this._CATEGORY.ALPHABETS, true);
+            this.updateCategoryListData(CONSTANT.PREPARED_DATA.NUMBERS, this._CATEGORY.NUMBERS, true);
+            welcomeElement.addClass('fade-out');
+            focusController.focus($('#' + this._CATEGORY.COLORS + '-' + CONSTANT.PREPARED_DATA.COLORS[0].id));*/
+            
+            this.updateCategoryListData(CONSTANT.VIDEOS.TECHNOLOGY, this._CATEGORY.TECHNOLOGY, true);
             this.updateCategoryListData(CONSTANT.PREPARED_DATA.ALPHABETS, this._CATEGORY.ALPHABETS, true);
             this.updateCategoryListData(CONSTANT.PREPARED_DATA.NUMBERS, this._CATEGORY.NUMBERS, true);
             welcomeElement.addClass('fade-out');
