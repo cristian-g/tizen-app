@@ -27,6 +27,10 @@ class CreateVideosTable extends Migration
             $table->string('source');
             $table->string('thumbnail');
 
+            // Related category
+            $table->unsignedInteger('category_id')->nullable();
+            $table->foreign('category_id')->references('id')->on('categories');
+
             $table->timestamps();
         });
     }
