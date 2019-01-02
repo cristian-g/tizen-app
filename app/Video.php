@@ -24,4 +24,9 @@ class Video extends Model
     {
         return $this->hasMany('App\Purchase');
     }
+
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
+    }
 }
