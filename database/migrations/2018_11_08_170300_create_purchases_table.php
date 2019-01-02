@@ -31,120 +31,227 @@ class CreatePurchasesTable extends Migration
             $table->timestamps();
         });
 
-        $names = [
-            "Dewayne Schuessler",
-            "Joann Keough",
-            "Katharine Knowles",
-            "Renee Wison",
-            "Mallory Jerkins",
-            "Jarrod Liner",
-            "Apolonia Mariano",
-            "April Hartness",
-            "Linn Migues",
-            "Desirae Foulds",
-            "Sherwood Fugate",
-            "Irena Morgado",
-            "Macie Lazar",
-            "Eden Crigger",
-            "Lawana Scroggins",
-            "Jerald Valderrama",
-            "Yetta Sedlock",
-            "Lovella Ponds",
-            "Ardis Guadalupe",
-            "Lieselotte Slattery",
-            "Leandra Corner",
-            "Pat Muniz",
-            "Domingo Zambrano",
-            "Jong Schueller",
-            "Vasiliki Nicastro",
-            "Cecille Beech",
-            "Trisha Mcnair",
-            "Candice Rocamora",
-            "Jonnie Townson",
-            "Wayne Holcomb",
-            "Sylvia Wegner",
-            "Thu Panzer",
-            "Myrtis Majeed",
-            "Ola Murrin",
-            "Mechelle Parshall",
-            "Marlys Hazell",
-            "Janna Nickell",
-            "Isis Vine",
-            "Madlyn Trostle",
-            "Meggan Orton",
-            "Jenna Brister",
-            "Tonisha Avila",
-            "Quincy Ryerson",
-            "Shantel Azcona",
-            "Cristina Carolan",
-            "Melonie Farwell",
-            "Jerold Robles",
-            "Maurine Boothe",
-            "Lesli Bonk",
-            "Lara Kamerer",
-            "Mike Hazelrigg",
-            "Antonetta Dusseault",
-            "Junita Duenas",
-            "Elinore Place",
-            "Kourtney Mcclean",
-            "Penney Ashworth",
-            "Javier Armond",
-            "Pearlene Ganz",
-            "Verline Dunston",
-            "Sherice Hinojosa",
-            "Enola Kress",
-            "Johnna Enders",
-            "Rosann Klenk",
-            "Roberto Mcgrew",
-            "Jacqulyn Bivins",
-            "Julio Whitener",
-            "Raisa Langham",
-            "Justin Aziz",
-            "Manual Dupuis",
-            "Lamont Orndorff",
-            "Yevette Mulloy",
-            "Rafaela Lassen",
-            "Barbara Orlandi",
-            "Mei Marlow",
-            "Ione Surrett",
-            "Wilbur Elsberry",
-            "Jacquelyne Costantino",
-            "Izetta Royer",
-            "Roselle Kuss",
-            "Gertrudis Suarez",
-            "Dominque Valenza",
-            "Edwardo Arsenault",
-            "Tierra Clay",
-            "Ardella Blackstone",
-            "Angela Rosebrock",
-            "Jessia Atwood",
-            "Sharika Beaudreau",
-            "Mervin Guiterrez",
-            "Sonia Phegley",
-            "Shona Ussery",
-            "Isa Noland",
-            "Marline Tyner",
-            "Tenisha Neumeister",
-            "Timika Lingenfelter",
-            "Daniel Tweed",
-            "Sheridan Olszewski",
-            "Alvin Rock",
-            "Josef Gottlieb",
-            "Olimpia Reda",
-            "Rufus Wolken",
+
+        $usersInfo = [
+            [
+                'name' => "Adrià Puigdellívol Pérez",
+                'sub_auth0' => "estudy|adria.puigdellivol",
+                'picture' => "/img/estudy/adria.puigdellivol.jpg",
+            ],
+            [
+                'name' => "Alejandro Sardá Sagarra",
+                'sub_auth0' => "estudy|alejandro.sarda",
+                'picture' => "/img/estudy/alejandro.sarda.jpg",
+            ],
+            [
+                'name' => "Andreu Salzano García",
+                'sub_auth0' => "estudy|andreu.salzano",
+                'picture' => "/img/estudy/andreu.salzano.jpg",
+            ],
+            [
+                'name' => "Angela Brunet Rodríguez",
+                'sub_auth0' => "estudy|angela.brunet",
+                'picture' => "/img/estudy/angela.brunet.jpg",
+            ],
+            [
+                'name' => "Borja Aguilar Vítores",
+                'sub_auth0' => "estudy|borja.aguilar",
+                'picture' => "/img/estudy/borja.aguilar.jpg",
+            ],
+            [
+                'name' => "Carla Radresa Badosa",
+                'sub_auth0' => "estudy|carla.radresa",
+                'picture' => "/img/estudy/carla.radresa.jpg",
+            ],
+            [
+                'name' => "Carlos Rocha Cavaller",
+                'sub_auth0' => "estudy|carlos.rocha",
+                'picture' => "/img/estudy/carlos.rocha.jpg",
+            ],
+            [
+                'name' => "Carlos Muntané Fuentes",
+                'sub_auth0' => "estudy|carlos.muntane",
+                'picture' => "/img/estudy/carlos.muntane.jpg",
+            ],
+            [
+                'name' => "Carme Perseguer Barragán",
+                'sub_auth0' => "estudy|carme.perseguer",
+                'picture' => "/img/estudy/carme.perseguer.jpg",
+            ],
+            [
+                'name' => "Daniel Solé Serentill",
+                'sub_auth0' => "estudy|daniel.ss",
+                'picture' => "/img/estudy/daniel.ss.jpg",
+            ],
+            [
+                'name' => "David Gonzàlez Lesmes",
+                'sub_auth0' => "estudy|david.gl",
+                'picture' => "/img/estudy/david.gl.jpg",
+            ],
+            [
+                'name' => "Esteve Genovard Ferriol",
+                'sub_auth0' => "estudy|esteve.genovard",
+                'picture' => "/img/estudy/esteve.genovard.jpg",
+            ],
+            [
+                'name' => "Genís Serrabasa Sánchez",
+                'sub_auth0' => "estudy|genis.serrabasa",
+                'picture' => "/img/estudy/genis.serrabasa.jpg",
+            ],
+            [
+                'name' => "Gerard Parareda Gallifa",
+                'sub_auth0' => "estudy|gerard.parareda",
+                'picture' => "/img/estudy/gerard.parareda.jpg",
+            ],
+            [
+                'name' => "Joel López Romero",
+                'sub_auth0' => "estudy|joel.lopez",
+                'picture' => "/img/estudy/joel.lopez.jpg",
+            ],
+            [
+                'name' => "Jordi Gallego Rovira",
+                'sub_auth0' => "estudy|jordi.gallego",
+                'picture' => "/img/estudy/jordi.gallego.jpg",
+            ],
+            [
+                'name' => "Jordi Alonso Martí",
+                'sub_auth0' => "estudy|jordi.alonso",
+                'picture' => "/img/estudy/jordi.alonso.jpg",
+            ],
+            [
+                'name' => "Jordi Roldán García",
+                'sub_auth0' => "estudy|jordi.roldan",
+                'picture' => "/img/estudy/jordi.roldan.jpg",
+            ],
+            [
+                'name' => "Judit Villanueva Pérez",
+                'sub_auth0' => "estudy|judit.villanueva",
+                'picture' => "/img/estudy/judit.villanueva.jpg",
+            ],
+            [
+                'name' => "Laura Gendrau Sanclemente",
+                'sub_auth0' => "estudy|laura.gendrau",
+                'picture' => "/img/estudy/laura.gendrau.jpg",
+            ],
+            [
+                'name' => "Marc Grau Riesco",
+                'sub_auth0' => "estudy|marc.gr",
+                'picture' => "/img/estudy/marc.gr.jpg",
+            ],
+            [
+                'name' => "Marc Castells Güell",
+                'sub_auth0' => "estudy|marc.castells",
+                'picture' => "/img/estudy/marc.castells.jpg",
+            ],
+            [
+                'name' => "Maria Chueca Buxó",
+                'sub_auth0' => "estudy|maria.chueca",
+                'picture' => "/img/estudy/maria.chueca.jpg",
+            ],
+            [
+                'name' => "Noa Duran Plass",
+                'sub_auth0' => "estudy|noa.duran",
+                'picture' => "/img/estudy/noa.duran.jpg",
+            ],
+            [
+                'name' => "Pau Nonell Isach",
+                'sub_auth0' => "estudy|pau.nonell",
+                'picture' => "/img/estudy/pau.nonell.jpg",
+            ],
+            [
+                'name' => "Pau Freixas Mateu",
+                'sub_auth0' => "estudy|pau.freixas",
+                'picture' => "/img/estudy/pau.freixas.jpg",
+            ],
+            [
+                'name' => "Pol Fernàndez Martí",
+                'sub_auth0' => "estudy|pol.fm",
+                'picture' => "/img/estudy/pol.fm.jpg",
+            ],
+            [
+                'name' => "Pol Valés Rodon",
+                'sub_auth0' => "estudy|pol.vales",
+                'picture' => "/img/estudy/pol.vales.jpg",
+            ],
+            [
+                'name' => "Rafael Rebollo Cacín",
+                'sub_auth0' => "estudy|rafael.rebollo",
+                'picture' => "/img/estudy/rafael.rebollo.jpg",
+            ],
+            [
+                'name' => "Robin Jiménez Newman",
+                'sub_auth0' => "estudy|robin.jimenez",
+                'picture' => "/img/estudy/robin.jimenez.jpg",
+            ],
+            [
+                'name' => "Roger Cecilia Costa",
+                'sub_auth0' => "estudy|roger.cecilia",
+                'picture' => "/img/estudy/roger.cecilia.jpg",
+            ],
+            [
+                'name' => "Sergi Simó Bosquet",
+                'sub_auth0' => "estudy|sergi.simo",
+                'picture' => "/img/estudy/sergi.simo.jpg",
+            ],
+            [
+                'name' => "Sergio Álvarez Durán",
+                'sub_auth0' => "estudy|sergio.ad",
+                'picture' => "/img/estudy/sergio.ad.jpg",
+            ],
+            [
+                'name' => "Sònia Arroyo Esparza",
+                'sub_auth0' => "estudy|sonia.arroyo",
+                'picture' => "/img/estudy/sonia.arroyo.jpg",
+            ],
+            [
+                'name' => "Tatiana Cáceres Amigo",
+                'sub_auth0' => "estudy|tatiana.caceres",
+                'picture' => "/img/estudy/tatiana.caceres.jpg",
+            ],
+            [
+                'name' => "Xavier Hernández Sevilla",
+                'sub_auth0' => "estudy|xavier.hernandez",
+                'picture' => "/img/estudy/xavier.hernandez.jpg",
+            ],
         ];
 
         $users = array();
-        $length = count($names);
+        $length = count($usersInfo);
         for ($i = 0; $i < $length; $i++) {
             $user = new User([
-                'name' => $names[$i],
+                'name' => $usersInfo[$i]['name'],
+                'sub_auth0' => $usersInfo[$i]['name'],
+                'picture' => $usersInfo[$i]['name'],
             ]);
             $user->save();
             array_push($users, $user);
         }
 
+        $categoriesInfo = [
+            [
+                'title' => "Science",
+            ],
+            [
+                'title' => "",
+            ],
+            [
+                'title' => "",
+            ],
+            [
+                'title' => "",
+            ],
 
+        ];
+
+        $categories = array();
+        $length = count($categoriesInfo);
+        for ($i = 0; $i < $length; $i++) {
+            $category = new \App\Category([
+                'title' => $categoriesInfo[$i]['title'],
+            ]);
+            $category->save();
+            array_push($categories, $category);
+        }
 
         $movies = [
             [
@@ -342,10 +449,17 @@ class CreatePurchasesTable extends Migration
                 "thumbnail" => $movies[$i]["thumbnail"],
             ]);
             $video->save();
+            // Save views
+            for ($j = 0; $j < 4; $j++) {
+                $view = new \App\View();
+                $view->user()->associate($users[$j*4]);
+                $view->video()->associate($video);
+                $view->save();
+            }
             // Save purchases
             for ($j = 0; $j < 4; $j++) {
                 $purchase = new \App\Purchase();
-                $purchase->user()->associate($users[$i*4+$j]);
+                $view->user()->associate($users[$j*4]);
                 $purchase->video()->associate($video);
                 $purchase->stripe_token = "token_example";
                 $purchase->save();
