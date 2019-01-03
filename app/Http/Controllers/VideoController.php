@@ -219,6 +219,7 @@ class VideoController extends Controller
             "business_price" => $video->business_price,
             "views" => $video->views,
             "purchases" => $video->purchases,
+            "category" => CategoryController::getCategoryJson($video->category)
         ];
     }
 }

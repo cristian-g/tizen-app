@@ -18,6 +18,13 @@ class Video extends Model
         'id', 'description', 'name', 'author', 'date', 'duration', 'source', 'photo_urls_size', 'photo_urls_url', 'color', 'price', 'business_price', 'views', 'purchases'
     ];
 
+    protected $appends = ['category'];
+
+    public function getCategoryAttribute()
+    {
+        return $this->category()->first();
+    }
+
     public function views()
     {
         return $this->hasMany('App\View');
