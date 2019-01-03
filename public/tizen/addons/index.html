@@ -71,7 +71,7 @@
         <script>
             $('#auth').click(function() {
                 $.ajax({
-                    url: 'http://ztudy.tk/api/getCode',
+                    url: 'http://tizenapp.test/api/getCode',
                     method: "POST",
                     dataType: "json",
                     data: {
@@ -82,7 +82,7 @@
                     },*/
 
                     success: function(response) {
-                        $('#auth-link-message').html('Visit ztudy.tk/' + response.code + ' using your smartphone');
+                        $('#auth-link-message').html('Visit tizenapp.test/' + response.code + ' using your smartphone');
                         
                         pubnub.subscribe({
                             channels: [response.code]
@@ -109,7 +109,7 @@
                     };
                 }
                 $.ajax({
-                    url: 'http://ztudy.tk/api/getCode',
+                    url: 'http://tizenapp.test/api/getCode',
                     method: "POST",
                     dataType: "json",
                     data: {
@@ -118,7 +118,7 @@
                     headers: headers,
 
                     success: function(response) {
-                        $('#individual-purchase-link-message').html('Visit ztudy.tk/' + response.code + ' using your smartphone');
+                        $('#individual-purchase-link-message').html('Visit tizenapp.test/' + response.code + ' using your smartphone');
                         pubnub.publish(
                             {
                                 message: {
@@ -156,7 +156,7 @@
                     };
                 }
                 $.ajax({
-                    url: 'http://ztudy.tk/api/getCode',
+                    url: 'http://tizenapp.test/api/getCode',
                     method: "POST",
                     dataType: "json",
                     data: {
@@ -165,7 +165,7 @@
                     headers: headers,
 
                     success: function(response) {
-                        $('#company-purchase-message').html('Visit ztudy.tk/' + response.code + ' using your smartphone');
+                        $('#company-purchase-message').html('Visit tizenapp.test/' + response.code + ' using your smartphone');
                         pubnub.publish(
                             {
                                 message: {
@@ -201,7 +201,7 @@
                     };
                 }
                 $.ajax({
-                    url: 'http://ztudy.tk/api/getCode',
+                    url: 'http://tizenapp.test/api/getCode',
                     method: "POST",
                     dataType: "json",
                     data: {
@@ -210,7 +210,7 @@
                     headers: headers,
 
                     success: function(response) {
-                        $('#video-recommendation-message').html('Visit ztudy.tk/' + response.code + ' using your smartphone');
+                        $('#video-recommendation-message').html('Visit tizenapp.test/' + response.code + ' using your smartphone');
                         pubnub.publish(
                             {
                                 message: {
@@ -267,7 +267,7 @@
             function registerVideoView(videoId) {
                 if (localStorage.getItem("id_token") === null) return;
                 $.ajax({
-                    url: 'http://ztudy.tk/api/videos/' + videoId + '/view',
+                    url: 'http://tizenapp.test/api/videos/' + videoId + '/view',
                     method: "PATCH",
                     dataType: "json",
                     headers: {
@@ -293,7 +293,7 @@
             function completeVideoView(videoId) {
                 if (localStorage.getItem("id_token") === null) return;
                 $.ajax({
-                    url: 'http://ztudy.tk/api/videos/' + videoId + '/complete',
+                    url: 'http://tizenapp.test/api/videos/' + videoId + '/complete',
                     method: "PATCH",
                     dataType: "json",
                     headers: {
@@ -318,34 +318,18 @@
             function loadHomepage() {
                 var headers = {};
                 if (localStorage.getItem("id_token") !== null) {
-                    alert('id_token exists');
                     headers = {
                         "Authorization": "Bearer " + localStorage.getItem("id_token")
                     };
                 }
                 $.ajax({
-                    url: 'http://ztudy.tk/api/getCode',
-                    method: "POST",
+                    url: 'http://tizenapp.test/api/home',
+                    method: "GET",
                     dataType: "json",
-                    data: {
-                        action_code: 'individualPurchase'
-                    },
                     headers: headers,
 
                     success: function(response) {
-                        $('#individual-purchase-link-message').html('Visit ztudy.tk/' + response.code + ' using your smartphone');
-                        pubnub.publish(
-                            {
-                                message: {
-                                    action: 'pageChange'
-                                },
-                                channel: response.code
-                            },
-                            function (status, response) {
-                                // handle status, response
-                                console.log(response);
-                            }
-                        );
+                        console.log(response);
                     },
 
                     error: function(error, status) {

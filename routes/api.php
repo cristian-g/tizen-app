@@ -40,3 +40,6 @@ Route::get('category/{id}', 'CategoryController@show');
 Route::get('videos/{id}', 'VideoController@show');
 Route::patch('videos/{id}/view', 'VideoController@view')->middleware('JWT');
 Route::patch('videos/{id}/complete', 'VideoController@complete')->middleware('JWT');
+
+// Homepage
+Route::get('home', 'VideoController@home')->middleware('optionalJWT');
