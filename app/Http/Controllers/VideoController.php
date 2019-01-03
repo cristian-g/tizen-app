@@ -8,7 +8,6 @@ use App\View;
 use Auth0\Login\Facade\Auth0;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class VideoController extends Controller
 {
