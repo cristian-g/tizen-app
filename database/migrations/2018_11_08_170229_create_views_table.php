@@ -23,8 +23,10 @@ class CreateViewsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
 
             // Video
-            $table->unsignedInteger('video_id');
+            $table->string('video_id');
             $table->foreign('video_id')->references('id')->on('videos');
+
+            $table->boolean('completed')->default(false);
 
             $table->timestamps();
         });

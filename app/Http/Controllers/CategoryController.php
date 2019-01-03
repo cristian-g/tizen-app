@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -13,17 +14,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $categories = Category::with('videos')->orderBy('order', 'asc')->get();
+        $categoriesArray = [];
+        foreach ($categories as $category) {
+            array_push($categoriesArray, $this->getCategoryJson($category));
+        }
+        return response()->json(['categories'=> $categoriesArray], 200);
     }
 
     /**
@@ -34,7 +30,6 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -45,18 +40,39 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = Category::find($id);
+        $json = $this->getCategoryJson($category);
+        return response()->json(['videos' => $json["videos"]], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    private function getCategoryJson($category)
     {
-        //
+        $videosArray = [];
+        foreach ($category->videos()->get() as $video) {
+            array_push($videosArray, [
+                "description" => $video->description,
+                "id" => $video->id,
+                "name" => $video->name,
+                "author" => $video->author,
+                "date" => $video->date,
+                "duration" => $video->duration,
+                "source" => $video->source,
+                "photo_urls" => [
+                    "size" => $video->photo_urls_size,
+                    "url" => $video->photo_urls_url,
+                ],
+                "color" => $video->color,
+                "price" => $video->price,
+                "business_price" => $video->business_price,
+                "views" => $video->views,
+                "purchases" => $video->purchases,
+            ]);
+        }
+        return [
+            "key" => $category->id,
+            "title" => $category->title,
+            "videos" => $videosArray
+        ];
     }
 
     /**

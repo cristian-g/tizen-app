@@ -31,3 +31,7 @@ Route::patch('updatePicture', 'UserController@update')->middleware('JWT');
 
 // Code
 Route::post('getCode', 'ConnectionController@store')->middleware('optionalJWT');
+
+// Categories
+Route::get('categories', 'CategoryController@index');
+Route::get('category/{id}', 'CategoryController@show');

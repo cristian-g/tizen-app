@@ -14,21 +14,29 @@ class CreateVideosTable extends Migration
     public function up()
     {
         Schema::create('videos', function (Blueprint $table) {
-            $table->increments('id');
-
-            $table->string('title');
-            $table->string('director');
-            $table->unsignedBigInteger('views');
+            $table->string('id');
+            $table->primary('id');
 
             $table->text('description');
-            $table->string('cast');
-            $table->unsignedInteger('minutes');
-
+            $table->string('name');
+            $table->string('author');
+            $table->string('date');
+            $table->string('duration');
             $table->string('source');
-            $table->string('thumbnail');
+
+            $table->string('photo_urls_size');
+            $table->string('photo_urls_url');
+
+            $table->string('color');
+
+            $table->decimal('price',9, 2);
+            $table->decimal('business_price',9, 2);
+
+            $table->unsignedBigInteger('views');
+            $table->unsignedBigInteger('purchases');
 
             // Related category
-            $table->unsignedInteger('category_id')->nullable();
+            $table->string('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
 
             $table->timestamps();

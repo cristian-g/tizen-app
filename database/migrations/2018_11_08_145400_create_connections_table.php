@@ -23,7 +23,7 @@ class CreateConnectionsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
 
             // Relate video
-            $table->unsignedInteger('video_id')->nullable();
+            $table->string('video_id')->nullable();
             $table->foreign('video_id')->references('id')->on('videos');
 
             $table->string('code')->unique();
