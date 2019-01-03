@@ -17,7 +17,7 @@ class CategoryController extends Controller
         $categories = Category::with('videos')->orderBy('order', 'asc')->get();
         $categoriesArray = [];
         foreach ($categories as $category) {
-            array_push($categoriesArray, $this->getCategoryJson($category));
+            array_push($categoriesArray, self::getCategoryJsonWithVideos($category));
         }
         return response()->json(['categories'=> $categoriesArray], 200);
     }
@@ -41,11 +41,19 @@ class CategoryController extends Controller
     public function show($id)
     {
         $category = Category::find($id);
-        $json = $this->getCategoryJson($category);
+        $json = self::getCategoryJsonWithVideos($category);
         return response()->json(['videos' => $json["videos"]], 200);
     }
 
-    private function getCategoryJson($category)
+    public static function getCategoryJson($category)
+    {
+        return [
+            "key" => $category->id,
+            "title" => $category->title,
+        ];
+    }
+
+    public static function getCategoryJsonWithVideos($category)
     {
         $videosArray = [];
         foreach ($category->videos()->get() as $video) {
@@ -54,7 +62,7 @@ class CategoryController extends Controller
         return [
             "key" => $category->id,
             "title" => $category->title,
-            "videos" => $videosArray
+            "videos" => $videosArray,
         ];
     }
 

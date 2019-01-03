@@ -96,7 +96,7 @@ class VideoController extends Controller
         $mostViewedJson = [
             'most_viewed' => $mostViewedVideosJson
         ];
-        array_push($json, $newJson);
+        array_push($json, $mostViewedJson);
 
         return response()->json($json, 200);
     }
@@ -219,6 +219,7 @@ class VideoController extends Controller
             "business_price" => $video->business_price,
             "views" => $video->views,
             "purchases" => $video->purchases,
+            "category" => CategoryController::getCategoryJson($video->category)
         ];
     }
 }
