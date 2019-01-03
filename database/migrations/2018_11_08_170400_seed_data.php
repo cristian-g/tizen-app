@@ -525,7 +525,7 @@ class SeedData extends Migration
             "author" => $info["author"],
             "date" => $info["date"],
             "duration" => $info["duration"],
-            "source" => $info['name'],
+            "source" => $info["source"],
             "photo_urls_size" => $info["photo_urls_size"],
             "photo_urls_url" => $info["photo_urls_url"],
             "color" => $info["color"],

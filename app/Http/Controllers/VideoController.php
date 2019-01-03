@@ -37,7 +37,8 @@ class VideoController extends Controller
      */
     public function show($id)
     {
-        //
+        $video = Video::find($id);
+        return response()->json(VideoController::getVideoJson($video), 200);
     }
 
     /**
@@ -62,6 +63,13 @@ class VideoController extends Controller
     public function view(Request $request, $id)
     {
         Video::find($id)->increment('views', 1);
+        return response()->json(null, 200);
+    }
+
+    public function completeView(Request $request, $id)
+    {
+        Video::find($id)->increment('views', 1);
+        return response()->json(null, 200);
     }
 
     /**
@@ -73,5 +81,27 @@ class VideoController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public static function getVideoJson($video)
+    {
+        return [
+            "description" => $video->description,
+            "id" => $video->id,
+            "name" => $video->name,
+            "author" => $video->author,
+            "date" => $video->date,
+            "duration" => $video->duration,
+            "source" => $video->source,
+            "photo_urls" => [
+                "size" => $video->photo_urls_size,
+                "url" => $video->photo_urls_url,
+            ],
+            "color" => $video->color,
+            "price" => $video->price,
+            "business_price" => $video->business_price,
+            "views" => $video->views,
+            "purchases" => $video->purchases,
+        ];
     }
 }

@@ -49,24 +49,7 @@ class CategoryController extends Controller
     {
         $videosArray = [];
         foreach ($category->videos()->get() as $video) {
-            array_push($videosArray, [
-                "description" => $video->description,
-                "id" => $video->id,
-                "name" => $video->name,
-                "author" => $video->author,
-                "date" => $video->date,
-                "duration" => $video->duration,
-                "source" => $video->source,
-                "photo_urls" => [
-                    "size" => $video->photo_urls_size,
-                    "url" => $video->photo_urls_url,
-                ],
-                "color" => $video->color,
-                "price" => $video->price,
-                "business_price" => $video->business_price,
-                "views" => $video->views,
-                "purchases" => $video->purchases,
-            ]);
+            array_push($videosArray, VideoController::getVideoJson($video));
         }
         return [
             "key" => $category->id,

@@ -26,6 +26,8 @@ class CreateViewsTable extends Migration
             $table->string('video_id');
             $table->foreign('video_id')->references('id')->on('videos');
 
+            $table->unique(['user_id', 'video_id']);
+
             $table->boolean('completed')->default(false);
 
             $table->timestamps();

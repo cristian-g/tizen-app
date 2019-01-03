@@ -35,3 +35,7 @@ Route::post('getCode', 'ConnectionController@store')->middleware('optionalJWT');
 // Categories
 Route::get('categories', 'CategoryController@index');
 Route::get('category/{id}', 'CategoryController@show');
+
+// Videos
+Route::get('videos/{id}', 'VideoController@show');
+Route::patch('videos/{id}/view', 'VideoController@view')->middleware('JWT');
