@@ -13,6 +13,7 @@ var myVideoApp = {
     relatedPlaylistItems: [],
     currentCategory: undefined,
     currentDepth: undefined,
+    categoryList: undefined,
     lastDepth: undefined,
     dialogSetting: undefined,
     playSetting: {
@@ -208,6 +209,9 @@ var myVideoApp = {
         }
         $.caph.focus.controllerProvider.getInstance().focus('btnPlayerPlay');
     },
+    startVideoPlayer: function(video){
+    	
+    },
     back: function(){
         if(this.currentDepth === this._DEPTH.INDEX){
             return;
@@ -245,22 +249,93 @@ var myVideoApp = {
     },
     changeCategory: function(category){
     	$('#category-title').html(category);
+    	var url;
     	switch (category) {
 		case 'Technology':
-
+			url = 'technology';
 			break;
 		case 'Biology':
-			
+			url = 'biology';
 			break;
 		case 'Sociology':
-			
+			url = 'sociology';
 			break;
-		case 'Politics':
-			
+		case 'Graphic Design':
+			url = 'graphic_design';
 			break;
 		default:
 			break;
 		}
-    	this.changeDepth(6);
+    	$.ajax({
+            url: 'http://ztudy.tk/api/category/' + url,
+            method: "GET",
+            dataType: "json",
+            success: function(response) {
+            	console.info(response)
+            	myVideoApp.categoryList = response.videos;
+            	var size = response.videos.length;
+            	var i = 0;
+            	$('#category-item-title').html('');
+            	$('#description .overview').html('');
+            	$('#list_0').html('');
+            	$('#list_1').html('');
+            	if(size > 0){
+            		while (i < 3 || i < size){
+            			$('#list_0').append('<div style="position: relative; transform: translate3d(0px, 0px, 0px); margin-right:15px" class=""><div id="'+ response.videos[i].id +'" info-num='+ i + ' class="item" ng-class="{\'item-blank\': item.isBlank === true}" focusable="" data-focusable-depth="6" data-index="0" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">'+
+            									'<div class="loader hide" ng-show="item.loaded === false"></div>'+
+            										'<div class="content" ng-hide="item.loaded === false" style="background: url('+ response.videos[i].photo_urls.url +');-webkit-background-size:100%;">'+
+            											'<div class="text font-label">'+
+            												'<div class="font-info">'+ response.videos[i].name +'</div>'+
+            											'</div>'+
+            										'</div>'+
+            									'</div>'+
+            								'</div>');
+
+            			$('#list_0 #' + response.videos[i].id).on('selected', function(){
+            				myVideoApp.startVideoPlayer(myVideoApp.categoryList[$(this).attr('info-num')]);
+            			}).on('focused', function(){
+            				$('#category-item-title').html(myVideoApp.categoryList[$(this).attr('info-num')].name);
+                        	$('#description .overview').html(myVideoApp.categoryList[$(this).attr('info-num')].description);
+            			});
+            			
+            			
+            			
+            			i++;
+            		}
+            		
+            		if(size > 4){
+            			while (i < 7 || i < size){
+                			$('#list_1').append('<div style="position: relative; transform: translate3d(0px, 0px, 0px); margin-right:15px" class=""><div id="'+ response.videos[i].id +'" info-num='+ i + ' class="item" ng-class="{\'item-blank\': item.isBlank === true}" focusable="" data-focusable-depth="6" data-index="0" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">'+
+                									'<div class="loader hide" ng-show="item.loaded === false"></div>'+
+                										'<div class="content" ng-hide="item.loaded === false" style="background: url('+ response.videos[i].photo_urls.url +');-webkit-background-size:100%;">'+
+                											'<div class="text font-label">'+
+                												'<div class="font-info">'+ response.videos[i].name +'</div>'+
+                											'</div>'+
+                										'</div>'+
+                									'</div>'+
+                								'</div>');
+                			$('#list_1 #' + response.videos[i].id).on('selected', function(){
+                				myVideoApp.startVideoPlayer(myVideoApp.categoryList[$(this).attr('info-num')]);
+                			}).on('focused', function(){
+                				$('#category-item-title').html(myVideoApp.categoryList[$(this).attr('info-num')].name);
+                            	$('#description .overview').html(myVideoApp.categoryList[$(this).attr('info-num')].description);
+                			});
+                			i++;
+                		}
+            		}
+            		
+
+
+            	}
+            	myVideoApp.changeDepth(6);
+        		$.caph.focus.activate(function(nearestFocusableFinderProvider, controllerProvider) {
+
+    			});
+            },
+
+            error: function(error, status) {
+                console.error(error, status);
+            }
+        });
     }
 };

@@ -110,7 +110,7 @@ $('document').ready(function(){
         	$('.select-opt').removeClass('opt-focused');
         	$('#ctg4').addClass('opt-focused');
         }).on('selected', function(){
-        	myVideoApp.changeCategory('Politics')
+        	myVideoApp.changeCategory('Graphic Design')
         });
         
         $('#logOutOpt').on('focused', function(){
