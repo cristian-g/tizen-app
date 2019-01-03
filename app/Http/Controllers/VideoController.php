@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\User;
 use App\Video;
 use App\View;
@@ -20,6 +21,84 @@ class VideoController extends Controller
     {
         $videos = Video::with('users')->orderBy('created_at', 'asc')->get();
         return response()->json(['videos'=> $videos->toArray()], 200);
+    }
+
+    public function home()
+    {
+        $json = [];
+
+        // Get user info (if logged)
+        $userInfo = Auth0::jwtUser();
+        $user = null;
+        if ($userInfo !== null) {
+            $user = User::where('sub_auth0', $userInfo->sub)->first();
+        }
+
+        // Continue watching
+        if ($user !== null) {
+            $continueWatchingVideosJson = [];
+            $pendingViews = $user->views()->with('video')->where(['completed' => false])->get();
+            foreach ($pendingViews as $view) {
+                $video = $view->video()->first();
+                array_push($continueWatchingVideosJson, self::getVideoJson($video));
+            }
+            $continueWatchingJson = [
+                'continue_watching' => $continueWatchingVideosJson
+            ];
+            array_push($json, $continueWatchingJson);
+        }
+
+        // Recommended for you
+        /*if ($user !== null) {
+            $categories = Category::withCount([
+                'views as views_count' => function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                }
+            ])->get();
+            $categoriesArray = [];
+            foreach ($categories as $category) {
+                array_push($categoriesArray, Category::getCategoryJson($category));
+            }
+            array_push($json, $categoriesArray);
+        }*/
+
+        /*if ($user !== null) {
+            $recommendedVideosJson = [];
+            $pendingViews = $user->views()->with('video')->where(['completed' => false])->get();
+            foreach ($pendingViews as $view) {
+                $video = $view->video()->first();
+                array_push($recommendedVideosJson, self::getVideoJson($video));
+            }
+            $recommendedJson = [
+                'continue_watching' => $recommendedVideosJson
+            ];
+            array_push($json, $recommendedJson);
+        }*/
+
+        // New
+        $newVideosJson = [];
+        $newVideos = Video::orderBy('date', 'desc')
+            ->limit(7)->get();
+        foreach ($newVideos as $video) {
+            array_push($newVideosJson, self::getVideoJson($video));
+        }
+        $newJson = [
+            'new' => $newVideosJson
+        ];
+        array_push($json, $newJson);
+
+        // Most viewed
+        $mostViewedVideosJson = [];
+        $mostViewedVideos = Video::orderBy('views', 'desc')->limit(7)->get();
+        foreach ($mostViewedVideos as $video) {
+            array_push($mostViewedVideosJson, self::getVideoJson($video));
+        }
+        $mostViewedJson = [
+            'most_viewed' => $mostViewedVideosJson
+        ];
+        array_push($json, $newJson);
+
+        return response()->json($json, 200);
     }
 
     /**

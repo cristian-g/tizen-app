@@ -523,7 +523,7 @@ class SeedData extends Migration
             "id" => $info["id"],
             "name" => $info["name"],
             "author" => $info["author"],
-            "date" => $info["date"],
+            "date" => \Carbon\Carbon::createFromFormat('d/m/Y', $info["date"]),
             "duration" => $info["duration"],
             "source" => $info["source"],
             "photo_urls_size" => $info["photo_urls_size"],

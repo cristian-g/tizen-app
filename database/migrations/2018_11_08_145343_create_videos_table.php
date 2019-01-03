@@ -20,7 +20,7 @@ class CreateVideosTable extends Migration
             $table->text('description');
             $table->string('name');
             $table->string('author');
-            $table->string('date');
+            $table->date('date');
             $table->string('duration');
             $table->string('source');
 

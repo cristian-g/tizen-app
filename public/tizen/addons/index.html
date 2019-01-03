@@ -318,34 +318,18 @@
             function loadHomepage() {
                 var headers = {};
                 if (localStorage.getItem("id_token") !== null) {
-                    alert('id_token exists');
                     headers = {
                         "Authorization": "Bearer " + localStorage.getItem("id_token")
                     };
                 }
                 $.ajax({
-                    url: 'http://ztudy.tk/api/getCode',
-                    method: "POST",
+                    url: 'http://ztudy.tk/api/home',
+                    method: "GET",
                     dataType: "json",
-                    data: {
-                        action_code: 'individualPurchase'
-                    },
                     headers: headers,
 
                     success: function(response) {
-                        $('#individual-purchase-link-message').html('Visit ztudy.tk/' + response.code + ' using your smartphone');
-                        pubnub.publish(
-                            {
-                                message: {
-                                    action: 'pageChange'
-                                },
-                                channel: response.code
-                            },
-                            function (status, response) {
-                                // handle status, response
-                                console.log(response);
-                            }
-                        );
+                        console.log(response);
                     },
 
                     error: function(error, status) {
