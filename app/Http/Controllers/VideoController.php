@@ -96,7 +96,7 @@ class VideoController extends Controller
         $mostViewedJson = [
             'most_viewed' => $mostViewedVideosJson
         ];
-        array_push($json, $newJson);
+        array_push($json, $mostViewedJson);
 
         return response()->json($json, 200);
     }
