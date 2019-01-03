@@ -49,7 +49,7 @@
     </div>
     <!-- OVERVIEW -->
     <div class="overview">
-        <div class="depth1 depth2 depth3 font-header"></div>
+        <div id="title-video" class="depth1 depth2 depth3 font-header"></div>
         <div class="depth4 title-header">Settings</div>
         <div class="depth5 title-header">Log In</div>
         <div class="depth6 title-header">Category - <span id="category-title"></span><div id="category-item-title" style="margin-top: 20px;color: rgba(255, 0, 0, 0.298039);text-shadow: -1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff;font: 60px 'SamsungSVD_Latin Medium';"></div></div>
@@ -61,8 +61,15 @@
     </div>
 
     <!-- page: TALK (OVERVIEW) -->
-    <div class="depth2 overview desc font-body"></div>
-    <div class="depth2 btn-wrapper">
+    <div id="detail-info" class="depth2 overview font-body">
+    	<div class="detail-tag">Description: <span class="detail-tag-text" id="detail-description"></span></div>
+    	<div class="detail-tag">Date of publish: <span class="detail-tag-text" id="detail-date"></span></div>
+    	<div class="detail-tag">Author: <span class="detail-tag-text" id="detail-author"></span></div>
+    	<div class="detail-tag">Duration: <span class="detail-tag-text" id="detail-duration"></span></div>
+    	<div class="detail-tag">Views: <span class="detail-tag-text" id="detail-repro"></span></div>
+    	<div class="detail-tag">Purchases: <span class="detail-tag-text" id="detail-purch"></span></div>
+    </div>
+    <div class="depth2 btn-wrapper" style="margin-top: 30px">
         <div id="btnPlay" focusable data-focusable-depth="2" data-focusable-initial-focus="true" data-focusable-name="btnPlay" class="btn btn-gap btn-play">
             <div class="btn-icon icon-caph icon-caph-play"></div>
         </div>
@@ -70,10 +77,10 @@
             <i class="fa fa-eye icon-buy"></i>
         </div>
         <div id="btnBuy" focusable data-focusable-depth="2" data-focusable-initial-focus="true" data-focusable-name="btnBuy" class="btn btn-gap btn-buy">
-            <i class="fa fa-shopping-cart icon-buy"></i>
+            <i class="fa fa-shopping-cart icon-buy"></i>(<span id="price"></span> €)
         </div>
         <div id="btnBuyComp" focusable data-focusable-depth="2" data-focusable-initial-focus="true" data-focusable-name="btnBuyComp" class="btn btn-gap btn-buyComp">
-            <i class="fa fa-globe icon-buy"></i>
+            <i class="fa fa-globe icon-buy"></i>(<span id="comp-price"></span> €)
         </div>
     </div>
     <!-- page: TALK (LIST) -->
@@ -88,8 +95,12 @@
 <div class="depth1 list-wrapper page">
     <div id="list-category" class="list-category" style="transform: translate3d(0, 0, 0)">
         <div class="list-area">
-            <div class="title font-label">Colors</div>
-            <div id="category_0" title="Colors"></div>
+            <div class="title font-label">New</div>
+            <div id="category_2" title="New"></div>
+        </div>
+        <div class="list-area">
+            <div class="title font-label">Most Viewed</div>
+            <div id="category_3" title="Most Viewed"></div>
         </div>
         <div class="list-area">
             <div class="title font-label">Alphabets</div>
@@ -97,7 +108,7 @@
         </div>
         <div class="list-area">
             <div class="title font-label">Numbers</div>
-            <div id="category_2" title="Numbers"></div>
+            <div id="category_0" title="Numbers"></div>
         </div>
     </div>
 </div>
@@ -122,7 +133,7 @@
 <script id="playlist" type="text/template">
     <div id="<%=item.id%>" class="item" ng-class="{'item-blank': item.isBlank === true}" focusable data-focusable-depth="1" data-index="<%= index %>">
         <div class="loader <%=(!item.loaded)?'hide':'' %>" ng-show="item.loaded === false"></div>
-        <div class="content" ng-hide="item.loaded === false" style="background: url(<%=item.photo_urls[0].url || '' %>);-webkit-background-size:100%;">
+        <div class="content" ng-hide="item.loaded === false" style="background: url(<%=item.photo_urls.url || '' %>);-webkit-background-size:100%;">
             <div class="text font-label">
                 <div class="font-info"><%=item.name%></div>
             </div>
@@ -141,9 +152,9 @@
 <script id="relatedPlaylist" type="text/template">
     <div class="item" focusable data-focusable-depth="2" on-focused="focus($event, CATEGORY.RELATED_PLAY_LIST, this)" on-selected="selected($event, CATEGORY.RELATED_PLAY_LIST, this,$index)">
         <div class="loader <%=(!item.loaded)?'hide':'' %>"></div>
-        <div class="content" ng-hide="item.loaded === false" style="background: url(<%=item.photo_urls[0].url || '' %>);-webkit-background-size:100% 100%;">
+        <div class="content" ng-hide="item.loaded === false" style="background: url(<%=item.photo_urls.url || '' %>);-webkit-background-size:100% 100%;">
             <div class="text font-label">
-            <div class="font-info"><%=item.name%></div><%=item.name%></div>
+            <%=item.name%></div>
         </div>
     </div>
 </script>

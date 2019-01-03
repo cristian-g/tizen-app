@@ -10,6 +10,8 @@ var myVideoApp = {
         CATEGORIES: 6
     },
     _dataCategory: [],
+    newVideos: [],
+    mostViewed: [],
     relatedPlaylistItems: [],
     currentCategory: undefined,
     currentDepth: undefined,
@@ -94,10 +96,19 @@ var myVideoApp = {
             if(category === myVideoApp.currentCategory){
                 return;
             }
-
-            $('#list-category').css({
-                transform: 'translate3d(0, ' + (-CONSTANT.SCROLL_HEIGHT_OF_INDEX * category) + 'px, 0)'
-            });
+            if(localStorage.getItem('id_token') == null){
+            	$('#list-category').css({
+	            	
+            		transform: 'translate3d(0, ' + (-CONSTANT.SCROLL_HEIGHT_OF_INDEX * (category - 2)) + 'px, 0)'
+            
+            	});
+        	}else{
+	            $('#list-category').css({
+	            	
+	            		transform: 'translate3d(0, ' + (-CONSTANT.SCROLL_HEIGHT_OF_INDEX * category) + 'px, 0)'
+	            
+	            });
+        	}
             myVideoApp.currentCategory = category;
         }
     },
@@ -106,9 +117,30 @@ var myVideoApp = {
         $('.desc').html(item.description);
         $('#wrapper').css('borderColor', item.color);
     },
-    updateRelatedPlaylist: function(listData){
-        this.relatedPlaylistItems = listData;
-        $('#related-play-list')[0].caphList.update();
+    updateRelatedPlaylist: function(category){
+    	$.ajax({
+            url: 'http://ztudy.tk/api/category/' + category,
+            method: "GET",
+            dataType: "json",
+            success: function(response) {
+            	myVideoApp.relatedPlaylistItems = response.videos;
+            	$('#related-play-list').html('');
+                $('#related-play-list').caphList({
+                    items: myVideoApp.relatedPlaylistItems,
+                    template: 'relatedPlaylist',
+                    containerClass: 'list-container',
+                    wrapperClass: 'list-scroll-wrapper'
+                }).on('selected', function(){
+                    setMediaControllerTimer();
+                    myVideoApp.changeDepth(myVideoApp._DEPTH.PLAYER);
+                    myVideoApp.launchPlayer();
+                });
+            },
+            error: function(error, status) {
+                console.error(error, status);
+            }
+        });
+
     },
     initDialogSetting: function(){ // Initialize the setting dialog box.
         var _this = this;
@@ -209,8 +241,21 @@ var myVideoApp = {
         }
         $.caph.focus.controllerProvider.getInstance().focus('btnPlayerPlay');
     },
-    startVideoPlayer: function(video){
+    showDetail: function(video){
+    	console.log(video);
+    	$('#title-video').html(video.name);
+    	$('#detail-description').html(video.description);
+    	$('#detail-date').html(video.date);
+    	$('#detail-author').html(video.author);
+    	$('#detail-duration').html(video.duration);
+    	$('#detail-repro').html(video.views);
+    	$('#detail-purch').html(video.purchases);
+    	$('#price').html(video.price);
+    	$('#comp-price').html(video.business_price);
     	
+    	this.updateRelatedPlaylist(video.category.key);
+    	
+    	myVideoApp.changeDepth(2);
     },
     back: function(){
         if(this.currentDepth === this._DEPTH.INDEX){
@@ -246,6 +291,40 @@ var myVideoApp = {
     	localStorage.removeItem('id_token');
     	$('.groupLogged').hide();
 		$('.groupNotLogged').show();
+    },
+    loadHomePage: function(callback) {
+        var headers = {};
+        if (localStorage.getItem("id_token") !== null) {
+            headers = {
+                "Authorization": "Bearer " + localStorage.getItem("id_token")
+            };
+        }
+        $.ajax({
+            url: 'http://ztudy.tk/api/home',
+            method: "GET",
+            dataType: "json",
+            headers: headers,
+
+            success: function(response) {
+                myVideoApp._dataCategory[myVideoApp._CATEGORY.NEW] = response[0].new;
+                myVideoApp._dataCategory[myVideoApp._CATEGORY.MOST_VIEWED] = response[1].most_viewed;
+                
+                var focusController = $.caph.focus.controllerProvider.getInstance();
+                
+                setTimeout(function(){
+                	var welcomeElement = $('.welcome');
+                    welcomeElement.addClass('fade-out');
+                    focusController.focus($('#' + myVideoApp._dataCategory[myVideoApp._CATEGORY.NEW][0].id));
+                    callback && callback();
+                }.bind(this), 0);//3000);
+            },
+
+            error: function(error, status) {
+                console.error(error, status);
+                return;
+            }
+        });
+        
     },
     changeCategory: function(category){
     	$('#category-title').html(category);
@@ -292,7 +371,7 @@ var myVideoApp = {
             								'</div>');
 
             			$('#list_0 #' + response.videos[i].id).on('selected', function(){
-            				myVideoApp.startVideoPlayer(myVideoApp.categoryList[$(this).attr('info-num')]);
+            				myVideoApp.showDetail(myVideoApp.categoryList[$(this).attr('info-num')]);
             			}).on('focused', function(){
             				$('#category-item-title').html(myVideoApp.categoryList[$(this).attr('info-num')].name);
                         	$('#description .overview').html(myVideoApp.categoryList[$(this).attr('info-num')].description);

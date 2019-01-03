@@ -4,10 +4,10 @@ var CONSTANT = {
     },
     ITEMS: [this.ITEM, this.ITEM, this.ITEM, this.ITEM],
     CATEGORY: {
-        TECHNOLOGY: 0,
-        ALPHABETS: 1,
-        NUMBERS: 2,
-        RELATED_PLAY_LIST: 3
+        WATCHING: 0,
+        RECOMMENDED: 1,
+        NEW: 2,
+        MOST_VIEWED: 3
     },
     EFFECT_DELAY_TIME: 500,
     SCROLL_HEIGHT_OF_INDEX: 297, //269, //369, 265+28
