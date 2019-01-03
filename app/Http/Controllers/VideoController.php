@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Video;
+use App\View;
+use Auth0\Login\Facade\Auth0;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class VideoController extends Controller
@@ -53,16 +57,50 @@ class VideoController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function view(Request $request, $id)
     {
         Video::find($id)->increment('views', 1);
+
+        $view = new \App\View();
+
+        $userInfo = Auth0::jwtUser();
+        $user = User::where('sub_auth0', $userInfo->sub) -> first();
+        $view->user()->associate($user);
+
+        $video = Video::find($id);
+        $view->video()->associate($video);
+
+        try {
+            $view->save();
+        }
+        catch (QueryException $exception) {
+            $view = View::where([
+                "user_id" => $user->id,
+                "video_id" => $video->id,
+            ])->first();
+            $view->update([
+                "completed" => false
+            ]);
+        }
+
+        return response()->json(null, 200);
+    }
+
+    public function complete(Request $request, $id)
+    {
+        $userInfo = Auth0::jwtUser();
+        $user = User::where('sub_auth0', $userInfo->sub) -> first();
+
+        $video = Video::find($id);
+
+        $view = View::where([
+            "user_id" => $user->id,
+            "video_id" => $video->id,
+        ])->first();
+        $view->update([
+            "completed" => true
+        ]);
+
         return response()->json(null, 200);
     }
 

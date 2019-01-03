@@ -12,6 +12,7 @@ class View extends Model
      * @var array
      */
     protected $fillable = [
+        'completed'
     ];
 
     public function user()

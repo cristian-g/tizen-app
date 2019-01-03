@@ -237,6 +237,125 @@
             // ------------------------------------------------------
             // END OF VIDEO RECOMMENDATION BLOCK
             // ------------------------------------------------------
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            // ------------------------------------------------------
+            // START OF REGISTER VIDEO VIEW BLOCK
+            // ------------------------------------------------------
+            // Example: registerVideoView('tech_1');
+            function registerVideoView(videoId) {
+                if (localStorage.getItem("id_token") === null) return;
+                $.ajax({
+                    url: 'http://ztudy.tk/api/videos/' + videoId + '/view',
+                    method: "PATCH",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem("id_token")
+                    },
+
+                    success: function(response) {
+                        console.log(response);
+                    },
+
+                    error: function(error, status) {
+                        console.error(error, status);
+                    }
+                });
+            }
+            // ------------------------------------------------------
+            // END OF REGISTER VIDEO VIEW BLOCK
+            // ------------------------------------------------------
+            // ------------------------------------------------------
+            // START OF COMPLETE VIDEO VIEW BLOCK
+            // ------------------------------------------------------
+            // Example: completeVideoView('tech_1');
+            function completeVideoView(videoId) {
+                if (localStorage.getItem("id_token") === null) return;
+                $.ajax({
+                    url: 'http://ztudy.tk/api/videos/' + videoId + '/complete',
+                    method: "PATCH",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem("id_token")
+                    },
+
+                    success: function(response) {
+                        console.log(response);
+                    },
+
+                    error: function(error, status) {
+                        console.error(error, status);
+                    }
+                });
+            }
+            // ------------------------------------------------------
+            // END OF COMPLETE VIDEO VIEW BLOCK
+            // ------------------------------------------------------
+            // ------------------------------------------------------
+            // START OF HOMEPAGE BLOCK
+            // ------------------------------------------------------
+            function loadHomepage() {
+                var headers = {};
+                if (localStorage.getItem("id_token") !== null) {
+                    alert('id_token exists');
+                    headers = {
+                        "Authorization": "Bearer " + localStorage.getItem("id_token")
+                    };
+                }
+                $.ajax({
+                    url: 'http://ztudy.tk/api/getCode',
+                    method: "POST",
+                    dataType: "json",
+                    data: {
+                        action_code: 'individualPurchase'
+                    },
+                    headers: headers,
+
+                    success: function(response) {
+                        $('#individual-purchase-link-message').html('Visit ztudy.tk/' + response.code + ' using your smartphone');
+                        pubnub.publish(
+                            {
+                                message: {
+                                    action: 'pageChange'
+                                },
+                                channel: response.code
+                            },
+                            function (status, response) {
+                                // handle status, response
+                                console.log(response);
+                            }
+                        );
+                    },
+
+                    error: function(error, status) {
+                        console.error(error, status);
+                    }
+                });
+            }
+            // ------------------------------------------------------
+            // END OF HOMEPAGE BLOCK
+            // ------------------------------------------------------
         </script>
     </body>
 </html>
