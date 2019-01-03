@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\User;
 use App\Video;
 use App\View;
@@ -48,7 +49,31 @@ class VideoController extends Controller
         }
 
         // Recommended for you
-        //$json = ;
+        /*if ($user !== null) {
+            $categories = Category::withCount([
+                'views as views_count' => function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                }
+            ])->get();
+            $categoriesArray = [];
+            foreach ($categories as $category) {
+                array_push($categoriesArray, Category::getCategoryJson($category));
+            }
+            array_push($json, $categoriesArray);
+        }*/
+
+        /*if ($user !== null) {
+            $recommendedVideosJson = [];
+            $pendingViews = $user->views()->with('video')->where(['completed' => false])->get();
+            foreach ($pendingViews as $view) {
+                $video = $view->video()->first();
+                array_push($recommendedVideosJson, self::getVideoJson($video));
+            }
+            $recommendedJson = [
+                'continue_watching' => $recommendedVideosJson
+            ];
+            array_push($json, $recommendedJson);
+        }*/
 
         // New
         $newVideosJson = [];
