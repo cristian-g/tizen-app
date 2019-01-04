@@ -50,7 +50,7 @@
     <!-- OVERVIEW -->
     <div class="overview">
         <div id="title-video" class="depth1 depth2 depth3 font-header"></div>
-        <div class="depth4 title-header">Settings</div>
+        <div class="depth4 title-header">Payment</div>
         <div class="depth5 title-header">Log In</div>
         <div class="depth6 title-header">Category - <span id="category-title"></span><div id="category-item-title" style="margin-top: 20px;color: rgba(255, 0, 0, 0.298039);text-shadow: -1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff;font: 60px 'SamsungSVD_Latin Medium';"></div></div>
     </div>
@@ -70,11 +70,11 @@
     	<div class="detail-tag">Purchases: <span class="detail-tag-text" id="detail-purch"></span></div>
     </div>
     <div class="depth2 btn-wrapper" style="margin-top: 30px">
-        <div id="btnPlay" focusable data-focusable-depth="2" data-focusable-initial-focus="true" data-focusable-name="btnPlay" class="btn btn-gap btn-play">
-            <div class="btn-icon icon-caph icon-caph-play"></div>
-        </div>
         <div id="btnPreview" focusable data-focusable-depth="2" data-focusable-initial-focus="true" data-focusable-name="btnPreview" class="btn btn-gap btn-preview">
             <i class="fa fa-eye icon-buy"></i>
+        </div>
+        <div id="btnPlay" focusable data-focusable-depth="2" data-focusable-initial-focus="true" data-focusable-name="btnPlay" class="btn btn-gap btn-play">
+            <div class="btn-icon icon-caph icon-caph-play"></div>
         </div>
         <div id="btnBuy" focusable data-focusable-depth="2" data-focusable-initial-focus="true" data-focusable-name="btnBuy" class="btn btn-gap btn-buy">
             <i class="fa fa-shopping-cart icon-buy"></i>(<span id="price"></span> €)
@@ -114,8 +114,13 @@
 </div>
 
 <!-- depth4 -->
-<div id="settingPage" class="depth4 list-wrapper page sub-page">
-
+<div id="paymentPage" class="depth4 list-wrapper page sub-page">
+<button id="individual-purchase">Individual purchase</button><span id="individual-purchase-link-message"></span>
+        <div id="individual-purchase-view">
+        </div>
+        <button id="company-purchase">Purchase as a company</button><span id="company-purchase-link-message"></span>
+        <div id="company-purchase-view">
+        </div>
 </div>
 
 <!-- LogIn depth5 -->
@@ -150,7 +155,7 @@
 </script>
 
 <script id="relatedPlaylist" type="text/template">
-    <div class="item" focusable data-focusable-depth="2" on-focused="focus($event, CATEGORY.RELATED_PLAY_LIST, this)" on-selected="selected($event, CATEGORY.RELATED_PLAY_LIST, this,$index)">
+    <div class="item" focusable data-focusable-depth="2" index="<%= index %>">
         <div class="loader <%=(!item.loaded)?'hide':'' %>"></div>
         <div class="content" ng-hide="item.loaded === false" style="background: url(<%=item.photo_urls.url || '' %>);-webkit-background-size:100% 100%;">
             <div class="text font-label">

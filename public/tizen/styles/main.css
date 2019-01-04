@@ -834,3 +834,12 @@ body {
 .depth2.btn-wrapper .btn{
 	padding-right: 10px;
 }
+.timer{
+	color: white;
+    position: relative;
+    width: 180px;
+    height: 128px;
+    display: table-cell;
+    vertical-align: middle;
+    border-radius: 15px;
+}

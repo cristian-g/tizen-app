@@ -1,6 +1,9 @@
 $('document').ready(function(){
     'use strict';
     $('.wrapper').load('views/main.html', function(){
+    	
+    	
+    	
         $.caph.focus.activate(function(nearestFocusableFinderProvider, controllerProvider) {
             controllerProvider.setInitialDepth(1);
         });
@@ -123,6 +126,17 @@ $('document').ready(function(){
         });
         
         $('#btnPlay').on('selected', function(){
+        	myVideoApp.isPreview = false;
+        	$('#totalDuration').html(myVideoApp.currentVideo.duration);
+        	setMediaControllerTimer();
+            myVideoApp.changeDepth(myVideoApp._DEPTH.PLAYER);
+            myVideoApp.launchPlayer();
+        });
+        
+        $('#btnPreview').on('selected', function(){
+        	$('#caphPlayer video')[0].currentTime = 0;
+        	myVideoApp.isPreview = true;
+        	$('#totalDuration').html("01:00");
             setMediaControllerTimer();
             myVideoApp.changeDepth(myVideoApp._DEPTH.PLAYER);
             myVideoApp.launchPlayer();
@@ -180,10 +194,13 @@ $('document').ready(function(){
                  template: 'relatedPlaylist',
                  containerClass: 'list-container',
                  wrapperClass: 'list-scroll-wrapper'
-             }).on('selected', function(){
-                 setMediaControllerTimer();
-                 myVideoApp.changeDepth(myVideoApp._DEPTH.PLAYER);
-                 myVideoApp.launchPlayer();
+             }).on('selected', function($event){
+            	 console.log($('.focused'))
+            	 console.log($($event.target).data('index'));
+            	 
+            	 var currentItem = myVideoApp.relatedPlaylistItems[$('.focused').attr('index')];
+                 myVideoApp.setOverviewDark(false);
+                 myVideoApp.showDetail(currentItem);
              });
              
              myVideoApp.changeDepth(myVideoApp._DEPTH.INDEX);
