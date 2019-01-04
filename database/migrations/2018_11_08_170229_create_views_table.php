@@ -29,6 +29,7 @@ class CreateViewsTable extends Migration
             $table->unique(['user_id', 'video_id']);
 
             $table->boolean('completed')->default(false);
+            $table->unsignedBigInteger('time_to_resume')->default(0);
 
             $table->timestamps();
         });

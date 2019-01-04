@@ -33,8 +33,8 @@ Route::patch('updatePicture', 'UserController@update')->middleware('JWT');
 Route::post('getCode', 'ConnectionController@store')->middleware('optionalJWT');
 
 // Categories
-Route::get('categories', 'CategoryController@index');
-Route::get('category/{id}', 'CategoryController@show');
+Route::get('categories', 'CategoryController@index')->middleware('optionalJWT');
+Route::get('category/{id}', 'CategoryController@show')->middleware('optionalJWT');
 
 // Videos
 Route::get('videos/{id}', 'VideoController@show')->middleware('optionalJWT');

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
 use App\Purchase;
 use App\User;
 use App\Video;
@@ -147,8 +146,6 @@ class VideoController extends Controller
 
     public function view(Request $request, $id)
     {
-        Video::find($id)->increment('views', 1);
-
         $view = new \App\View();
 
         $userInfo = Auth0::jwtUser();
@@ -157,6 +154,8 @@ class VideoController extends Controller
 
         $video = Video::find($id);
         $view->video()->associate($video);
+
+        $view->time_to_resume = $request->time_to_resume;
 
         try {
             $view->save();
@@ -167,7 +166,8 @@ class VideoController extends Controller
                 "video_id" => $video->id,
             ])->first();
             $view->update([
-                "completed" => false
+                "completed" => false,
+                "time_to_resume" => $request->time_to_resume
             ]);
         }
 
@@ -176,6 +176,8 @@ class VideoController extends Controller
 
     public function complete(Request $request, $id)
     {
+        Video::find($id)->increment('views', 1);
+
         $userInfo = Auth0::jwtUser();
         $user = User::where('sub_auth0', $userInfo->sub) -> first();
 
@@ -236,6 +238,16 @@ class VideoController extends Controller
                 "video_id" => $video->id,
             ])->first();
             $json["purchased"] = $purchase != null;
+        }
+        if ($user != null) {
+            $view = View::where([
+                "user_id" => $user->id,
+                "video_id" => $video->id,
+            ])->first();
+            $json["resume"] = $view != null && (!$view->completed);
+            if ($json["resume"]) {
+                $json["timeToResume"] = $view->time_to_resume;
+            }
         }
         return $json;
     }

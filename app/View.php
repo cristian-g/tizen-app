@@ -12,7 +12,7 @@ class View extends Model
      * @var array
      */
     protected $fillable = [
-        'completed'
+        'completed', 'time_to_resume'
     ];
 
     public function user()

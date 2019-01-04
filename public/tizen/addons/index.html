@@ -273,7 +273,7 @@
             // START OF REGISTER VIDEO VIEW BLOCK
             // ------------------------------------------------------
             // Example: registerVideoView('tech_1');
-            function registerVideoView(videoId) {
+            function registerVideoView(videoId, timeToResume) {
                 if (localStorage.getItem("id_token") === null) return;
                 $.ajax({
                     url: 'http://ztudy.tk/api/videos/' + videoId + '/view',
@@ -281,6 +281,9 @@
                     dataType: "json",
                     headers: {
                         "Authorization": "Bearer " + localStorage.getItem("id_token")
+                    },
+                    data: {
+                        time_to_resume: timeToResume
                     },
 
                     success: function(response) {
@@ -376,6 +379,68 @@
             }
             // ------------------------------------------------------
             // END OF GET VIDEO DETAILS (AFTER PURCHASE) BLOCK
+            // ------------------------------------------------------
+            
+            
+            
+            
+            
+            
+            // ------------------------------------------------------
+            // START OF GET CATEGORIES
+            // ------------------------------------------------------
+            function getCategories() {
+                var headers = {};
+                if (localStorage.getItem("id_token") !== null) {
+                    headers = {
+                        "Authorization": "Bearer " + localStorage.getItem("id_token")
+                    };
+                }
+                $.ajax({
+                    url: 'http://ztudy.tk/api/categories',
+                    method: "GET",
+                    dataType: "json",
+                    headers: headers,
+
+                    success: function(response) {
+                        console.log(response);
+                    },
+
+                    error: function(error, status) {
+                        console.error(error, status);
+                    }
+                });
+            }
+            // ------------------------------------------------------
+            // END OF GET CATEGORIES
+            // ------------------------------------------------------
+            // ------------------------------------------------------
+            // START OF GET CATEGORY
+            // ------------------------------------------------------
+            function getCategory(categoryId) {
+                var headers = {};
+                if (localStorage.getItem("id_token") !== null) {
+                    headers = {
+                        "Authorization": "Bearer " + localStorage.getItem("id_token")
+                    };
+                }
+                $.ajax({
+                    url: 'http://ztudy.tk/api/category/' + categoryId,
+                    method: "GET",
+                    dataType: "json",
+                    headers: headers,
+
+                    success: function(response) {
+                        console.log(response);
+                    },
+
+                    error: function(error, status) {
+                        console.error(error, status);
+                    }
+                });
+            }
+            // ------------------------------------------------------
+            // END OF GET CATEGORY
             // ------------------------------------------------------
         </script>
     </body>
