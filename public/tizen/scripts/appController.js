@@ -286,10 +286,10 @@ var myVideoApp = {
         var targetDepth;
         switch(this.currentDepth){
             case this._DEPTH.DETAIL:
-    			if(myVideoApp.lastDepth == null){
+    			if(myVideoApp.lastDepth != 6){
     				targetDepth = 1;
     			}else{
-    				targetDepth = this.lastDepth;
+    				targetDepth = 6;
     			}
                 break;
             case this._DEPTH.PLAYER:

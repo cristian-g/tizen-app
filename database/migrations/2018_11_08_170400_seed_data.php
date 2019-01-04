@@ -272,7 +272,7 @@ class SeedData extends Migration
                 "name" => 'Special Effects on Fantastic Beasts',
                 "author" => 'Fame Focus',
                 "date" => '19/12/2018',
-                "duration" => '9:00',
+                "duration" => '09:00',
                 "source" => 'https://www.dropbox.com/s/vtl4zxxm0gw667c/SpecialEffects-Tech.mp4?dl=1',
                 "photo_urls_size" => '240x180',
     	        "photo_urls_url" => 'https://www.dropbox.com/s/sosbye0jtq7rm3f/specialeffects.png?dl=1',
@@ -289,10 +289,38 @@ class SeedData extends Migration
                 "duration" => '20:21',
                 "source" => 'https://www.dropbox.com/s/8y4rx6y84gtil9n/AI-Tech.mp4?dl=1',
                 "photo_urls_size" => '240x180',
-    	        "photo_urls_url" => 'https://www.dropbox.com/s/asb1ldo6mq7k7ew/ai.png?dl=1',
+                "photo_urls_url" => 'https://www.dropbox.com/s/asb1ldo6mq7k7ew/ai.png?dl=1',
                 "color" => 'rgba(255, 0, 0, .3)',
                 "price" => 3.50,
                 "business_price" => 18.50
+            ],
+            [
+                "description" => 'What is a blockchain and how do they work? I\'ll explain why blockchains are so special in simple and plain English!',
+                "id" => 'tech_4',
+                "name" => 'Blockchain',
+                "author" => 'Simply Explained - Savjee',
+                "date" => '13/11/2017',
+                "duration" => '05:59',
+                "source" => 'https://www.dropbox.com/s/rs0z1x39is9kqyo/BlockChain-Tech.mp4?dl=1',
+                "photo_urls_size" => '240x180',
+                "photo_urls_url" => 'https://www.dropbox.com/s/yb6asrglrikra2p/blockchain.png?dl=1',
+                "color" => 'rgba(255, 0, 0, .3)',
+                "price" => 4.50,
+                "business_price" => 21.50
+            ],
+            [
+                "description" => 'A complete Guide to setup and install Raspberry Pi 3 Model B as Gaming, Multimedia, Hacking and as a coding device. All you need to know is mentioned in the video, How to get started, How to assemble and how to make it run.',
+                "id" => 'tech_5',
+                "name" => 'Raspberry',
+                "author" => 'Trick i Know',
+                "date" => '08/01/2018',
+                "duration" => '26:13',
+                "source" => 'https://www.dropbox.com/s/50co0j11jfulr70/Raspberry-Tech.mp4?dl=1',
+                "photo_urls_size" => '240x180',
+                "photo_urls_url" => 'https://www.dropbox.com/s/k0qxb4hhcfzs0fh/raspberry.png?dl=1',
+                "color" => 'rgba(255, 0, 0, .3)',
+                "price" => 3.50,
+                "business_price" => 19.50
             ],
         ];
         $videosCategoryBiologyInfo = [
@@ -467,6 +495,20 @@ class SeedData extends Migration
                 "color" => 'rgba(255, 0, 0, .3)',
                 "price" => 4.99,
                 "business_price" => 21.50
+            ],
+            [
+                "description" => 'In this tutorial, I have explained about design Technology Roll Up Banner, Graphic Design in Photoshop.',
+                "id" => 'graph_4',
+                "name" => 'RollUp design',
+                "author" => 'Apple Graphic Studio',
+                "date" => '10/12/2018',
+                "duration" => '20:56',
+                "source" => 'https://www.dropbox.com/s/x8ldiwg62bcn0f8/RollUp-Graph.mp4?dl=1',
+                "photo_urls_size" => '240x180',
+                "photo_urls_url" => 'https://www.dropbox.com/s/kq8b3mvvqlqc2rh/rollup.png?dl=1',
+                "color" => 'rgba(255, 0, 0, .3)',
+                "price" => 1.99,
+                "business_price" => 15.60
             ],
         ];
 
