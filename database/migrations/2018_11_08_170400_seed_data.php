@@ -568,7 +568,7 @@ class SeedData extends Migration
             ],
             [
                 "description" => 'Description.',
-                "id" => 'graph_4',
+                "id" => 'graph_5',
                 "name" => 'Name.',
                 "author" => 'Author',
                 "date" => '12/03/2012',
