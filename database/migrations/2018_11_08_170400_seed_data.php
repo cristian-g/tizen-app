@@ -380,6 +380,34 @@ class SeedData extends Migration
                 "price" => 3.50,
                 "business_price" => 16.99
             ],
+            [
+                "description" => 'Description.',
+                "id" => 'bio_4',
+                "name" => 'Name.',
+                "author" => 'Author',
+                "date" => '12/03/2012',
+                "duration" => '77:77',
+                "source" => 'https://www.dropbox.com/s/xdphjb1gpypo4jb/ATP-Bio.mp4?dl=1',
+                "photo_urls_size" => '240x180',
+                "photo_urls_url" => 'https://www.dropbox.com/s/yqdi3bvffsbgsfl/atp.png?dl=1',
+                "color" => 'rgba(255, 0, 0, .3)',
+                "price" => 7.77,
+                "business_price" => 77.77
+            ],
+            [
+                "description" => 'Description.',
+                "id" => 'bio_5',
+                "name" => 'Name.',
+                "author" => 'Author',
+                "date" => '12/03/2012',
+                "duration" => '77:77',
+                "source" => 'https://www.dropbox.com/s/xdphjb1gpypo4jb/ATP-Bio.mp4?dl=1',
+                "photo_urls_size" => '240x180',
+                "photo_urls_url" => 'https://www.dropbox.com/s/yqdi3bvffsbgsfl/atp.png?dl=1',
+                "color" => 'rgba(255, 0, 0, .3)',
+                "price" => 7.77,
+                "business_price" => 77.77
+            ],
         ];
         $videosCategorySociologyInfo = [
             [
@@ -437,6 +465,34 @@ class SeedData extends Migration
                 "color" => 'rgba(255, 0, 0, .3)',
                 "price" => 3.80,
                 "business_price" => 18.99
+            ],
+            [
+                "description" => 'Description.',
+                "id" => 'soci_4',
+                "name" => 'Name.',
+                "author" => 'Author',
+                "date" => '12/03/2012',
+                "duration" => '77:77',
+                "source" => 'https://www.dropbox.com/s/xdphjb1gpypo4jb/ATP-Bio.mp4?dl=1',
+                "photo_urls_size" => '240x180',
+                "photo_urls_url" => 'https://www.dropbox.com/s/yqdi3bvffsbgsfl/atp.png?dl=1',
+                "color" => 'rgba(255, 0, 0, .3)',
+                "price" => 7.77,
+                "business_price" => 77.77
+            ],
+            [
+                "description" => 'Description.',
+                "id" => 'soci_5',
+                "name" => 'Name.',
+                "author" => 'Author',
+                "date" => '12/03/2012',
+                "duration" => '77:77',
+                "source" => 'https://www.dropbox.com/s/xdphjb1gpypo4jb/ATP-Bio.mp4?dl=1',
+                "photo_urls_size" => '240x180',
+                "photo_urls_url" => 'https://www.dropbox.com/s/yqdi3bvffsbgsfl/atp.png?dl=1',
+                "color" => 'rgba(255, 0, 0, .3)',
+                "price" => 7.77,
+                "business_price" => 77.77
             ],
         ];
         $videosCategoryGraphicDesignInfo = [
@@ -509,6 +565,20 @@ class SeedData extends Migration
                 "color" => 'rgba(255, 0, 0, .3)',
                 "price" => 1.99,
                 "business_price" => 15.60
+            ],
+            [
+                "description" => 'Description.',
+                "id" => 'graph_4',
+                "name" => 'Name.',
+                "author" => 'Author',
+                "date" => '12/03/2012',
+                "duration" => '77:77',
+                "source" => 'https://www.dropbox.com/s/xdphjb1gpypo4jb/ATP-Bio.mp4?dl=1',
+                "photo_urls_size" => '240x180',
+                "photo_urls_url" => 'https://www.dropbox.com/s/yqdi3bvffsbgsfl/atp.png?dl=1',
+                "color" => 'rgba(255, 0, 0, .3)',
+                "price" => 7.77,
+                "business_price" => 77.77
             ],
         ];
 
