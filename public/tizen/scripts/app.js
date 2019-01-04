@@ -1,6 +1,9 @@
 $('document').ready(function(){
     'use strict';
     $('.wrapper').load('views/main.html', function(){
+    	
+    	
+    	
         $.caph.focus.activate(function(nearestFocusableFinderProvider, controllerProvider) {
             controllerProvider.setInitialDepth(1);
         });
@@ -123,11 +126,91 @@ $('document').ready(function(){
         });
         
         $('#btnPlay').on('selected', function(){
+        	myVideoApp.isPreview = false;
+        	$('#totalDuration').html(myVideoApp.currentVideo.duration);
+        	setMediaControllerTimer();
+            myVideoApp.changeDepth(myVideoApp._DEPTH.PLAYER);
+            myVideoApp.launchPlayer();
+        });
+        
+        $('#btnPreview').on('selected', function(){
+        	$('#caphPlayer video')[0].currentTime = 0;
+        	myVideoApp.isPreview = true;
+        	$('#totalDuration').html("01:00");
             setMediaControllerTimer();
             myVideoApp.changeDepth(myVideoApp._DEPTH.PLAYER);
             myVideoApp.launchPlayer();
         });
 
+        myVideoApp.loadHomePage(function(){
+        	 var focusHandler = function($event, category){
+                 var currentItem = myVideoApp._dataCategory[category][$($event.target).data('index')];
+                 myVideoApp.setOverviewDark(false);
+                 myVideoApp.updateOverview(currentItem);
+                 myVideoApp.setListContainer($event, category);
+             };
+
+             var selectHandler = function($event, category){
+            	 var currentItem = myVideoApp._dataCategory[category][$($event.target).data('index')];
+                 myVideoApp.setOverviewDark(false);
+                 myVideoApp.showDetail(currentItem);
+             };
+
+             var blurHandler = function(){
+                 if(myVideoApp.currentDepth === myVideoApp._DEPTH.INDEX){
+                     myVideoApp.setOverviewDark(true);
+                 }
+             };
+             
+             $('#category_2').caphList({
+                 items: myVideoApp._dataCategory[myVideoApp._CATEGORY.NEW],
+                 template: 'playlist',
+                 containerClass: 'list-container',
+                 wrapperClass: "list-scroll-wrapper"
+             }).on('focused', function($event){
+                 focusHandler($event, myVideoApp._CATEGORY.NEW);
+             }).on('selected', function($event){
+                 selectHandler($event, myVideoApp._CATEGORY.NEW);
+             }).on('blurred', function(){
+                 blurHandler();
+             });
+             
+             $('#category_3').caphList({
+                 items: myVideoApp._dataCategory[myVideoApp._CATEGORY.MOST_VIEWED],
+                 template: 'playlist',
+                 containerClass: 'list-container',
+                 wrapperClass: "list-scroll-wrapper"
+             }).on('focused', function($event){
+                 focusHandler($event, myVideoApp._CATEGORY.MOST_VIEWED);
+             }).on('selected', function($event){
+                 selectHandler($event, myVideoApp._CATEGORY.MOST_VIEWED);
+             }).on('blurred', function(){
+                 blurHandler();
+             });
+             
+             myVideoApp.relatedPlaylistItems = myVideoApp._dataCategory[myVideoApp._CATEGORY.NEW];
+             $('#related-play-list').caphList({
+                 items: myVideoApp.relatedPlaylistItems,
+                 template: 'relatedPlaylist',
+                 containerClass: 'list-container',
+                 wrapperClass: 'list-scroll-wrapper'
+             }).on('selected', function($event){
+            	 console.log($('.focused'))
+            	 console.log($($event.target).data('index'));
+            	 
+            	 var currentItem = myVideoApp.relatedPlaylistItems[$('.focused').attr('index')];
+                 myVideoApp.setOverviewDark(false);
+                 myVideoApp.showDetail(currentItem);
+             });
+             
+             myVideoApp.changeDepth(myVideoApp._DEPTH.INDEX);
+
+             $.caph.focus.controllerProvider.getInstance().focus(
+                 $('#' + myVideoApp._dataCategory[myVideoApp._CATEGORY.NEW][0].id)
+             );
+             myVideoApp.setListContainer(null, myVideoApp._CATEGORY.NEW);
+        });
+        /*
         myVideoApp.initCategoryListData(function(){
             var focusHandler = function($event, category){
                 var currentItem = myVideoApp._dataCategory[category][$($event.target).data('index')];
@@ -205,17 +288,12 @@ $('document').ready(function(){
                 $('#' + CONSTANT.VIDEOS.TECHNOLOGY[0].id)
             );
             myVideoApp.setListContainer(null, myVideoApp._CATEGORY.TECHNOLOGY);
-        });
+        });*/
     });
 
     var relatedPlaylistItems = [];
 
     myVideoApp.initVideoPlayer(); // Initialize video plugin.
-
-    var updateRelatedPlaylist = function(listData){
-        relatedPlaylistItems = listData;
-        $('#related-play-list')[0].caphList.update();
-    };
 
     var mediaControllerTimer;
     var controllerElement = $('#caphPlayer .controls-bar');

@@ -348,7 +348,7 @@ body {
     overflow: hidden;
     width: 1920px;
     height: 498px;
-    top: 700px;
+    top: 785px;
 }
 
 .move-container {
@@ -740,13 +740,13 @@ body {
 .btn-buy:before {
     content: 'BUY';
     line-height: 80px;
-    margin: 0 44px 0 82px;
+    margin: 0 0px 0 82px;
 }
 
 .btn-buyComp:before {
     content: 'BUY AS COMPANY';
     line-height: 80px;
-    margin: 0 44px 0 82px;
+    margin: 0 0px 0 82px;
 }
 
 .btn-preview:before {
@@ -820,4 +820,26 @@ body {
 .category-row{
     display: -webkit-inline-box;	
 }
+.detail-tag{
+	font-weight: 900;
+}
+.detail-tag-text{
+	font-weight: 400;
+	font-size: 30px;
+}
+#detail-info{
+	font-size: 40px;
+    margin: 0 0 0 112px;
+}
+.depth2.btn-wrapper .btn{
+	padding-right: 10px;
+}
+.timer{
+	color: white;
+    position: relative;
+    width: 180px;
+    height: 128px;
+    display: table-cell;
+    vertical-align: middle;
+    border-radius: 15px;
 }

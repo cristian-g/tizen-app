@@ -21,7 +21,7 @@
 <div id="caphPlayer" id="player" class="depth3 hide player">
     <video style="width:100%">
         <!-- Put your video file address into 'src' property in 'source' tag. -->
-        <source src="https://www.dropbox.com/s/p2yl8an601cn150/Bateries-Tech.mp4?dl=1" type="video/mp4"></source> <!--http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_50mb.mp4-->
+        <source id="videoSource" src="https://www.dropbox.com/s/p2yl8an601cn150/Bateries-Tech.mp4?dl=1" type="video/mp4"></source> <!--http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_50mb.mp4-->
         <!-- Put your sub-title file address into 'src' property in 'track' tag. -->
         <track src="{{Sub title Address}}" label="English subtitles" kind="subtitles" srclang="en"></track> <!--http://www.html5rocks.com/en/tutorials/video/basics/devstories-en.vtt-->
     </video>
@@ -40,8 +40,8 @@
                 <div id="btnPlayerForward" focusable data-focusable-depth="3" data-focusable-name="btnPlayerForward" class="btn-player">
                     <div class="btn-icon-player icon-caph icon-caph-forward"></div>
                 </div>
-                <div id="btnPlayerNext" focusable data-focusable-depth="3" data-focusable-name="btnPlayerNext" class="btn-player">
-                    <div class="btn-icon-player icon-caph icon-caph-next"></div>
+                <div class="timer">
+                	<span id="currentDuration"></span>/<span id="totalDuration"></span>
                 </div>
             </div>
         </div>
