@@ -26,6 +26,8 @@ class CreatePurchasesTable extends Migration
             $table->string('video_id');
             $table->foreign('video_id')->references('id')->on('videos');
 
+            $table->unique(['user_id', 'video_id']);
+
             $table->string('stripe_token');
 
             $table->timestamps();

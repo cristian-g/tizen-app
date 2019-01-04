@@ -37,9 +37,12 @@ Route::get('categories', 'CategoryController@index');
 Route::get('category/{id}', 'CategoryController@show');
 
 // Videos
-Route::get('videos/{id}', 'VideoController@show');
+Route::get('videos/{id}', 'VideoController@show')->middleware('optionalJWT');
 Route::patch('videos/{id}/view', 'VideoController@view')->middleware('JWT');
 Route::patch('videos/{id}/complete', 'VideoController@complete')->middleware('JWT');
 
 // Homepage
 Route::get('home', 'VideoController@home')->middleware('optionalJWT');
+
+// Purchase
+Route::post('purchase', 'PurchaseController@store')->middleware('JWT');

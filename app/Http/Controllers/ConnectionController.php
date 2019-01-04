@@ -47,9 +47,9 @@ class ConnectionController extends Controller
         }
         $connection->action_code = $request->action_code;
         if (
-            $request->action === 'individualPurchase' ||
-            $request->action === 'companyPurchase' ||
-            $request->action === 'videoRecommendation'
+            $request->action_code === 'individualPurchase' ||
+            $request->action_code === 'companyPurchase' ||
+            $request->action_code === 'videoRecommendation'
         ) $connection->video()->associate(Video::find($request->video_id));
         $connection->save();
 
@@ -64,14 +64,15 @@ class ConnectionController extends Controller
      * @param  string  $code
      * @return \Illuminate\Http\Response
      */
-    public function show($code)
+    public function show(Request $request, $code)
     {
         $connection = Connection::where('code', $code)->get()->last();
         if ($connection->action_code === 'auth') {
             return view('auth');
         }
         else if ($connection->action_code === 'individualPurchase') {
-            return view('individualPurchase');
+            $video = $connection->video()->first();
+            return view('individualPurchase', ["video" => $video]);
         }
         else if ($connection->action_code === 'companyPurchase') {
             return view('companyPurchase');

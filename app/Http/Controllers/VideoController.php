@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Purchase;
 use App\User;
 use App\Video;
 use App\View;
@@ -121,7 +122,15 @@ class VideoController extends Controller
     public function show($id)
     {
         $video = Video::find($id);
-        return response()->json(VideoController::getVideoJson($video), 200);
+
+        $userInfo = Auth0::jwtUser();
+
+        $user = null;
+        if ($userInfo !== null) {
+            $user = User::where('sub_auth0', $userInfo->sub)->first();
+        }
+
+        return response()->json(VideoController::getVideoJson($video, $user), 200);
     }
 
     /**
@@ -200,9 +209,9 @@ class VideoController extends Controller
         //
     }
 
-    public static function getVideoJson($video)
+    public static function getVideoJson($video, $user = null)
     {
-        return [
+        $json = [
             "description" => $video->description,
             "id" => $video->id,
             "name" => $video->name,
@@ -221,5 +230,13 @@ class VideoController extends Controller
             "purchases" => $video->purchases,
             "category" => CategoryController::getCategoryJson($video->category)
         ];
+        if ($user != null) {
+            $purchase = Purchase::where([
+                "user_id" => $user->id,
+                "video_id" => $video->id,
+            ])->first();
+            $json["purchased"] = $purchase != null;
+        }
+        return $json;
     }
 }

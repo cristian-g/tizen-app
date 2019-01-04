@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Purchase;
+use App\User;
+use App\Video;
+use Auth0\Login\Facade\Auth0;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
@@ -34,7 +39,33 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $video = Video::find($request->video_id);
+        $video->increment('purchases', 1);
+
+        $purchase = new \App\Purchase();
+
+        $userInfo = Auth0::jwtUser();
+        $user = User::where('sub_auth0', $userInfo->sub) -> first();
+        $purchase->user()->associate($user);
+
+        $purchase->video()->associate($video);
+
+        $purchase->stripe_token = $request->stripe_token;
+
+        try {
+            $purchase->save();
+        }
+        catch (QueryException $exception) {
+            $purchase = Purchase::where([
+                "user_id" => $user->id,
+                "video_id" => $video->id,
+            ])->first();
+            $purchase->update([
+                "stripe_token" => $request->stripe_token
+            ]);
+        }
+
+        return response()->json(null, 200);
     }
 
     /**

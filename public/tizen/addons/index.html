@@ -54,10 +54,14 @@
             });
             pubnub.addListener({
                 message: function(message) {
+                    console.log('handle message');
                     // handle message
                     if (message.message.action === 'auth') {
                         localStorage.setItem('id_token', message.message.idToken);
                         displayProfile(message.message.userInfo);
+                    }
+                    if (message.message.action === 'paid_video') {
+                        getVideoDetails('tech_2');
                     }
                 },
                 presence: function(presenceEvent) {
@@ -101,9 +105,13 @@
             // START OF INDIVIDUAL PURCHASE BLOCK
             // ------------------------------------------------------
             $('#individual-purchase').click(function() {
+                requestIndividualPurchase('tech_2');
+            });
+            
+            // Example: requestIndividualPurchase('tech_2')
+            function requestIndividualPurchase(videoId) {
                 var headers = {};
                 if (localStorage.getItem("id_token") !== null) {
-                    alert('id_token exists');
                     headers = {
                         "Authorization": "Bearer " + localStorage.getItem("id_token")
                     };
@@ -113,7 +121,8 @@
                     method: "POST",
                     dataType: "json",
                     data: {
-                        action_code: 'individualPurchase'
+                        action_code: 'individualPurchase',
+                        video_id: videoId
                     },
                     headers: headers,
 
@@ -137,7 +146,7 @@
                         console.error(error, status);
                     }
                 });
-            });
+            }
             
             
             
@@ -339,6 +348,34 @@
             }
             // ------------------------------------------------------
             // END OF HOMEPAGE BLOCK
+            // ------------------------------------------------------
+            // ------------------------------------------------------
+            // START OF GET VIDEO DETAILS (AFTER PURCHASE) BLOCK
+            // ------------------------------------------------------
+            function getVideoDetails(videoId) {
+                var headers = {};
+                if (localStorage.getItem("id_token") !== null) {
+                    headers = {
+                        "Authorization": "Bearer " + localStorage.getItem("id_token")
+                    };
+                }
+                $.ajax({
+                    url: 'http://ztudy.tk/api/videos/' + videoId,
+                    method: "GET",
+                    dataType: "json",
+                    headers: headers,
+
+                    success: function(response) {
+                        console.log(response);
+                    },
+
+                    error: function(error, status) {
+                        console.error(error, status);
+                    }
+                });
+            }
+            // ------------------------------------------------------
+            // END OF GET VIDEO DETAILS (AFTER PURCHASE) BLOCK
             // ------------------------------------------------------
         </script>
     </body>
