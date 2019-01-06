@@ -65,7 +65,7 @@
                     }
                     if (message.message.action === 'profile_update') {
                         $.ajax({
-                            url: 'http://tizenapp.test/api/login',
+                            url: 'http://ztudy.tk/api/login',
                             method: "GET",
                             dataType: "json",
                             headers: {
@@ -99,14 +99,14 @@
         <script>
             $('#auth').click(function() {
                 $.ajax({
-                    url: 'http://tizenapp.test/api/getCode',
+                    url: 'http://ztudy.tk/api/getCode',
                     method: "POST",
                     dataType: "json",
                     data: {
                         action_code: 'auth'
                     },
                     success: function(response) {
-                        $('#auth-link-message').html('Visit tizenapp.test/' + response.code + ' using your smartphone');
+                        $('#auth-link-message').html('Visit ztudy.tk/' + response.code + ' using your smartphone');
                         
                         pubnub.subscribe({
                             channels: [response.code]
@@ -136,7 +136,7 @@
                     };
                 }
                 $.ajax({
-                    url: 'http://tizenapp.test/api/getCode',
+                    url: 'http://ztudy.tk/api/getCode',
                     method: "POST",
                     dataType: "json",
                     data: {
@@ -146,7 +146,7 @@
                     headers: headers,
 
                     success: function(response) {
-                        $('#individual-purchase-link-message').html('Visit tizenapp.test/' + response.code + ' using your smartphone');
+                        $('#individual-purchase-link-message').html('Visit ztudy.tk/' + response.code + ' using your smartphone');
                         pubnub.publish(
                             {
                                 message: {
@@ -184,7 +184,7 @@
                     };
                 }
                 $.ajax({
-                    url: 'http://tizenapp.test/api/getCode',
+                    url: 'http://ztudy.tk/api/getCode',
                     method: "POST",
                     dataType: "json",
                     data: {
@@ -193,7 +193,7 @@
                     headers: headers,
 
                     success: function(response) {
-                        $('#company-purchase-message').html('Visit tizenapp.test/' + response.code + ' using your smartphone');
+                        $('#company-purchase-message').html('Visit ztudy.tk/' + response.code + ' using your smartphone');
                         pubnub.publish(
                             {
                                 message: {
@@ -229,7 +229,7 @@
                     };
                 }
                 $.ajax({
-                    url: 'http://tizenapp.test/api/getCode',
+                    url: 'http://ztudy.tk/api/getCode',
                     method: "POST",
                     dataType: "json",
                     data: {
@@ -238,7 +238,7 @@
                     headers: headers,
 
                     success: function(response) {
-                        $('#video-recommendation-message').html('Visit tizenapp.test/' + response.code + ' using your smartphone');
+                        $('#video-recommendation-message').html('Visit ztudy.tk/' + response.code + ' using your smartphone');
                         pubnub.publish(
                             {
                                 message: {
@@ -295,7 +295,7 @@
             function registerVideoView(videoId, timeToResume) {
                 if (localStorage.getItem("id_token") === null) return;
                 $.ajax({
-                    url: 'http://tizenapp.test/api/videos/' + videoId + '/view',
+                    url: 'http://ztudy.tk/api/videos/' + videoId + '/view',
                     method: "PATCH",
                     dataType: "json",
                     headers: {
@@ -324,7 +324,7 @@
             function completeVideoView(videoId) {
                 if (localStorage.getItem("id_token") === null) return;
                 $.ajax({
-                    url: 'http://tizenapp.test/api/videos/' + videoId + '/complete',
+                    url: 'http://ztudy.tk/api/videos/' + videoId + '/complete',
                     method: "PATCH",
                     dataType: "json",
                     headers: {
@@ -354,7 +354,7 @@
                     };
                 }
                 $.ajax({
-                    url: 'http://tizenapp.test/api/home',
+                    url: 'http://ztudy.tk/api/home',
                     method: "GET",
                     dataType: "json",
                     headers: headers,
@@ -382,7 +382,7 @@
                     };
                 }
                 $.ajax({
-                    url: 'http://tizenapp.test/api/videos/' + videoId,
+                    url: 'http://ztudy.tk/api/videos/' + videoId,
                     method: "GET",
                     dataType: "json",
                     headers: headers,
@@ -416,7 +416,7 @@
                     };
                 }
                 $.ajax({
-                    url: 'http://tizenapp.test/api/categories',
+                    url: 'http://ztudy.tk/api/categories',
                     method: "GET",
                     dataType: "json",
                     headers: headers,
@@ -444,7 +444,7 @@
                     };
                 }
                 $.ajax({
-                    url: 'http://tizenapp.test/api/category/' + categoryId,
+                    url: 'http://ztudy.tk/api/category/' + categoryId,
                     method: "GET",
                     dataType: "json",
                     headers: headers,
@@ -466,7 +466,7 @@
             // ------------------------------------------------------
             function loadContacts() {
                 $.ajax({
-                    url: 'http://tizenapp.test/api/contacts',
+                    url: 'http://ztudy.tk/api/contacts',
                     method: "GET",
                     dataType: "json",
                     headers: {
@@ -490,7 +490,7 @@
             // Example: storeRecommendation('tech_1', 'estudy|esteve.genovard');
             function storeRecommendation(videoId, userId) {
                 $.ajax({
-                    url: 'http://tizenapp.test/api/recommendation',
+                    url: 'http://ztudy.tk/api/recommendation',
                     method: "POST",
                     dataType: "json",
                     headers: {
@@ -517,7 +517,7 @@
             // ------------------------------------------------------
             function loadNotifications() {
                 $.ajax({
-                    url: 'http://tizenapp.test/api/notifications',
+                    url: 'http://ztudy.tk/api/notifications',
                     method: "GET",
                     dataType: "json",
                     headers: {
