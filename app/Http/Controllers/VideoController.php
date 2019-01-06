@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Purchase;
 use App\User;
 use App\Video;
@@ -9,6 +10,7 @@ use App\View;
 use Auth0\Login\Facade\Auth0;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VideoController extends Controller
 {
@@ -49,18 +51,37 @@ class VideoController extends Controller
         }
 
         // Recommended for you
-        /*if ($user !== null) {
-            $categories = Category::withCount([
+        if ($user !== null) {
+            /*$categories = Category::withCount([
                 'views as views_count' => function ($query) use ($user) {
                     $query->where('user_id', $user->id);
                 }
-            ])->get();
+            ])->get();*/
+            $categories = DB::table('categories')
+                ->select(['categories.*', DB::raw('COUNT(views.id) as views'), DB::raw('MAX(views.created_at) as last_view')])
+                ->where('views.user_id', '=', $user->id)
+                ->join('videos', 'categories.id', '=', 'videos.category_id')
+                ->join('views', 'videos.id', '=', 'views.video_id')
+                ->groupBy('categories.id')
+                ->orderBy('last_view', 'desc')
+                ->get();
+
+            $totalViews = 0;
+            /*foreach ($categories as $category) {
+                $totalViews += $category["views"]
+            }*/
+
+
+
+
+
             $categoriesArray = [];
             foreach ($categories as $category) {
-                array_push($categoriesArray, Category::getCategoryJson($category));
+                //array_push($categoriesArray, Category::getCategoryJson($category));
+                array_push($categoriesArray, $category);
             }
-            array_push($json, $categoriesArray);
-        }*/
+            //array_push($json, $categoriesArray);
+        }
 
         /*if ($user !== null) {
             $recommendedVideosJson = [];
@@ -187,9 +208,12 @@ class VideoController extends Controller
             "user_id" => $user->id,
             "video_id" => $video->id,
         ])->first();
-        $view->update([
-            "completed" => true
-        ]);
+
+        if ($view != null) {
+            $view->update([
+                "completed" => true
+            ]);
+        }
 
         return response()->json(null, 200);
     }
