@@ -17,9 +17,6 @@ class ViewController extends Controller
      */
     public function index()
     {
-        //
-
-
         $user = User::all()->first();
 
         $views = $user->views()->orderBy('created_at', 'asc')->get();
