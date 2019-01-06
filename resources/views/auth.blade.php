@@ -267,7 +267,7 @@
                     $('#profile-image').attr('src', data.result.url);
 
                     $.ajax({
-                        url: 'http://tizenapp.test/api/updatePicture',
+                        url: 'http://ztudy.tk/api/updatePicture',
                         method: "PATCH",
                         dataType: "json",
                         headers: {

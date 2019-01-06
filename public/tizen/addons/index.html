@@ -5,7 +5,7 @@
         <!-- START OF AUTH BLOCK -->
         <button id="auth">Login or register</button><span id="auth-link-message"></span>
         <div id="profile-view" class="card" style="width: 18rem;">
-            <img class="card-img-top">
+            <img class="card-img-top" id="profile-image">
             <div class="card-body">
                 <h5 class="card-title"></h5>
             </div>
@@ -63,6 +63,23 @@
                     if (message.message.action === 'paid_video') {
                         getVideoDetails('tech_2');
                     }
+                    if (message.message.action === 'profile_update') {
+                        $.ajax({
+                            url: 'http://ztudy.tk/api/login',
+                            method: "GET",
+                            dataType: "json",
+                            headers: {
+                                "Authorization": "Bearer " + localStorage.getItem("id_token")
+                            },
+                            success: function(response) {
+                                console.log(response);
+                                $('#profile-image').attr('src', response.user.picture);
+                            },
+                            error: function(error, status) {
+                                console.error(error, status);
+                            }
+                        });
+                    }
                 },
                 presence: function(presenceEvent) {
                     // handle presence
@@ -81,10 +98,6 @@
                     data: {
                         action_code: 'auth'
                     },
-                    /*headers: {
-                        "Authorization": "Bearer " + accessToken
-                    },*/
-
                     success: function(response) {
                         $('#auth-link-message').html('Visit ztudy.tk/' + response.code + ' using your smartphone');
                         
@@ -92,7 +105,6 @@
                             channels: [response.code]
                         });
                     },
-
                     error: function(error, status) {
                         console.error(error, status);
                     }
