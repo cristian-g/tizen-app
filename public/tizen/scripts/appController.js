@@ -198,8 +198,12 @@ var myVideoApp = {
             },
             onEnded: function(){ // The event handler when the video ends playing.
                 if(_this.currentDepth === _this._DEPTH.PLAYER){
-                	myVideoApp.stopVideoPlaying();
-                    _this.back();
+                	if(!myVideoApp.isPreview){
+                		myVideoApp.currentVideo.ended = true;
+                    	myVideoApp.completeVideoView(myVideoApp.currentVideo.id);
+                	}else{
+                		_this.back();
+                	}
                 }
             },
             onError: function(){ // The event handler when the error occurs during playing.
@@ -257,6 +261,7 @@ var myVideoApp = {
 
             success: function(response) {
                 myVideoApp.currentVideo = response;
+                myVideoApp.currentVideo.ended = false;
                 $('#title-video').html(video.name);
             	$('#detail-description').html(video.description);
             	$('#detail-date').html(video.date);
@@ -299,7 +304,7 @@ var myVideoApp = {
     	$('#caphPlayer video').load()
     	var video = $('#caphPlayer video')[0];
     	if(myVideoApp.currentVideo.resume){
-    		video.currentTime = myVideoApp.currentVideo.time_to_resume;
+    		video.currentTime = myVideoApp.currentVideo.timeToResume;
     	}
         video.addEventListener("timeupdate", function(){
     	    if(myVideoApp.isPreview){
@@ -327,12 +332,15 @@ var myVideoApp = {
                 break;
             case this._DEPTH.PLAYER:
             	var video = $('#caphPlayer video')[0];
+            	
                 if(this.videoControls && this.videoControls.pause && !video.paused){
                     this.videoControls.pause();
                 }
                 targetDepth = this.lastDepth;
-                if(video.currentTime =! 0){
-                	myVideoApp.registerVideoView(myVideoApp.currentVideo.id, video.currentTime);
+                if(video.currentTime != 0){
+                	if(!myVideoApp.isPreview && !myVideoApp.currentVideo.ended){
+                		myVideoApp.registerVideoView(myVideoApp.currentVideo.id, Math.round(video.currentTime));
+                	}
                 }
                 break;
             case this._DEPTH.LOGIN:
@@ -523,6 +531,7 @@ var myVideoApp = {
 
             success: function(response) {
                 myVideoApp.currentVideo = response;
+                myVideoApp.currentVideo.ended = false;
             },
 
             error: function(error, status) {
@@ -544,7 +553,7 @@ var myVideoApp = {
             },
 
             success: function(response) {
-                console.log(response);
+                myVideoApp.updateVideoDetails(myVideoApp.currentVideo.id);
             },
 
             error: function(error, status) {
@@ -552,8 +561,24 @@ var myVideoApp = {
             }
         });
     },
-    stopVideoPlaying: function(){
-    	
+    completeVideoView: function(videoId) {
+        if (localStorage.getItem("id_token") === null) return;
+        $.ajax({
+            url: 'http://ztudy.tk/api/videos/' + videoId + '/complete',
+            method: "PATCH",
+            dataType: "json",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("id_token")
+            },
+
+            success: function(response) {
+                myVideoApp.showDetail(myVideoApp.currentVideo);
+            },
+
+            error: function(error, status) {
+                console.error(error, status);
+            }
+        });
     }
 
 };
