@@ -46,3 +46,21 @@ Route::get('home', 'VideoController@home')->middleware('optionalJWT');
 
 // Purchase
 Route::post('purchase', 'PurchaseController@store')->middleware('JWT');
+
+// Contacts
+Route::get('contacts', 'UserController@index')->middleware('JWT');
+
+// Recommendation
+Route::post('recommendation', 'RecommendationController@store')->middleware('JWT');
+
+// Notifications
+Route::get('notifications', 'RecommendationController@index')->middleware('JWT');
+Route::post('storeExampleNotification', 'RecommendationController@storeExample')->middleware('JWT');
+
+// Reset database
+Route::get('reset-database', function (Request $request) {
+    //return shell_exec('php artisan migrate:rollback') . shell_exec('php artisan migrate');
+    \Illuminate\Support\Facades\Artisan::call('migrate:rollback');
+    \Illuminate\Support\Facades\Artisan::call('migrate');
+    return "Yey! Data has been reset. Go back to your tests, little grasshopper!";
+});

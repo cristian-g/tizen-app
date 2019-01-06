@@ -15,6 +15,29 @@ class SeedData extends Migration
      */
     public function up()
     {
+        // Departments
+        $department1 = new \App\Department([
+            "name" => "Software",
+            "order" => 1
+        ]);
+        $department1->save();
+        $department2 = new \App\Department([
+            "name" => "Hardware",
+            "order" => 2
+        ]);
+        $department2->save();
+        $department3 = new \App\Department([
+            "name" => "Human resources",
+            "order" => 3
+        ]);
+        $department3->save();
+        $department4 = new \App\Department([
+            "name" => "Management",
+            "order" => 4
+        ]);
+        $department4->save();
+
+        // Users
         $usersInfo = [
             [
                 'name' => "Adrià Puigdellívol Pérez",
@@ -197,15 +220,29 @@ class SeedData extends Migration
                 'picture' => "/img/estudy/xavier.hernandez.jpg",
             ],
         ];
+        shuffle($usersInfo);
 
         $users = array();
         $length = count($usersInfo);
         for ($i = 0; $i < $length; $i++) {
+            // $i: 0-35
             $user = new User([
                 'name' => $usersInfo[$i]['name'],
-                'sub_auth0' => $usersInfo[$i]['name'],
-                'picture' => $usersInfo[$i]['name'],
+                'sub_auth0' => $usersInfo[$i]['sub_auth0'],
+                'picture' => $usersInfo[$i]['picture'],
             ]);
+            if ($i >= 0 && $i <= 8) {
+                $user->department()->associate($department1);
+            }
+            else if ($i >= 9 && $i <= 17) {
+                $user->department()->associate($department2);
+            }
+            else if ($i >= 18 && $i <= 26) {
+                $user->department()->associate($department3);
+            }
+            else if ($i >= 27 && $i <= 35) {
+                $user->department()->associate($department4);
+            }
             $user->save();
             array_push($users, $user);
         }

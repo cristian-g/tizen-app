@@ -50,6 +50,8 @@ class CreateVideosTable extends Migration
      */
     public function down()
     {
+        \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::dropIfExists('videos');
+        \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
