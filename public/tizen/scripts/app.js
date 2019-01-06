@@ -28,6 +28,27 @@ $('document').ready(function(){
                 	console.log('paid');
                     myVideoApp.showDetail(myVideoApp.currentVideo);
                 }
+                if (message.message.action === 'logout') {
+                    myVideoApp.logOut();
+                }
+                if (message.message.action === 'profile_update') {
+                    $.ajax({
+                        url: 'http://ztudy.tk/api/login',
+                        method: "GET",
+                        dataType: "json",
+                        headers: {
+                            "Authorization": "Bearer " + localStorage.getItem("id_token")
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            localStorage.setItem('image', response.user.picture);
+                            document.querySelector('#profile-view img').src = response.user.picture;
+                        },
+                        error: function(error, status) {
+                            console.error(error, status);
+                        }
+                    });
+                }
             	console.log(message);
 
             },
