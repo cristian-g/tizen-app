@@ -12,10 +12,6 @@
     		</div>  
     	</div>
         
-        <div id="btnSetting" focusable data-focusable-depth="1" class="depth1 groupLogged btn btn-gap btn-setting">
-            <div class="btn-icon icon-caph icon-caph-setting"></div>
-        </div>
-        
         <div id="btnBack" focusable data-focusable-depth="2" class="depth2 btn btn-gap btn-return">
             <div class="btn-icon icon-caph icon-caph-return"></div>
         </div>
@@ -93,6 +89,14 @@
 <!-- page: INDEX (LIST) -->
 <div class="depth1 list-wrapper page">
     <div id="list-category" class="list-category" style="transform: translate3d(0, 0, 0)">
+        <div id="area-cat0" class="list-area">
+            <div class="title font-label">Continue watching</div>
+            <div id="category_0" title="Continue watching" class="list-container"></div>
+        </div>
+        <div id="area-cat1" class="list-area">
+            <div class="title font-label">Recommended for you</div>
+            <div id="category_1" title="Recommended for you"></div>
+        </div>
         <div class="list-area">
             <div class="title font-label">New</div>
             <div id="category_2" title="New"></div>
@@ -100,14 +104,6 @@
         <div class="list-area">
             <div class="title font-label">Most Viewed</div>
             <div id="category_3" title="Most Viewed"></div>
-        </div>
-        <div class="list-area">
-            <div class="title font-label">Alphabets</div>
-            <div id="category_1" title="Alphabets"></div>
-        </div>
-        <div class="list-area">
-            <div class="title font-label">Numbers</div>
-            <div id="category_0" title="Numbers"></div>
         </div>
     </div>
 </div>
@@ -151,6 +147,16 @@
     </div>
 </div>
 
+<script id="playlist1" type="text/template">
+    <div id="<%=item.id%>" class="item" focusable data-focusable-depth="1" data-index="<%= index %>">
+        <div class="loader <%=(!item.loaded)?'hide':'' %>"></div>
+        <div class="content" style="background: url(<%=item.photo_urls.url || '' %>);-webkit-background-size:100%;">
+            <div class="text font-label">
+                <div class="font-info"><%=item.name%></div>
+            </div>
+        </div>
+    </div>
+</script>
 <script id="playlist" type="text/template">
     <div id="<%=item.id%>" class="item" ng-class="{'item-blank': item.isBlank === true}" focusable data-focusable-depth="1" data-index="<%= index %>">
         <div class="loader <%=(!item.loaded)?'hide':'' %>" ng-show="item.loaded === false"></div>

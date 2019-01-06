@@ -5,9 +5,10 @@ var myVideoApp = {
         INDEX: 1,
         DETAIL: 2,
         PLAYER: 3,
-        SETTING: 4,
+        PAYMENT: 4,
         LOGIN: 5,
-        CATEGORIES: 6
+        CATEGORIES: 6,
+        RECOMMEND: 7
     },
     _dataCategory: [],
     newVideos: [],
@@ -18,6 +19,7 @@ var myVideoApp = {
     categoryList: undefined,
     lastDepth: undefined,
     currentVideo: undefined,
+    requestRunning: false,
     dialogSetting: undefined,
     playSetting: {
         chkAutoPlay: true,
@@ -65,6 +67,11 @@ var myVideoApp = {
         $('.depth' + depth).show();
         
         switch (depth) {
+        case this._DEPTH.LOGIN:
+        	if(this.currentDepth != this._DEPTH.DETAIL){
+        		this.lastDepth = 1;
+        	}
+        	break;
 		case this._DEPTH.INDEX:
 			if(localStorage.getItem('id_token')){
 				//logged
@@ -79,7 +86,117 @@ var myVideoApp = {
 				$('.groupLogged').hide();
 				$('.groupNotLogged').show();
 			}
-			this.loadHomePage();
+			this.loadHomePage(function(){
+	        	var focusHandler = function($event, category){
+	                var currentItem = myVideoApp._dataCategory[category][$($event.target).data('index')];
+	                myVideoApp.setOverviewDark(false);
+	                myVideoApp.updateOverview(currentItem);
+	                myVideoApp.setListContainer($event, category);
+	            };
+
+	            var selectHandler = function($event, category){
+		           	var currentItem = myVideoApp._dataCategory[category][$($event.target).data('index')];
+	                myVideoApp.setOverviewDark(false);
+	                console.info(currentItem);
+	                myVideoApp.showDetail(currentItem);
+	            };
+
+	            var blurHandler = function(){
+	                if(myVideoApp.currentDepth === myVideoApp._DEPTH.INDEX){
+	                    myVideoApp.setOverviewDark(true);
+	                }
+	            };
+	            
+	            $('#category_0').html('');
+	            $('#category_1').html('');
+	            $('#category_2').html('');
+	            $('#category_3').html('');
+	            
+	            if(myVideoApp._dataCategory[myVideoApp._CATEGORY.WATCHING] != null){
+	            	$('#area-cat0').show();
+		           	 $('#category_0').caphList({
+		                    items: myVideoApp._dataCategory[myVideoApp._CATEGORY.WATCHING],
+		                    template: 'playlist',
+		                    containerClass: 'list-container',
+		                    wrapperClass: "list-scroll-wrapper"
+		                }).on('focused', function($event){
+		                    focusHandler($event, myVideoApp._CATEGORY.WATCHING);
+		                }).on('selected', function($event){
+		                	if(!myVideoApp.requestRunning){
+			                	var currentItem = myVideoApp._dataCategory[myVideoApp._CATEGORY.WATCHING][$($event.target).data('index')];
+				                myVideoApp.setOverviewDark(false);
+				                console.info(currentItem);
+				                myVideoApp.showDetail(currentItem);
+		                	}
+		                }).on('blurred', function(){
+		                    blurHandler();
+		                });
+		           	 
+	            }else{
+	           	 $('#area-cat0').hide();
+	            }
+	            
+	            if(myVideoApp._dataCategory[myVideoApp._CATEGORY.RECOMMENDED] != null){
+	            	$('#area-cat1').show();
+	           	 $('#category_1').caphList({
+	                    items: myVideoApp._dataCategory[myVideoApp._CATEGORY.RECOMMENDED],
+	                    template: 'playlist',
+	                    containerClass: 'list-container',
+	                    wrapperClass: "list-scroll-wrapper"
+	                }).on('focused', function($event){
+	                    focusHandler($event, myVideoApp._CATEGORY.RECOMMENDED);
+	                }).on('selected', function($event){
+	                	if(!myVideoApp.requestRunning){
+		                	var currentItem = myVideoApp._dataCategory[myVideoApp._CATEGORY.RECOMMENDED][$($event.target).data('index')];
+			                myVideoApp.setOverviewDark(false);
+			                console.info(currentItem);
+			                myVideoApp.showDetail(currentItem);
+	                	}
+	                }).on('blurred', function(){
+	                    blurHandler();
+	                });
+	           	 
+	            }else{
+	           	 $('#area-cat1').hide();
+	            }
+	            
+	            $('#category_2').caphList({
+	                items: myVideoApp._dataCategory[myVideoApp._CATEGORY.NEW],
+	                template: 'playlist',
+	                containerClass: 'list-container',
+	                wrapperClass: "list-scroll-wrapper"
+	            }).on('focused', function($event){
+	                focusHandler($event, myVideoApp._CATEGORY.NEW);
+	            }).on('selected', function($event){
+	            	if(!myVideoApp.requestRunning){
+	            		var currentItem = myVideoApp._dataCategory[myVideoApp._CATEGORY.NEW][$($event.target).data('index')];
+		                myVideoApp.setOverviewDark(false);
+		                console.info(currentItem);
+		                myVideoApp.showDetail(currentItem);
+	            	}
+	            }).on('blurred', function(){
+	                blurHandler();
+	            });
+	            
+	            $('#category_3').caphList({
+	                items: myVideoApp._dataCategory[myVideoApp._CATEGORY.MOST_VIEWED],
+	                template: 'playlist',
+	                containerClass: 'list-container',
+	                wrapperClass: "list-scroll-wrapper"
+	            }).on('focused', function($event){
+	                focusHandler($event, myVideoApp._CATEGORY.MOST_VIEWED);
+	            }).on('selected', function($event){
+	            	if(!myVideoApp.requestRunning){
+	            		var currentItem = myVideoApp._dataCategory[myVideoApp._CATEGORY.MOST_VIEWED][$($event.target).data('index')];
+		                myVideoApp.setOverviewDark(false);
+		                console.info(currentItem);
+		                myVideoApp.showDetail(currentItem);
+	            	}
+	            }).on('blurred', function(){
+	                blurHandler();
+	            });
+	            
+	        });
 			this.lastDepth = this.currentDepth;
 		break;
 		default:
@@ -89,6 +206,27 @@ var myVideoApp = {
         
         this.currentDepth = depth;
         $.caph.focus.controllerProvider.getInstance().setDepth(depth);
+        
+        if(myVideoApp.currentDepth == 1){
+        	if(myVideoApp._dataCategory[myVideoApp._CATEGORY.WATCHING] != null){
+            	$.caph.focus.controllerProvider.getInstance().focus(
+                        $('#' + myVideoApp._dataCategory[myVideoApp._CATEGORY.WATCHING][0].id)
+                    );
+                    myVideoApp.setListContainer(null, myVideoApp._CATEGORY.WATCHING);
+            }else{
+            	if(myVideoApp._dataCategory[myVideoApp._CATEGORY.RECOMMENDED] != null){
+            		$.caph.focus.controllerProvider.getInstance().focus(
+        				$('#' + myVideoApp._dataCategory[myVideoApp._CATEGORY.RECOMMENDED][0].id)
+            		);
+            		myVideoApp.setListContainer(null, myVideoApp._CATEGORY.RECOMMENDED);
+            	}else{
+            		$.caph.focus.controllerProvider.getInstance().focus(
+                        $('#' + myVideoApp._dataCategory[myVideoApp._CATEGORY.NEW][0].id)
+                    );
+                    myVideoApp.setListContainer(null, myVideoApp._CATEGORY.NEW);
+            	}
+            }
+        }
     },
     setListContainer: function($event, category){
         if(myVideoApp.currentDepth === myVideoApp._DEPTH.INDEX){
@@ -99,14 +237,20 @@ var myVideoApp = {
             if(category === myVideoApp.currentCategory){
                 return;
             }
-            if(localStorage.getItem('id_token') == null){
+            if(localStorage.getItem('id_token') == null || myVideoApp._dataCategory[1] == null){
             	$('#list-category').css({
-            		transform: 'translate3d(0, ' + (-CONSTANT.SCROLL_HEIGHT_OF_INDEX * (category - 0)) + 'px, 0)'
+            		transform: 'translate3d(0, ' + (-CONSTANT.SCROLL_HEIGHT_OF_INDEX * (category - 2)) + 'px, 0)'
             	});
         	}else{
-	            $('#list-category').css({
-	            		transform: 'translate3d(0, ' + (-CONSTANT.SCROLL_HEIGHT_OF_INDEX * category) + 'px, 0)'
-	            });
+        		if(myVideoApp._dataCategory[0] == null){
+        			$('#list-category').css({
+	            		transform: 'translate3d(0, ' + (-CONSTANT.SCROLL_HEIGHT_OF_INDEX * (category - 1)) + 'px, 0)'
+        			});
+        		}else{
+        			 $('#list-category').css({
+ 	            		transform: 'translate3d(0, ' + (-CONSTANT.SCROLL_HEIGHT_OF_INDEX * category) + 'px, 0)'
+        			 });
+        		}
         	}
             myVideoApp.currentCategory = category;
         }
@@ -129,11 +273,11 @@ var myVideoApp = {
                     template: 'relatedPlaylist',
                     containerClass: 'list-container',
                     wrapperClass: 'list-scroll-wrapper'
-                })/*.on('selected', function($event){
+                }).on('selected', function($event){
                 	var currentItem = myVideoApp.relatedPlaylistItems[$('.focused').attr('index')];
                     myVideoApp.setOverviewDark(false);
                     myVideoApp.showDetail(currentItem);
-                });*/
+                });
             },
             error: function(error, status) {
                 console.error(error, status);
@@ -253,6 +397,10 @@ var myVideoApp = {
                 "Authorization": "Bearer " + localStorage.getItem("id_token")
             };
         }
+        if (myVideoApp.requestRunning) {
+            return;
+        }
+        myVideoApp.requestRunning = true;
         $.ajax({
             url: 'http://ztudy.tk/api/videos/' + videoId,
             method: "GET",
@@ -294,6 +442,9 @@ var myVideoApp = {
 
             error: function(error, status) {
                 console.error(error, status);
+            },
+            complete: function() {
+            	myVideoApp.requestRunning = false;
             }
         });
 
@@ -346,6 +497,8 @@ var myVideoApp = {
             case this._DEPTH.LOGIN:
             	if(myVideoApp.lastDepth == myVideoApp._DEPTH.DETAIL){
             		targetDepth = myVideoApp._DEPTH.DETAIL;
+            	}else{
+            		targetDepth = this._DEPTH.INDEX;
             	}
             	break;
             default:
@@ -367,6 +520,7 @@ var myVideoApp = {
     	localStorage.removeItem('id_token');
     	$('.groupLogged').hide();
 		$('.groupNotLogged').show();
+		this.changeDepth(1);
     },
     loadHomePage: function(callback) {
         var headers = {};
@@ -379,27 +533,39 @@ var myVideoApp = {
             url: 'http://ztudy.tk/api/home',
             method: "GET",
             dataType: "json",
+            async: false,
             headers: headers,
 
             success: function(response) {
             	if(localStorage.getItem('id_token') == null){
             		myVideoApp._dataCategory[myVideoApp._CATEGORY.NEW] = response[0].new;
                     myVideoApp._dataCategory[myVideoApp._CATEGORY.MOST_VIEWED] = response[1].most_viewed;
+                    myVideoApp._dataCategory[myVideoApp._CATEGORY.WATCHING] = undefined;
+                    myVideoApp._dataCategory[myVideoApp._CATEGORY.RECOMMENDED] = undefined;
+                    
             	}else{
     	            console.log(response);
-    	            myVideoApp._dataCategory[myVideoApp._CATEGORY.NEW] = response[1].new;
-                    myVideoApp._dataCategory[myVideoApp._CATEGORY.MOST_VIEWED] = response[2].most_viewed;
+    	            
+	            	if(response[0].continue_watching.length != 0){
+    	            	myVideoApp._dataCategory[myVideoApp._CATEGORY.WATCHING] = response[0].continue_watching;
+	            	}else{
+	            		myVideoApp._dataCategory[myVideoApp._CATEGORY.WATCHING] = undefined;
+	            	}
+	            	
+        	        if(response[1].recommended_for_you.length != 0){
+                        myVideoApp._dataCategory[myVideoApp._CATEGORY.RECOMMENDED] = response[1].recommended_for_you;
+    	            }else{
+    	            	myVideoApp._dataCategory[myVideoApp._CATEGORY.RECOMMENDED] = undefined;
+    	            }
+    	            myVideoApp._dataCategory[myVideoApp._CATEGORY.NEW] = response[2].new;
+                    myVideoApp._dataCategory[myVideoApp._CATEGORY.MOST_VIEWED] = response[3].most_viewed;
             	}
             	
                 var focusController = $.caph.focus.controllerProvider.getInstance();
                 
-                setTimeout(function(){
-                	var welcomeElement = $('.welcome');
-                    welcomeElement.addClass('fade-out');
-                    focusController.focus($('#' + myVideoApp._dataCategory[myVideoApp._CATEGORY.NEW][0].id));
-                    callback && callback();
-                }.bind(this), 0);//3000);
-                
+            	var welcomeElement = $('.welcome');
+                welcomeElement.addClass('fade-out');
+                callback && callback();
             },
             
             error: function(error, status) {
@@ -448,7 +614,7 @@ var myVideoApp = {
             	$('#list_0').html('');
             	$('#list_1').html('');
             	if(size > 0){
-            		while (i < 3 || i < size){
+            		while (i <= 3 && i < size){
             			$('#list_0').append('<div style="position: relative; transform: translate3d(0px, 0px, 0px); margin-right:15px" class=""><div id="'+ response.videos[i].id +'" info-num='+ i + ' class="item" ng-class="{\'item-blank\': item.isBlank === true}" focusable="" data-focusable-depth="6" data-index="0" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">'+
             									'<div class="loader hide" ng-show="item.loaded === false"></div>'+
             										'<div class="content" ng-hide="item.loaded === false" style="background: url('+ response.videos[i].photo_urls.url +');-webkit-background-size:100%;">'+
@@ -473,7 +639,7 @@ var myVideoApp = {
             		}
             		
             		if(size > 4){
-            			while (i < 7 || i < size){
+            			while (i <= 7 && i < size){
                 			$('#list_1').append('<div style="position: relative; transform: translate3d(0px, 0px, 0px); margin-right:15px" class=""><div id="'+ response.videos[i].id +'" info-num='+ i + ' class="item" ng-class="{\'item-blank\': item.isBlank === true}" focusable="" data-focusable-depth="6" data-index="0" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">'+
                 									'<div class="loader hide" ng-show="item.loaded === false"></div>'+
                 										'<div class="content" ng-hide="item.loaded === false" style="background: url('+ response.videos[i].photo_urls.url +');-webkit-background-size:100%;">'+

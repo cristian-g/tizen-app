@@ -7,7 +7,7 @@ $('document').ready(function(){
         $.caph.focus.activate(function(nearestFocusableFinderProvider, controllerProvider) {
             controllerProvider.setInitialDepth(1);
         });
-        myVideoApp.initDialogSetting();
+        //myVideoApp.initDialogSetting();
         
         //auth
         var pubnub = new PubNub({
@@ -68,13 +68,6 @@ $('document').ready(function(){
                     console.error(error, status);
                 }
             });
-        });
-        
-        //buttons
-        $('#btnSetting').on('focused', function(){
-            myVideoApp.setOverviewDark(false);
-        }).on('selected', function(){
-            myVideoApp.changeDepth(4);
         });
         
         $('#btnBack').on('selected', function(){
@@ -223,75 +216,8 @@ $('document').ready(function(){
             
         });
         
-        myVideoApp.loadHomePage(function(){
-        	 var focusHandler = function($event, category){
-                 var currentItem = myVideoApp._dataCategory[category][$($event.target).data('index')];
-                 myVideoApp.setOverviewDark(false);
-                 myVideoApp.updateOverview(currentItem);
-                 myVideoApp.setListContainer($event, category);
-             };
-
-             var selectHandler = function($event, category){
-            	 var currentItem = myVideoApp._dataCategory[category][$($event.target).data('index')];
-                 myVideoApp.setOverviewDark(false);
-                 console.info(currentItem);
-                 myVideoApp.showDetail(currentItem);
-             };
-
-             var blurHandler = function(){
-                 if(myVideoApp.currentDepth === myVideoApp._DEPTH.INDEX){
-                     myVideoApp.setOverviewDark(true);
-                 }
-             };
-             
-             $('#category_2').caphList({
-                 items: myVideoApp._dataCategory[myVideoApp._CATEGORY.NEW],
-                 template: 'playlist',
-                 containerClass: 'list-container',
-                 wrapperClass: "list-scroll-wrapper"
-             }).on('focused', function($event){
-                 focusHandler($event, myVideoApp._CATEGORY.NEW);
-             }).on('selected', function($event){
-                 selectHandler($event, myVideoApp._CATEGORY.NEW);
-             }).on('blurred', function(){
-                 blurHandler();
-             });
-             
-             $('#category_3').caphList({
-                 items: myVideoApp._dataCategory[myVideoApp._CATEGORY.MOST_VIEWED],
-                 template: 'playlist',
-                 containerClass: 'list-container',
-                 wrapperClass: "list-scroll-wrapper"
-             }).on('focused', function($event){
-                 focusHandler($event, myVideoApp._CATEGORY.MOST_VIEWED);
-             }).on('selected', function($event){
-                 selectHandler($event, myVideoApp._CATEGORY.MOST_VIEWED);
-             }).on('blurred', function(){
-                 blurHandler();
-             });
-             
-             myVideoApp.relatedPlaylistItems = myVideoApp._dataCategory[myVideoApp._CATEGORY.NEW];
-             $('#related-play-list').caphList({
-                 items: myVideoApp.relatedPlaylistItems,
-                 template: 'relatedPlaylist',
-                 containerClass: 'list-container',
-                 wrapperClass: 'list-scroll-wrapper'
-             }).on('selected', function($event){
-            	 console.log($('.focused'))
-            	 console.log($($event.target).data('index'));
-            	 
-            	 var currentItem = myVideoApp.relatedPlaylistItems[$('.focused').attr('index')];
-                 myVideoApp.setOverviewDark(false);
-                 myVideoApp.showDetail(currentItem);
-             });
-             
-             myVideoApp.changeDepth(myVideoApp._DEPTH.INDEX);
-
-             $.caph.focus.controllerProvider.getInstance().focus(
-                 $('#' + myVideoApp._dataCategory[myVideoApp._CATEGORY.NEW][0].id)
-             );
-             myVideoApp.setListContainer(null, myVideoApp._CATEGORY.NEW);
-        });
+        myVideoApp.changeDepth(myVideoApp._DEPTH.INDEX);
+        
         /*
         myVideoApp.initCategoryListData(function(){
             var focusHandler = function($event, category){
