@@ -80,6 +80,10 @@
                             }
                         });
                     }
+                    if (message.message.action === 'logout') {
+                        localStorage.removeItem('id_token');
+                        // Change UI
+                    }
                 },
                 presence: function(presenceEvent) {
                     // handle presence

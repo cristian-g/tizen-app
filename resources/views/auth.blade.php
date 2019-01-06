@@ -174,13 +174,25 @@
         }
 
         function logout() {
-            // Remove tokens and expiry time from localStorage
-            localStorage.removeItem('access_token');
-            localStorage.removeItem('id_token');
-            localStorage.removeItem('expires_at');
-            displayButtons();
-            $('#profile-view').hide();
-            $('#picture-upload').hide();
+            pubnub.publish(
+                {
+                    message: {
+                        action: 'logout'
+                    },
+                    channel: localStorage.getItem('redirect_code')
+                },
+                function (status, response) {
+                    // handle status, response
+                    console.log(response);
+                    // Remove tokens and expiry time from localStorage
+                    localStorage.removeItem('access_token');
+                    localStorage.removeItem('id_token');
+                    localStorage.removeItem('expires_at');
+                    displayButtons();
+                    $('#profile-view').hide();
+                    $('#picture-upload').hide();
+                }
+            );
         }
 
         function isAuthenticated() {
