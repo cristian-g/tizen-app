@@ -81,10 +81,7 @@ var myVideoApp = {
 			}
 			this.loadHomePage();
 			this.lastDepth = this.currentDepth;
-			break;
-		case this._DEPTH.DETAIL:
-
-			break;
+		break;
 		default:
 			this.lastDepth = this.currentDepth;
 			break;
@@ -104,7 +101,7 @@ var myVideoApp = {
             }
             if(localStorage.getItem('id_token') == null){
             	$('#list-category').css({
-            		transform: 'translate3d(0, ' + (-CONSTANT.SCROLL_HEIGHT_OF_INDEX * (category - 2)) + 'px, 0)'
+            		transform: 'translate3d(0, ' + (-CONSTANT.SCROLL_HEIGHT_OF_INDEX * (category - 0)) + 'px, 0)'
             	});
         	}else{
 	            $('#list-category').css({
@@ -201,6 +198,7 @@ var myVideoApp = {
             },
             onEnded: function(){ // The event handler when the video ends playing.
                 if(_this.currentDepth === _this._DEPTH.PLAYER){
+                	myVideoApp.stopVideoPlaying();
                     _this.back();
                 }
             },
@@ -244,30 +242,65 @@ var myVideoApp = {
         $.caph.focus.controllerProvider.getInstance().focus('btnPlayerPlay');
     },
     showDetail: function(video){
-    	this.currentVideo = video;
-    	console.log(video);
-    	$('#title-video').html(video.name);
-    	$('#detail-description').html(video.description);
-    	$('#detail-date').html(video.date);
-    	$('#detail-author').html(video.author);
-    	$('#detail-duration').html(video.duration);
-    	$('#detail-repro').html(video.views);
-    	$('#detail-purch').html(video.purchases);
-    	$('#price').html(video.price);
-    	$('#comp-price').html(video.business_price);
+    	var videoId = video.id;
+    	var headers = {};
+        if (localStorage.getItem("id_token") !== null) {
+            headers = {
+                "Authorization": "Bearer " + localStorage.getItem("id_token")
+            };
+        }
+        $.ajax({
+            url: 'http://ztudy.tk/api/videos/' + videoId,
+            method: "GET",
+            dataType: "json",
+            headers: headers,
+
+            success: function(response) {
+                myVideoApp.currentVideo = response;
+                $('#title-video').html(video.name);
+            	$('#detail-description').html(video.description);
+            	$('#detail-date').html(video.date);
+            	$('#detail-author').html(video.author);
+            	$('#detail-duration').html(video.duration);
+            	$('#detail-repro').html(myVideoApp.currentVideo.views);
+            	$('#detail-purch').html(myVideoApp.currentVideo.purchases);
+            	if(myVideoApp.currentVideo.purchased){
+            		$('#btnBuy').hide();
+            		$('#btnPlay').show()
+            	}else{
+            		$('#btnPlay').hide();
+            		$('#price').html(video.price);
+            		$('#btnBuy').show();
+                	if(localStorage.getItem('id_token') == null){
+                		$('#logBuyMsg').show();
+                	}else{
+                		$('#logBuyMsg').hide();
+                	}
+            	}
+            	
+            	myVideoApp.updateRelatedPlaylist(video.category.key);
+            	
+            	myVideoApp.changeDepth(2);
+            	$.caph.focus.controllerProvider.getInstance().focus(
+                        $('#btnPreview')
+                 );
+            	myVideoApp.loadVideo();
+            },
+
+            error: function(error, status) {
+                console.error(error, status);
+            }
+        });
+
     	
-    	this.updateRelatedPlaylist(video.category.key);
-    	
-    	myVideoApp.changeDepth(2);
-    	$.caph.focus.controllerProvider.getInstance().focus(
-                $('#btnPreview')
-         );
-    	this.loadVideo();
     },
     loadVideo: function(){
     	$('#videoSource').attr("src", myVideoApp.currentVideo.source);
     	$('#caphPlayer video').load()
     	var video = $('#caphPlayer video')[0];
+    	if(myVideoApp.currentVideo.resume){
+    		video.currentTime = myVideoApp.currentVideo.time_to_resume;
+    	}
         video.addEventListener("timeupdate", function(){
     	    if(myVideoApp.isPreview){
     	    	if(this.currentTime >= 60) {
@@ -293,11 +326,20 @@ var myVideoApp = {
     			}
                 break;
             case this._DEPTH.PLAYER:
-                if(this.videoControls && this.videoControls.pause && !$('#caphPlayer video')[0].paused){
+            	var video = $('#caphPlayer video')[0];
+                if(this.videoControls && this.videoControls.pause && !video.paused){
                     this.videoControls.pause();
                 }
                 targetDepth = this.lastDepth;
+                if(video.currentTime =! 0){
+                	myVideoApp.registerVideoView(myVideoApp.currentVideo.id, video.currentTime);
+                }
                 break;
+            case this._DEPTH.LOGIN:
+            	if(myVideoApp.lastDepth == myVideoApp._DEPTH.DETAIL){
+            		targetDepth = myVideoApp._DEPTH.DETAIL;
+            	}
+            	break;
             default:
                 targetDepth = this._DEPTH.INDEX;
         }
@@ -336,7 +378,9 @@ var myVideoApp = {
             		myVideoApp._dataCategory[myVideoApp._CATEGORY.NEW] = response[0].new;
                     myVideoApp._dataCategory[myVideoApp._CATEGORY.MOST_VIEWED] = response[1].most_viewed;
             	}else{
-    	            console.log(response)
+    	            console.log(response);
+    	            myVideoApp._dataCategory[myVideoApp._CATEGORY.NEW] = response[1].new;
+                    myVideoApp._dataCategory[myVideoApp._CATEGORY.MOST_VIEWED] = response[2].most_viewed;
             	}
             	
                 var focusController = $.caph.focus.controllerProvider.getInstance();
@@ -376,6 +420,12 @@ var myVideoApp = {
 		default:
 			break;
 		}
+    	 var headers = {};
+         if (localStorage.getItem("id_token") !== null) {
+             headers = {
+                 "Authorization": "Bearer " + localStorage.getItem("id_token")
+             };
+         }
     	$.ajax({
             url: 'http://ztudy.tk/api/category/' + url,
             method: "GET",
@@ -457,5 +507,53 @@ var myVideoApp = {
 	    if (minutes < 10) {minutes = "0"+minutes;}
 	    if (seconds < 10) {seconds = "0"+seconds;}
 	    return minutes+':'+seconds;
+    },
+    updateVideoDetails: function(videoId) {
+        var headers = {};
+        if (localStorage.getItem("id_token") !== null) {
+            headers = {
+                "Authorization": "Bearer " + localStorage.getItem("id_token")
+            };
+        }
+        $.ajax({
+            url: 'http://ztudy.tk/api/videos/' + videoId,
+            method: "GET",
+            dataType: "json",
+            headers: headers,
+
+            success: function(response) {
+                myVideoApp.currentVideo = response;
+            },
+
+            error: function(error, status) {
+                console.error(error, status);
+            }
+        });
+    },
+    registerVideoView: function(videoId, timeToResume) {
+        if (localStorage.getItem("id_token") === null) return;
+        $.ajax({
+            url: 'http://ztudy.tk/api/videos/' + videoId + '/view',
+            method: "PATCH",
+            dataType: "json",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("id_token")
+            },
+            data: {
+                time_to_resume: timeToResume
+            },
+
+            success: function(response) {
+                console.log(response);
+            },
+
+            error: function(error, status) {
+                console.error(error, status);
+            }
+        });
+    },
+    stopVideoPlaying: function(){
+    	
     }
+
 };

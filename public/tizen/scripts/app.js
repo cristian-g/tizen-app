@@ -24,6 +24,12 @@ $('document').ready(function(){
                     localStorage.setItem('image', message.message.userInfo.picture);
                     displayProfile(message.message.userInfo);
                 }
+                if (message.message.action === 'paid_video') {
+                	console.log('paid');
+                    myVideoApp.showDetail(myVideoApp.currentVideo);
+                }
+            	console.log(message);
+
             },
             presence: function(presenceEvent) {
                 // handle presence
@@ -34,7 +40,6 @@ $('document').ready(function(){
         $('#btnLogIn').on('focused', function(){
             myVideoApp.setOverviewDark(false);
         }).on('selected',function() {
-        	
             $.ajax({
                 url: 'http://ztudy.tk/api/getCode',
                 method: "POST",
@@ -142,6 +147,82 @@ $('document').ready(function(){
             myVideoApp.launchPlayer();
         });
 
+        
+        $('#btnBuy').on('selected',function() {
+        	var videoId = myVideoApp.currentVideo.id;
+        	var headers = {};
+            if (localStorage.getItem("id_token") !== null) {
+                headers = {
+                    "Authorization": "Bearer " + localStorage.getItem("id_token")
+                };
+                $.ajax({
+                    url: 'http://ztudy.tk/api/getCode',
+                    method: "POST",
+                    dataType: "json",
+                    data: {
+                        action_code: 'individualPurchase',
+                        video_id: videoId
+                    },
+                    headers: headers,
+
+                    success: function(response) {
+                        $('#buy-link-message').html('Visit ztudy.tk/' + response.code + ' using your smartphone');
+                        var nric = 'ztudy.tk/' + response.code;
+                        var url = 'https://api.qrserver.com/v1/create-qr-code/?data=' + nric + '&amp;size=500x500';
+                        $('#barcodeBuy').attr('src', url);
+                        
+                        pubnub.publish(
+                            {
+                                message: {
+                                    action: 'pageChange'
+                                },
+                                channel: response.code
+                            },
+                            function (status, response) {
+                                // handle status, response
+                                console.log(response);
+                            }
+                        );
+                        myVideoApp.changeDepth(4);
+                    },
+
+                    error: function(error, status) {
+                        console.error(error, status);
+                    }
+                });
+            }else{
+            	$.ajax({
+                    url: 'http://ztudy.tk/api/getCode',
+                    method: "POST",
+                    dataType: "json",
+                    data: {
+                        action_code: 'auth'
+                    },
+                    /*headers: {
+                        "Authorization": "Bearer " + accessToken
+                    },*/
+
+                    success: function(response) {
+                        $('#auth-link-message').html('Visit <span class="auth-url">ztudy.tk/' + response.code + '</span> using your smartphone');
+                        
+                        var nric = 'ztudy.tk/' + response.code;
+                        var url = 'https://api.qrserver.com/v1/create-qr-code/?data=' + nric + '&amp;size=500x500';
+                        $('#barcode').attr('src', url);
+                        
+                        pubnub.subscribe({
+                            channels: [response.code]
+                        });
+                        myVideoApp.changeDepth(5);
+                    },
+
+                    error: function(error, status) {
+                        console.error(error, status);
+                    }
+                });
+            }
+            
+        });
+        
         myVideoApp.loadHomePage(function(){
         	 var focusHandler = function($event, category){
                  var currentItem = myVideoApp._dataCategory[category][$($event.target).data('index')];
@@ -153,6 +234,7 @@ $('document').ready(function(){
              var selectHandler = function($event, category){
             	 var currentItem = myVideoApp._dataCategory[category][$($event.target).data('index')];
                  myVideoApp.setOverviewDark(false);
+                 console.info(currentItem);
                  myVideoApp.showDetail(currentItem);
              };
 
