@@ -23,7 +23,7 @@
             </div>
         </div>
         <div id="profile-view" class="card" style="width: 18rem;">
-            <img class="card-img-top">
+            <img class="card-img-top" id="profile-image">
             <div class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <button id="btn-logout" class="btn btn-primary btn-margin">
@@ -71,7 +71,7 @@
     </script>
     <script src="https://cdn.auth0.com/js/auth0/9.5.1/auth0.min.js"></script>
     <script src="lib/jquery/jquery.min.js" type="text/javascript"></script>
-    <script src="lib/blueimp-file-upload/js/vendor/jquery.ui.widget.js" type="text/javascript"></script>
+    <script src="lib/blueimp-file-upload/js/jquery.ui.widget.js" type="text/javascript"></script>
     <script src="lib/blueimp-file-upload/js/jquery.iframe-transport.js" type="text/javascript"></script>
     <script src="lib/blueimp-file-upload/js/jquery.fileupload.js" type="text/javascript"></script>
     <script src="lib/cloudinary-jquery-file-upload/cloudinary-jquery-file-upload.js" type="text/javascript"></script>
@@ -133,10 +133,6 @@
                             console.log(response);
                         }
                     );
-
-
-
-
                 },
 
                 error: function(error, status) {
@@ -268,18 +264,40 @@
                 $("input.cloudinary-fileupload[type=file]").cloudinary_fileupload();
                 $('.cloudinary-fileupload').bind('cloudinarydone', function(e, data) {
 
-                    console.log(data.result.url);
-                    var html = $.cloudinary.imageTag(data.result.public_id,
-                        { format: data.result.format, version: data.result.version,
-                            crop: 'scale', width: 200 });
+                    $('#profile-image').attr('src', data.result.url);
 
-                    console.log(html.toString());
+                    $.ajax({
+                        url: 'http://tizenapp.test/api/updatePicture',
+                        method: "PATCH",
+                        dataType: "json",
+                        headers: {
+                            "Authorization": "Bearer " + localStorage.getItem("id_token")
+                        },
+                        data: {
+                            url: data.result.url
+                        },
 
-                    $('.preview').html('<img src="' + data.result.url + '"></img>');
+                        success: function(response) {
+                            console.log(response);
+                            pubnub.publish(
+                                {
+                                    message: {
+                                        action: 'profile_update'
+                                    },
+                                    channel: localStorage.getItem('redirect_code')
+                                },
+                                function (status, response) {
+                                    // handle status, response
+                                    console.log(response);
+                                }
+                            );
+                        },
 
+                        error: function(error, status) {
+                            console.error(error, status);
+                        }
+                    });
 
-
-                    $('.image_public_id').val(data.result.public_id);
                     return true;});
             }
         });

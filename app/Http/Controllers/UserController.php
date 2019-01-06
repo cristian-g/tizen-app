@@ -67,7 +67,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
         $userInfo = Auth0::jwtUser();
         $user = User::where('sub_auth0', $userInfo->sub) -> first();
@@ -80,10 +80,9 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $userInfo = Auth0::jwtUser();
         $user = User::where('sub_auth0', $userInfo->sub) -> first();
