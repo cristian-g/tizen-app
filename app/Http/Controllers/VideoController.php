@@ -51,12 +51,8 @@ class VideoController extends Controller
         }
 
         // Recommended for you
+        $recommended_videos = 6.0;
         if ($user !== null) {
-            /*$categories = Category::withCount([
-                'views as views_count' => function ($query) use ($user) {
-                    $query->where('user_id', $user->id);
-                }
-            ])->get();*/
             $categories = DB::table('categories')
                 ->select(['categories.*', DB::raw('COUNT(views.id) as views'), DB::raw('MAX(views.created_at) as last_view')])
                 ->where('views.user_id', '=', $user->id)
@@ -67,34 +63,43 @@ class VideoController extends Controller
                 ->get();
 
             $totalViews = 0;
-            /*foreach ($categories as $category) {
-                $totalViews += $category["views"]
-            }*/
-
-
-
-
-
-            $categoriesArray = [];
             foreach ($categories as $category) {
-                //array_push($categoriesArray, Category::getCategoryJson($category));
-                array_push($categoriesArray, $category);
+                $totalViews += $category->views;
             }
-            //array_push($json, $categoriesArray);
-        }
+            foreach ($categories as $category) {
+                $category->normalized_views = floor(($category->views / $totalViews) * $recommended_videos);
+            }
 
-        /*if ($user !== null) {
-            $recommendedVideosJson = [];
-            $pendingViews = $user->views()->with('video')->where(['completed' => false])->get();
-            foreach ($pendingViews as $view) {
-                $video = $view->video()->first();
-                array_push($recommendedVideosJson, self::getVideoJson($video));
+            $current = 0;
+            foreach ($categories as $category) {
+                $current += $category->normalized_views;
             }
+            $difference = $recommended_videos - $current;
+
+            if (count($categories) > 0) {
+                $categories[0]->normalized_views += $difference;
+            }
+
+            $recommendedVideosArray = [];
+            foreach ($categories as $category) {
+                $videos = Video::where(['category_id' => $category->id])->with('views')->get()->sortBy(function($video) use ($user)
+                {
+                    $count = $video->views()->where(['views.user_id' => $user->id])->count();
+                    return $count;
+                });
+                $count_category = 0;
+                foreach ($videos as $index => $video) {
+                    if ($count_category >= $category->normalized_views) break;
+                    array_push($recommendedVideosArray, $video);
+                    $count_category++;
+                }
+            }
+
             $recommendedJson = [
-                'continue_watching' => $recommendedVideosJson
+                'recommended_for_you' => $recommendedVideosArray
             ];
             array_push($json, $recommendedJson);
-        }*/
+        }
 
         // New
         $newVideosJson = [];
@@ -213,6 +218,13 @@ class VideoController extends Controller
             $view->update([
                 "completed" => true
             ]);
+        }
+        else {
+            $view = new \App\View();
+            $view->user()->associate($user);
+            $view->video()->associate($video);
+            $view->completed = true;
+            $view->save();
         }
 
         return response()->json(null, 200);
