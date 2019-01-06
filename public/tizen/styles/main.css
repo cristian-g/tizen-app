@@ -818,7 +818,8 @@ body {
     padding: 15px 30px;
 }
 .category-row{
-    display: -webkit-inline-box;	
+    display: -webkit-inline-box;
+    margin-bottom: 20px;	
 }
 .detail-tag{
 	font-weight: 900;
