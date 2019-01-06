@@ -79,9 +79,7 @@
         <div id="btnBuy" focusable data-focusable-depth="2" data-focusable-initial-focus="true" data-focusable-name="btnBuy" class="btn btn-gap btn-buy">
             <i class="fa fa-shopping-cart icon-buy"></i>(<span id="price"></span> €)
         </div>
-        <div id="btnBuyComp" focusable data-focusable-depth="2" data-focusable-initial-focus="true" data-focusable-name="btnBuyComp" class="btn btn-gap btn-buyComp">
-            <i class="fa fa-globe icon-buy"></i>(<span id="comp-price"></span> €)
-        </div>
+        <div id="logBuyMsg">You need to Log In to buy a video.</div>
     </div>
     <!-- page: TALK (LIST) -->
     <div class="depth2 related-play-list">
@@ -115,12 +113,8 @@
 
 <!-- depth4 -->
 <div id="paymentPage" class="depth4 list-wrapper page sub-page">
-<button id="individual-purchase">Individual purchase</button><span id="individual-purchase-link-message"></span>
-        <div id="individual-purchase-view">
-        </div>
-        <button id="company-purchase">Purchase as a company</button><span id="company-purchase-link-message"></span>
-        <div id="company-purchase-view">
-        </div>
+	<div id="buy-link-message" class="auth-msg"></div>
+	 <img id='barcodeBuy' class="qr-code" src="" alt="" title="logIn" width="500" height="500" />
 </div>
 
 <!-- LogIn depth5 -->
