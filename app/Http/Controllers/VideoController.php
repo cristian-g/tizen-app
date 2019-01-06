@@ -90,7 +90,7 @@ class VideoController extends Controller
                 $count_category = 0;
                 foreach ($videos as $index => $video) {
                     if ($count_category >= $category->normalized_views) break;
-                    array_push($recommendedVideosArray, $video);
+                    array_push($recommendedVideosArray, self::getVideoJson($video));
                     $count_category++;
                 }
             }
