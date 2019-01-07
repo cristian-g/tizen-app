@@ -32,6 +32,8 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
+        \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::dropIfExists('categories');
+        \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

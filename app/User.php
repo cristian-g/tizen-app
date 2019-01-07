@@ -24,4 +24,9 @@ class User extends Model
     {
         return $this->hasMany('App\Purchase');
     }
+
+    public function department()
+    {
+        return $this->belongsTo('App\Department');
+    }
 }

@@ -56,10 +56,47 @@
     </nav>
 
     @yield('content')
+
+    <footer>
+        <p class="text-center">
+            <a href="javascript:storeExampleNotification()">{{ config('app.name', 'Laravel') }}</a>
+        </p>
+    </footer>
 </div>
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
+<script>
+    function storeExampleNotification() {
+        $.ajax({
+            url: '/api/storeExampleNotification',
+            method: "POST",
+            dataType: "json",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("id_token")
+            },
+            success: function(response) {
+                console.log(response);
+                pubnub.publish(
+                    {
+                        message: {
+                            action: 'notifications_update'
+                        },
+                        channel: localStorage.getItem('redirect_code')
+                    },
+                    function (status, response) {
+                        // handle status, response
+                        console.log(response);
+                    }
+                );
+            },
+
+            error: function(error, status) {
+                console.error(error, status);
+            }
+        });
+    }
+</script>
 @yield('scripts')
 </body>
 </html>

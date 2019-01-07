@@ -84,6 +84,9 @@
                         localStorage.removeItem('id_token');
                         // Change UI
                     }
+                    if (message.message.action === 'notifications_update') {
+                        loadNotifications();
+                    }
                 },
                 presence: function(presenceEvent) {
                     // handle presence
@@ -457,6 +460,80 @@
             }
             // ------------------------------------------------------
             // END OF GET CATEGORY
+            // ------------------------------------------------------
+            // ------------------------------------------------------
+            // START OF GET CONTACTS
+            // ------------------------------------------------------
+            function loadContacts() {
+                $.ajax({
+                    url: 'http://ztudy.tk/api/contacts',
+                    method: "GET",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem("id_token")
+                    },
+                    success: function(response) {
+                        console.log(response);
+                    },
+
+                    error: function(error, status) {
+                        console.error(error, status);
+                    }
+                });
+            }
+            // ------------------------------------------------------
+            // END OF GET CONTACTS
+            // ------------------------------------------------------
+            // ------------------------------------------------------
+            // START OF STORE RECOMMENDATION
+            // ------------------------------------------------------
+            // Example: storeRecommendation('tech_1', 'estudy|esteve.genovard');
+            function storeRecommendation(videoId, userId) {
+                $.ajax({
+                    url: 'http://ztudy.tk/api/recommendation',
+                    method: "POST",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem("id_token")
+                    },
+                    data: {
+                        video_id: videoId,
+                        user_id: userId
+                    },
+                    success: function(response) {
+                        console.log(response);
+                    },
+
+                    error: function(error, status) {
+                        console.error(error, status);
+                    }
+                });
+            }
+            // ------------------------------------------------------
+            // END OF STORE RECOMMENDATION
+            // ------------------------------------------------------
+            // ------------------------------------------------------
+            // START OF GET NOTIFICATIONS
+            // ------------------------------------------------------
+            function loadNotifications() {
+                $.ajax({
+                    url: 'http://ztudy.tk/api/notifications',
+                    method: "GET",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem("id_token")
+                    },
+                    success: function(response) {
+                        console.log(response);
+                    },
+
+                    error: function(error, status) {
+                        console.error(error, status);
+                    }
+                });
+            }
+            // ------------------------------------------------------
+            // END OF GET NOTIFICATIONS
             // ------------------------------------------------------
         </script>
     </body>

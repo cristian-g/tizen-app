@@ -19,6 +19,11 @@ class CreateUsersTable extends Migration
             $table->string('sub_auth0')->nullable()->unique();
             $table->string('picture')->nullable();
             $table->string('current_code')->nullable();
+
+            // Department
+            $table->unsignedInteger('department_id')->nullable();
+            $table->foreign('department_id')->references('id')->on('departments');
+
             $table->timestamps();
         });
     }
@@ -30,6 +35,8 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::dropIfExists('users');
+        \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

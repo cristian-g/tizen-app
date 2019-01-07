@@ -14,7 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
-//Route::get('/{code}', 'Controller@handleCode');
 
 Auth::routes();
 

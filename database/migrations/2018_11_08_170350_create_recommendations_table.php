@@ -1,12 +1,10 @@
 <?php
 
-use App\User;
-use App\Video;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateViewsTable extends Migration
+class CreateRecommendationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,21 +13,20 @@ class CreateViewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('views', function (Blueprint $table) {
+        Schema::create('recommendations', function (Blueprint $table) {
             $table->increments('id');
 
-            // Connected user
-            $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            // Origin user
+            $table->unsignedInteger('origin_user_id');
+            $table->foreign('origin_user_id')->references('id')->on('users');
+
+            // Target user
+            $table->unsignedInteger('target_user_id');
+            $table->foreign('target_user_id')->references('id')->on('users');
 
             // Video
             $table->string('video_id');
             $table->foreign('video_id')->references('id')->on('videos');
-
-            $table->unique(['user_id', 'video_id']);
-
-            $table->boolean('completed')->default(false);
-            $table->unsignedBigInteger('time_to_resume')->default(0);
 
             $table->timestamps();
         });
@@ -43,7 +40,7 @@ class CreateViewsTable extends Migration
     public function down()
     {
         \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        Schema::dropIfExists('views');
+        Schema::dropIfExists('recommendations');
         \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
