@@ -296,6 +296,19 @@ body {
     border: 10px solid #262626;
 }
 
+.item-user {
+    position: relative;
+    width: 200px; /*474px;*/
+    height: 200px; /*265px;*/
+    -webkit-box-sizing: border-box;
+    margin: 0 14px 0 0; /*0 24px 0 0;*/
+    border: 10px solid #262626;
+}
+
+.item-user.focused {
+    border: 4px solid #EEE;
+}
+
 .item-blank {
     border: 0;
 }
@@ -751,6 +764,12 @@ body {
 
 .btn-preview:before {
     content: 'PREVIEW';
+    line-height: 80px;
+    margin: 0 44px 0 82px;
+}
+
+.btn-rec:before {
+    content: 'RECOMMEND VIDEO';
     line-height: 80px;
     margin: 0 44px 0 82px;
 }

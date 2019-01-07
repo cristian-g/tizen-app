@@ -152,6 +152,10 @@ $('document').ready(function(){
             myVideoApp.launchPlayer();
         });
         
+        $('#btnRecommend').on('selected', function(){
+            myVideoApp.changeDepth(myVideoApp._DEPTH.RECOMMEND);
+        });
+        
         $('#btnPreview').on('selected', function(){
         	$('#caphPlayer video')[0].currentTime = 0;
         	myVideoApp.isPreview = true;

@@ -17,53 +17,53 @@ class SeedData extends Migration
     {
         $usersInfo = [
             [
-                'name' => "Adrià Puigdellívol Pérez",
-                'sub_auth0' => "estudy|adria.puigdellivol",
+                'name' => "Josep Ruiz",
+                'sub_auth0' => "josep-rui",
                 'picture' => "/img/estudy/adria.puigdellivol.jpg",
             ],
             [
-                'name' => "Alejandro Sardá Sagarra",
-                'sub_auth0' => "estudy|alejandro.sarda",
+                'name' => "Jandro Mendez",
+                'sub_auth0' => "jandro-mendez",
                 'picture' => "/img/estudy/alejandro.sarda.jpg",
             ],
             [
-                'name' => "Andreu Salzano García",
-                'sub_auth0' => "estudy|andreu.salzano",
+                'name' => "Andreu Ramon",
+                'sub_auth0' => "andreu-ramon",
                 'picture' => "/img/estudy/andreu.salzano.jpg",
             ],
             [
-                'name' => "Angela Brunet Rodríguez",
-                'sub_auth0' => "estudy|angela.brunet",
+                'name' => "Bruno Lopez",
+                'sub_auth0' => "bruno-lopez",
                 'picture' => "/img/estudy/angela.brunet.jpg",
             ],
             [
-                'name' => "Borja Aguilar Vítores",
-                'sub_auth0' => "estudy|borja.aguilar",
+                'name' => "Victor Aguiular",
+                'sub_auth0' => "victor-aguilar",
                 'picture' => "/img/estudy/borja.aguilar.jpg",
             ],
             [
-                'name' => "Carla Radresa Badosa",
-                'sub_auth0' => "estudy|carla.radresa",
+                'name' => "Carla García",
+                'sub_auth0' => "carla-garcia",
                 'picture' => "/img/estudy/carla.radresa.jpg",
             ],
             [
-                'name' => "Carlos Rocha Cavaller",
-                'sub_auth0' => "estudy|carlos.rocha",
+                'name' => "Carlos Fernández",
+                'sub_auth0' => "carlos-fernandez",
                 'picture' => "/img/estudy/carlos.rocha.jpg",
             ],
             [
-                'name' => "Carlos Muntané Fuentes",
-                'sub_auth0' => "estudy|carlos.muntane",
+                'name' => "Antoni Sardà",
+                'sub_auth0' => "antoni-sarda",
                 'picture' => "/img/estudy/carlos.muntane.jpg",
             ],
             [
-                'name' => "Carme Perseguer Barragán",
-                'sub_auth0' => "estudy|carme.perseguer",
+                'name' => "Natàlia Rius",
+                'sub_auth0' => "natalia-rius",
                 'picture' => "/img/estudy/carme.perseguer.jpg",
             ],
             [
-                'name' => "Daniel Solé Serentill",
-                'sub_auth0' => "estudy|daniel.ss",
+                'name' => "Daniel Martínez",
+                'sub_auth0' => "dnaiel-martinez",
                 'picture' => "/img/estudy/daniel.ss.jpg",
             ],
             [

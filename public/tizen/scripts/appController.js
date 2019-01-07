@@ -11,10 +11,12 @@ var myVideoApp = {
         RECOMMEND: 7
     },
     _dataCategory: [],
+    _dataUsers: [],
     newVideos: [],
     mostViewed: [],
     relatedPlaylistItems: [],
     currentCategory: undefined,
+    currentUsers: undefined,
     currentDepth: undefined,
     categoryList: undefined,
     lastDepth: undefined,
@@ -199,6 +201,100 @@ var myVideoApp = {
 	        });
 			this.lastDepth = this.currentDepth;
 		break;
+		case this._DEPTH.RECOMMEND:
+			this.loadRecommendUser(function(){
+	        	var focusHandler = function($event, category){
+	                myVideoApp.setOverviewDark(false);
+	                myVideoApp.setUserListContainer($event, category);
+	            };
+
+	            var selectHandler = function($event, category){
+	                myVideoApp.setOverviewDark(false);
+	                //recommend here
+	            };
+
+	            var blurHandler = function(){
+	                if(myVideoApp.currentDepth === myVideoApp._DEPTH.INDEX){
+	                    myVideoApp.setOverviewDark(true);
+	                }
+	            };
+	            
+	            $('#users_0').html('');
+	            $('#users_1').html('');
+	            $('#users_2').html('');
+	            $('#users_3').html('');
+	            $('#users_4').html('');
+	            
+	            if(myVideoApp._dataUsers[0] != null){
+	            	$('#area-usr0').show();
+		           	 $('#users_0').caphList({
+		                    items: myVideoApp._dataUsers[0],
+		                    template: 'userlist',
+		                    containerClass: 'list-container',
+		                    wrapperClass: "list-scroll-wrapper"
+		                }).on('focused', function($event){
+		                    focusHandler($event, 0);
+		                }).on('selected', function($event){
+		                	selectHandler($event, 0);
+		                }).on('blurred', function(){
+		                    blurHandler();
+		                });
+		           	 
+	            }else{
+	           	 $('#area-usr0').hide();
+	            }
+	            
+	            $('#users_1').caphList({
+                    items: myVideoApp._dataUsers[1],
+                    template: 'userlist',
+                    containerClass: 'list-container',
+                    wrapperClass: "list-scroll-wrapper"
+                }).on('focused', function($event){
+                    focusHandler($event, 1);
+                }).on('selected', function($event){
+                	selectHandler($event, 1);
+                }).on('blurred', function(){
+                    blurHandler();
+                });
+	            $('#users_2').caphList({
+                    items: myVideoApp._dataUsers[2],
+                    template: 'userlist',
+                    containerClass: 'list-container',
+                    wrapperClass: "list-scroll-wrapper"
+                }).on('focused', function($event){
+                    focusHandler($event, 2);
+                }).on('selected', function($event){
+                	selectHandler($event, 2);
+                }).on('blurred', function(){
+                    blurHandler();
+                });
+	            $('#users_3').caphList({
+                    items: myVideoApp._dataUsers[3],
+                    template: 'userlist',
+                    containerClass: 'list-container',
+                    wrapperClass: "list-scroll-wrapper"
+                }).on('focused', function($event){
+                    focusHandler($event, 3);
+                }).on('selected', function($event){
+                	selectHandler($event, 3);
+                }).on('blurred', function(){
+                    blurHandler();
+                });
+	            $('#users_4').caphList({
+                    items: myVideoApp._dataUsers[4],
+                    template: 'userlist',
+                    containerClass: 'list-container',
+                    wrapperClass: "list-scroll-wrapper"
+                }).on('focused', function($event){
+                    focusHandler($event, 4);
+                }).on('selected', function($event){
+                	selectHandler($event, 4);
+                }).on('blurred', function(){
+                    blurHandler();
+                });
+	        });
+			this.lastDepth = this.currentDepth;
+			break;
 		default:
 			this.lastDepth = this.currentDepth;
 			break;
@@ -227,6 +323,19 @@ var myVideoApp = {
             	}
             }
         }
+        if(myVideoApp.currentDepth == 7){
+        	if(myVideoApp._dataUsers[0] != null){
+            	$.caph.focus.controllerProvider.getInstance().focus(
+                        $('#' + myVideoApp._dataUsers[0][0].id)
+                    );
+                    myVideoApp.setUserListContainer(null, 0);
+            }else{
+            	$.caph.focus.controllerProvider.getInstance().focus(
+                        $('#' + myVideoApp._dataUsers[1][0].id)
+                    );
+                    myVideoApp.setUserListContainer(null, 1);
+            }
+        }
     },
     setListContainer: function($event, category){
         if(myVideoApp.currentDepth === myVideoApp._DEPTH.INDEX){
@@ -253,6 +362,27 @@ var myVideoApp = {
         		}
         	}
             myVideoApp.currentCategory = category;
+        }
+    },
+    setUserListContainer: function($event, category){
+        if(myVideoApp.currentDepth === myVideoApp._DEPTH.RECOMMEND){
+            $('#list-users > .list-area').addClass('list-fadeout'); // fade-out for each list
+            $('#users_' + category).parent().removeClass('list-fadeout');
+
+            // Move Container
+            if(category === myVideoApp.currentUsers){
+                return;
+            }
+            if(myVideoApp._dataUsers[0] == null){
+            	$('#list-users').css({
+            		transform: 'translate3d(0, ' + (-CONSTANT.SCROLL_HEIGHT_OF_INDEX * (category - 1)) + 'px, 0)'
+            	});
+        	}else{
+        		$('#list-users').css({
+	            		transform: 'translate3d(0, ' + (-CONSTANT.SCROLL_HEIGHT_OF_INDEX * category) + 'px, 0)'
+    			 });
+        	}
+            myVideoApp.currentUsers = category;
         }
     },
     updateOverview: function(item){
@@ -419,11 +549,13 @@ var myVideoApp = {
             	$('#detail-purch').html(myVideoApp.currentVideo.purchases);
             	if(myVideoApp.currentVideo.purchased){
             		$('#btnBuy').hide();
-            		$('#btnPlay').show()
+            		$('#btnPlay').show();
+            		$('#btnRecommend').show();
             	}else{
             		$('#btnPlay').hide();
             		$('#price').html(video.price);
             		$('#btnBuy').show();
+            		$('#btnRecommend').hide();
                 	if(localStorage.getItem('id_token') == null){
                 		$('#logBuyMsg').show();
                 	}else{
@@ -574,6 +706,39 @@ var myVideoApp = {
             }
         });
         
+    },
+    loadRecommendUser: function(callback){
+    	 $.ajax({
+             url: 'http://ztudy.tk/api/contacts',
+             method: "GET",
+             dataType: "json",
+             async: false,
+             headers: {
+                 "Authorization": "Bearer " + localStorage.getItem("id_token")
+             },
+             success: function(response) {
+                 console.log(response);
+     	            
+            	if(response[0].frequent_contacts.length != 0){
+ 	            	myVideoApp._dataUsers[0] = response[0].frequent_contacts;
+            	}else{
+            		myVideoApp._dataUsers[0] = undefined;
+            	}
+            	
+            	myVideoApp._dataUsers[1] = response[1].users;
+            	myVideoApp._dataUsers[2] = response[2].users;
+            	myVideoApp._dataUsers[3] = response[3].users;
+            	myVideoApp._dataUsers[4] = response[4].users;
+             	
+                 var focusController = $.caph.focus.controllerProvider.getInstance();
+
+                 callback && callback();
+             },
+
+             error: function(error, status) {
+                 console.error(error, status);
+             }
+         });
     },
     changeCategory: function(category){
     	$('#category-title').html(category);
@@ -745,6 +910,6 @@ var myVideoApp = {
                 console.error(error, status);
             }
         });
-    }
+    },
 
 };
