@@ -80,7 +80,7 @@ class RecommendationController extends Controller
 
         $recommendation->video()->associate($video);
 
-        $targetUser = User::where('sub_auth0', 'estudy|esteve.genovard') -> first();
+        $targetUser = User::where('sub_auth0', 'ernesto-sevilla') -> first();
         $recommendation->originUser()->associate($targetUser);
 
         $recommendation->save();
