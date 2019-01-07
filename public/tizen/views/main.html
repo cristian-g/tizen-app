@@ -28,6 +28,10 @@
             <div class="btn-icon icon-caph icon-caph-return"></div>
         </div>
         
+        <div id="btnBack7" focusable data-focusable-depth="7" class="depth7 btn btn-gap btn-return">
+            <div class="btn-icon icon-caph icon-caph-return"></div>
+        </div>
+        
         <div id="btnLogIn" focusable data-focusable-depth="1" class="depth1 groupNotLogged btn btnSup">
             <div class="btnSupText">Log In/Sign up</div>
         </div>  
@@ -35,11 +39,16 @@
         <div id="profile-view" class="depth1 groupLogged card btn btn-gap" style="background-color: rgba(105, 105, 105, 0.2);">
             <div class="card-body">
             <img class="card-img-top">
-                <div class="card-title"></div>
+                <div class="card-title"></div><i class="fa fa-bell noti-advise"></i>
             </div>
-            <div id="logOut" class="select-logout" style="opacity:0">
-	    		<div id="logOutOpt" focusable data-focusable-depth="1" class="depth1 opt-logout"><i class="fa fa-sign-out" style="font-size:35px;margin-right: 30px;"></i>Log out</div>
-    		</div>  
+           	<div id="profileSelect" style="opacity:0">
+	           	<div id="logOut" class="select-logout">
+	            	<div id="logOutOpt" focusable data-focusable-depth="1" class="depth1 opt-logout"><i class="fa fa-sign-out" style="font-size:35px;margin-right: 30px;"></i>Log out</div>
+		    		</div>
+	    		<div  id="noti" class="select-logout">
+	  			    <div id="NotiOpt" focusable data-focusable-depth="1" class="depth1 opt-logout"><i class="fa fa-bell" style="font-size:35px;margin-right: 30px;"></i><span id="not-msg"></span></div>
+	    		</div>
+           	</div> 
         </div>
         
     </div>
@@ -49,7 +58,7 @@
         <div class="depth4 title-header">Payment</div>
         <div class="depth5 title-header">Log In</div>
         <div class="depth6 title-header">Category - <span id="category-title"></span><div id="category-item-title" style="margin-top: 20px;color: rgba(255, 0, 0, 0.298039);text-shadow: -1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff;font: 60px 'SamsungSVD_Latin Medium';"></div></div>
-    	<div class="depth7 title-header">Recommend video</div>
+    	<div class="depth7 title-header">Recommend video<div id="recommended"></div></div>
     </div>
     
     <!-- page: INDEX (OVERVIEW) -->

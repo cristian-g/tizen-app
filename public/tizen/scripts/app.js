@@ -49,6 +49,25 @@ $('document').ready(function(){
                         }
                     });
                 }
+                if (message.message.action === 'notifications_update') {
+                	 $.ajax({
+                         url: 'http://ztudy.tk/api/notifications',
+                         method: "GET",
+                         dataType: "json",
+                         headers: {
+                             "Authorization": "Bearer " + localStorage.getItem("id_token")
+                         },
+                         success: function(response) {
+                             console.log(response);
+                             myVideoApp.notification = response.notifications[0]
+                             myVideoApp.showNotification();
+                         },
+
+                         error: function(error, status) {
+                             console.error(error, status);
+                         }
+                     });
+                }
             	console.log(message);
 
             },
@@ -103,6 +122,9 @@ $('document').ready(function(){
         $('#btnBack6').on('selected', function(){
             myVideoApp.back();
         });
+        $('#btnBack7').on('selected', function(){
+            myVideoApp.back();
+        });
         $('.select-opt').on('focused', function(){
         	myVideoApp.setOverviewDark(false);
         	myVideoApp.showCategoryList();
@@ -137,10 +159,15 @@ $('document').ready(function(){
         
         $('#logOutOpt').on('focused', function(){
             myVideoApp.setOverviewDark(false);
-        	$('#logOut').css('opacity','1');
+        	$('#logOut').addClass('focus-in');
+        	$('#description').css('opacity','0.1');
+        	$('#profileSelect').css('opacity','1');
         }).on('blurred', function(){
-        	$('#logOut').css('opacity','0');
+        	$('#logOut').removeClass('focus-in');
+        	$('#description').css('opacity','1');
+        	$('#profileSelect').css('opacity','0');
         }).on('selected', function(){
+        	
         	myVideoApp.logOut();
         });
         

@@ -20,6 +20,8 @@ var myVideoApp = {
     currentDepth: undefined,
     categoryList: undefined,
     lastDepth: undefined,
+    notification: undefined,
+    userRecommended: undefined,
     currentVideo: undefined,
     requestRunning: false,
     dialogSetting: undefined,
@@ -87,6 +89,10 @@ var myVideoApp = {
 				//not logged
 				$('.groupLogged').hide();
 				$('.groupNotLogged').show();
+			}
+			if(myVideoApp.notification == null){
+				$('.noti-advise').hide();
+				$('#NotiOpt').hide();
 			}
 			this.loadHomePage(function(){
 	        	var focusHandler = function($event, category){
@@ -210,8 +216,8 @@ var myVideoApp = {
 
 	            var selectHandler = function($event, category){
 	            	var currentUser = myVideoApp._dataUsers[category][$($event.target).data('index')];
+	            	myVideoApp.userRecommended = currentUser.name;
 	                myVideoApp.setOverviewDark(false);
-	                //recommend here
 	                myVideoApp.storeRecommendation(myVideoApp.currentVideo.id, currentUser.id);
 	            };
 
@@ -608,6 +614,9 @@ var myVideoApp = {
         }
         var targetDepth;
         switch(this.currentDepth){
+        	case this._DEPTH.RECOMMEND:
+        		targetDepth = this.lastDepth;
+        		break;
             case this._DEPTH.DETAIL:
     			if(myVideoApp.lastDepth != 6){
     				targetDepth = 1;
@@ -927,12 +936,35 @@ var myVideoApp = {
             },
             success: function(response) {
                 console.log(response);
+                $('#recommended').html('Video successfully recommended to ' + myVideoApp.userRecommended + ', select another user to recommend again this video or select BACK to continue using Ztudy.')
             },
 
             error: function(error, status) {
                 console.error(error, status);
             }
         });
+    },
+    showNotification: function(){
+    	$('#not-msg').html(myVideoApp.notification.origin_user.name + " has recommended you '" + myVideoApp.notification.video.name + "'.");
+        $('#NotiOpt').on('focused', function(){
+            myVideoApp.setOverviewDark(false);
+        	$('#description').css('opacity','0.1');
+        	$('#noti').addClass('focus-in');
+        	$('#profileSelect').css('opacity','1');
+        }).on('blurred', function(){
+        	$('#description').css('opacity','1');
+        	$('#noti').removeClass('focus-in');
+        	$('#profileSelect').css('opacity','0');
+        }).on('selected', function(){
+        	if(!myVideoApp.requestRunning){
+        		myVideoApp.showDetail(myVideoApp.notification.video);
+            	$('#NotiOpt').hide();
+            	$('.noti-advise').hide();
+            	myVideoApp.notification = null;
+        	}
+        });
+        $('#NotiOpt').show();
+        $('.noti-advise').show();
     }
 
 };

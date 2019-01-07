@@ -816,7 +816,6 @@ body {
     font: 60px 'SamsungSVD_Latin Medium';
 }
 .select-logout{
-    background-color: #1C1CD8;    
     position: relative;
     float: left;
     font: bold 28px 'SamsungSVD_Latin Medium';
@@ -862,4 +861,18 @@ body {
     display: table-cell;
     vertical-align: middle;
     border-radius: 15px;
+}
+#recommended{
+    font-size: 40px;
+    margin-top: 20px;
+    font-weight: 300;
+    padding-right: 70px;
+}
+.focus-in{
+	background-color: #1C1CD8;
+}
+.noti-advise{
+    font-size: 35px;
+    margin-top: 15px;
+    color: red;
 }
