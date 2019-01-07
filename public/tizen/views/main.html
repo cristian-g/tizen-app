@@ -164,7 +164,12 @@
         </div>
     </div>
 </div>
-
+<div id="picture-modal" class="modal">
+	<h1>User picture changed!</h1>
+	<div style="overflow: hidden; height: 400px; width: 400px;">
+		<img alt="Photo" src="" style="width: 400px">
+	</div>
+</div>
 <script id="playlist1" type="text/template">
     <div id="<%=item.id%>" class="item" focusable data-focusable-depth="1" data-index="<%= index %>">
         <div class="loader <%=(!item.loaded)?'hide':'' %>"></div>

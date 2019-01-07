@@ -43,6 +43,11 @@ $('document').ready(function(){
                             console.log(response);
                             localStorage.setItem('image', response.user.picture);
                             document.querySelector('#profile-view img').src = response.user.picture;
+                            $('#picture-modal img').attr('src', response.user.picture);
+                            document.querySelector('#picture-modal img').addEventListener('load', function(){
+                            	$('#picture-modal').fadeIn(500);
+                                setTimeout(function(){ $('#picture-modal').fadeOut(500); }, 3500);
+                            })
                         },
                         error: function(error, status) {
                             console.error(error, status);
