@@ -74,6 +74,8 @@ var myVideoApp = {
         case this._DEPTH.LOGIN:
         	if(this.currentDepth != this._DEPTH.DETAIL){
         		this.lastDepth = 1;
+        	}else{
+        		this.lastDepth = this.currentDepth;
         	}
         	break;
 		case this._DEPTH.INDEX:
@@ -559,6 +561,7 @@ var myVideoApp = {
             		$('#btnBuy').hide();
             		$('#btnPlay').show();
             		$('#btnRecommend').show();
+            		$('#logBuyMsg').hide();
             	}else{
             		$('#btnPlay').hide();
             		$('#price').html(video.price);
@@ -640,6 +643,9 @@ var myVideoApp = {
             case this._DEPTH.LOGIN:
             	if(myVideoApp.lastDepth == myVideoApp._DEPTH.DETAIL){
             		targetDepth = myVideoApp._DEPTH.DETAIL;
+            		if (localStorage.getItem("id_token") != null) {
+            			$('#logBuyMsg').hide();
+            		}
             	}else{
             		targetDepth = this._DEPTH.INDEX;
             	}

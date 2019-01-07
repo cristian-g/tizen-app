@@ -38,7 +38,9 @@
         
         <div id="profile-view" class="depth1 groupLogged card btn btn-gap" style="background-color: rgba(105, 105, 105, 0.2);">
             <div class="card-body">
-            <img class="card-img-top">
+            <div style="overflow: hidden; height: 60px; width: 60px;">
+            	<img class="card-img-top">
+            </div>
                 <div class="card-title"></div><i class="fa fa-bell noti-advise"></i>
             </div>
            	<div id="profileSelect" style="opacity:0">
@@ -184,12 +186,10 @@
     </div>
 </script>
 <script id="userlist" type="text/template">
-    <div id="<%=item.id%>" class="item-user" ng-class="{'item-blank': item.isBlank === true}" focusable data-focusable-depth="7" data-index="<%= index %>">
+    <div id="<%=item.id%>" class="item item-playlist" focusable data-focusable-depth="7" data-index="<%= index %>">
         <div class="loader <%=(!item.loaded)?'hide':'' %>" ng-show="item.loaded === false"></div>
-        <div class="content" ng-hide="item.loaded === false" style="background: url(http://ztudy.tk<%=item.photo_urls.url || '' %>);-webkit-background-size:100%;">
-            <div class="text font-label">
-                <div class="font-info"><%=item.name%></div>
-            </div>
+        <div class="content" ng-hide="item.loaded === false" style="background: url(http://ztudy.tk<%=item.photo_urls.url || '' %>);-webkit-background-size:100% 100%;">
+            <div class="playlist-text font-label"><%=item.name%></div>
         </div>
     </div>
 </script>

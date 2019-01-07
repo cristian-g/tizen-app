@@ -876,3 +876,9 @@ body {
     margin-top: 15px;
     color: red;
 }
+#logBuyMsg{
+    position: relative;
+    color: white;
+    margin-left: 570px;
+    padding-top: 20px;
+}
