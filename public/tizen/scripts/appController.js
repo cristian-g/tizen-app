@@ -209,8 +209,10 @@ var myVideoApp = {
 	            };
 
 	            var selectHandler = function($event, category){
+	            	var currentUser = myVideoApp._dataUsers[category][$($event.target).data('index')];
 	                myVideoApp.setOverviewDark(false);
 	                //recommend here
+	                myVideoApp.storeRecommendation(myVideoApp.currentVideo.id, currentUser.id);
 	            };
 
 	            var blurHandler = function(){
@@ -911,5 +913,26 @@ var myVideoApp = {
             }
         });
     },
+    storeRecommendation: function(videoId, userId) {
+        $.ajax({
+            url: 'http://ztudy.tk/api/recommendation',
+            method: "POST",
+            dataType: "json",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("id_token")
+            },
+            data: {
+                video_id: videoId,
+                user_id: userId
+            },
+            success: function(response) {
+                console.log(response);
+            },
+
+            error: function(error, status) {
+                console.error(error, status);
+            }
+        });
+    }
 
 };
