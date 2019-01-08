@@ -155,7 +155,8 @@ body {
 
 .overview.desc {
     font-size: 40px;
-    margin: 0 0 0 112px;
+    margin: 0 112px 0 112px;
+    width: 1668px;
 }
 
 .opacity-dark {
@@ -217,7 +218,7 @@ body {
 }
 
 .list-area.list-fadeout {
-    opacity: .1;
+    opacity: .5;
 }
 
 .list-area .title {
@@ -896,4 +897,24 @@ body {
     display: none;
     margin-bottom: 30px;
     padding-bottom: 30px;
+}
+.neews-feed{
+	display: inline;
+    font-size: 30px;
+    font-weight: 100;
+    position: absolute;
+    top: 0px;
+    right: 100px;
+}
+#news-msg{
+	font-size: 30px;
+    font-weight: 100;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 950px;
+    white-space: nowrap;
+    display: inline-block;
+}
+.news-div{
+	width: 950px;
 }

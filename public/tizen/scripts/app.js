@@ -46,7 +46,7 @@ $('document').ready(function(){
                             $('#picture-modal img').attr('src', response.user.picture);
                             document.querySelector('#picture-modal img').addEventListener('load', function(){
                             	$('#picture-modal').fadeIn(500);
-                                setTimeout(function(){ $('#picture-modal').fadeOut(500); }, 3500);
+                                setTimeout(function(){ $('#picture-modal').fadeOut(500); }, 5500);
                             })
                         },
                         error: function(error, status) {
@@ -401,6 +401,17 @@ $('document').ready(function(){
                 myVideoApp.back();
                 break;
         }
+    });
+    
+    var url= 'http://feeds.feedburner.com/gadgets360-latest';
+    $.ajax({
+      type: 'GET',
+      url: "https://api.rss2json.com/v1/api.json?rss_url=" + url,
+      dataType: 'jsonp',
+      success: function(data) {
+        console.log(data.feed.description);    
+        console.log(data);
+      }
     });
 });
 

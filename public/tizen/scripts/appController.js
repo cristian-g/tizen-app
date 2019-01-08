@@ -16,6 +16,7 @@ var myVideoApp = {
     mostViewed: [],
     relatedPlaylistItems: [],
     currentCategory: undefined,
+    catShown: undefined,
     currentUsers: undefined,
     currentDepth: undefined,
     categoryList: undefined,
@@ -71,6 +72,11 @@ var myVideoApp = {
         $('.depth' + depth).show();
         
         switch (depth) {
+        case this._DEPTH.CATEGORIES:
+        	this.lastDepth = this.currentDepth;
+        	this.currentDepth = depth;
+        	this.configureRSS(this.catShown);
+        	break;
         case this._DEPTH.LOGIN:
         	if(this.currentDepth != this._DEPTH.DETAIL){
         		this.lastDepth = 1;
@@ -763,14 +769,18 @@ var myVideoApp = {
     	switch (category) {
 		case 'Technology':
 			url = 'technology';
+			this.catShown = 0;
 			break;
 		case 'Biology':
+			this.catShown = 1;
 			url = 'biology';
 			break;
 		case 'Sociology':
+			this.catShown = 2;
 			url = 'sociology';
 			break;
 		case 'Graphic Design':
+			this.catShown = 3;
 			url = 'graphic_design';
 			break;
 		default:
@@ -796,6 +806,7 @@ var myVideoApp = {
             	$('#list_0').html('');
             	$('#list_1').html('');
             	if(size > 0){
+            		var id1 = response.videos[0].id;
             		while (i <= 3 && i < size){
             			$('#list_0').append('<div style="position: relative; transform: translate3d(0px, 0px, 0px); margin-right:15px" class=""><div id="'+ response.videos[i].id +'" info-num='+ i + ' class="item" ng-class="{\'item-blank\': item.isBlank === true}" focusable="" data-focusable-depth="6" data-index="0" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">'+
             									'<div class="loader hide" ng-show="item.loaded === false"></div>'+
@@ -848,6 +859,9 @@ var myVideoApp = {
         		$.caph.focus.activate(function(nearestFocusableFinderProvider, controllerProvider) {
 
     			});
+        		$.caph.focus.controllerProvider.getInstance().focus(
+                        $('#list_0 #' + id1)
+                 );
             },
 
             error: function(error, status) {
@@ -971,6 +985,46 @@ var myVideoApp = {
         });
         $('#NotiOpt').show();
         $('.noti-advise').show();
+    },
+    configureRSS: function(category){
+    	var url;
+    	switch(category){
+    	case 0:
+    		url = 'http://feeds.feedburner.com/gadgets360-latest';
+    		break;
+    	case 1:
+    		url = 'http://feeds.biologynews.net/biologynews/headlines';
+    		break;
+    	case 2:
+    		url = 'http://feeds.feedburner.com/ndtvnews-people';
+    		break;
+    	case 3:
+    		url = 'http://www.theartwolf.com/rss.xml';
+    		break;
+    	}
+    	var  showNext = function(items, i){
+    		i++;
+    		if(i >= items.length){
+        		i = 0;
+        	}
+        	if(myVideoApp.currentDepth == myVideoApp._DEPTH.CATEGORIES){
+	        	$('#news-msg').html(items[i].title);
+            	$('#neews-feed').fadeIn(500).delay(3000).fadeOut(500, function(){showNext(items,i)});
+        	}
+    	}
+    	$.ajax({
+    	      type: 'GET',
+    	      url: "https://api.rss2json.com/v1/api.json?rss_url=" + url,
+    	      dataType: 'jsonp',
+    	      success: function(data) {
+    	        console.log(data);
+    	        if(data.items.length != 0){
+    	        	var i = 0;    	        	
+    	        	$('#news-msg').html(data.items[i].title);
+    	        	$('#neews-feed').fadeIn(500).delay(3000).fadeOut(500, function(){showNext(data.items, i)});
+    	        }
+    	      }   
+    	 });
     }
 
 };
