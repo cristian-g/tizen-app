@@ -235,6 +235,7 @@ var myVideoApp = {
 	                }
 	            };
 	            
+	            $('#recommended').html('');
 	            $('#users_0').html('');
 	            $('#users_1').html('');
 	            $('#users_2').html('');
