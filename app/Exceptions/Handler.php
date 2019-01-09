@@ -51,11 +51,13 @@ class Handler extends ExceptionHandler
     {
         //return parent::render($request, $exception);
 
-        if ($exception instanceof HttpException) {
+        return response()->json('The application encountered an error!', 500);
+
+        /*if ($exception instanceof HttpException) {
             return response()->json('The application encountered an error!', 500);
         }
         else {
             return parent::render($request, $exception);
-        }
+        }*/
     }
 }
