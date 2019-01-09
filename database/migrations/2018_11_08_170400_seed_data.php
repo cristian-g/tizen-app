@@ -360,7 +360,7 @@ class SeedData extends Migration
                 "business_price" => 19.50
             ],
             [
-                "description" => 'How networks grew from small groups of connected computers on LAN networks to eventually larger worldwide networks like the ARPANET and even the Internet we know today. We\'ll also discuss how many technologies like Ethernet, MAC addresses, IP Addresses, packet switching, network switches, and TCP/IP were implemented to new problems as our computers became ever-increasingly connected.',
+                "description" => 'How networks grew from small groups of connected computers on LAN networks to eventually larger worldwide networks like the ARPANET and even the Internet we know today.',
                 "id" => 'tech_6',
                 "name" => 'Computer Networks',
                 "author" => 'Crash course',
@@ -452,15 +452,15 @@ class SeedData extends Migration
                 "author" => 'Khan Academy',
                 "date" => '30/07/2015',
                 "duration" => '08:03',
-                "source" => 'https://www.dropbox.com/s/rlj58rezw3noiw9/Diabetes-Bio.mp4?dl=1',
+                "source" => 'https://www.dropbox.com/s/cswa7ohf20yy3ba/Osmosis-Bio.mp4?dl=1',
                 "photo_urls_size" => '240x180',
-                "photo_urls_url" => 'https://www.dropbox.com/s/ukfbqhmytymrd66/diabates.png?dl=1',
+                "photo_urls_url" => 'https://www.dropbox.com/s/3lfb2813ykc7tnw/osmosis.png?dl=1',
                 "color" => 'rgba(255, 0, 0, .3)',
                 "price" => 1.27,
                 "business_price" => 10.55
             ],
             [
-                "description" => 'This animation by Nucleus shows you the function of plant and animal cells for middle school and high school biology, including organelles like the nucleus, nucleolus, DNA (chromosomes), ribosomes, mitochondria, etc. Also included are ATP molecules, cytoskeleton, cytoplasm, microtubules, proteins, chloroplasts, chlorophyll, cell walls, cell membrane, cilia, flagellae, etc.',
+                "description" => 'This animation by Nucleus shows you the function of plant and animal cells for middle school and high school biology, including organelles like the nucleus, nucleolus, DNA (chromosomes), ribosomes, mitochondria, etc.',
                 "id" => 'bio_6',
                 "name" => 'Cell Structure',
                 "author" => 'Nucleus Medical Media',
@@ -490,7 +490,7 @@ class SeedData extends Migration
                 "business_price" => 18.99
             ],
             [
-                "description" => 'The independence vote in the north-eastern region of Catalonia shook Spain’s democracy to the core. The Spanish authorities used force to try and stop it, but more than two million Catalans defied the police to back a new independent republic. Nine months on, Catalonia is still part of Spain, its leaders are in prison or abroad and its people are deeply split on the region’s future.',
+                "description" => 'The independence vote in the north-eastern region of Catalonia shook Spain’s democracy to the core. The Spanish authorities used force to try and stop it, but more than two million Catalans defied the police to back a new independent republic.',
                 "id" => 'soci_1',
                 "name" => 'Catalonia independence',
                 "author" => 'BBC',
@@ -504,7 +504,7 @@ class SeedData extends Migration
                 "business_price" => 16.99
             ],
             [
-                "description" => 'In which John Green teaches you about American women in the Progressive Era and, well, the progress they made. So the big deal is, of course, the right to vote women gained when the 19th amendment was passed and ratified. But women made a lot of other gains in the 30 years between 1890 and 1920.',
+                "description" => 'In which John Green teaches you about American women in the Progressive Era and, well, the progress they made. So the big deal is, of course, the right to vote women gained when the 19th amendment was passed and ratified.',
                 "id" => 'soci_2',
                 "name" => 'Womens Suffrage',
                 "author" => 'CrashCourse',
@@ -518,7 +518,7 @@ class SeedData extends Migration
                 "business_price" => 12.99
             ],
             [
-                "description" => '"Are you going to win?" the journalist asked the rebel."We don t deserve to lose," the rebel answered. Twenty years after the Zapatista uprising, VICE traveled to Chiapas to meet Morquecho, the first local journalist to speak with the Zapatista Army face-to-face, so he could recall the events of that fateful day—it was the first indigenous armed uprising in Latin America in the internet age.',
+                "description" => '"Are you going to win?" the journalist asked the rebel."We don t deserve to lose," the rebel answered. Twenty years after the Zapatista uprising, VICE traveled to Chiapas to meet Morquecho, the first local journalist to speak with the Zapatista Army face-to-face.',
                 "id" => 'soci_3',
                 "name" => 'The Zapatista Uprising',
                 "author" => 'Vice',
@@ -532,7 +532,7 @@ class SeedData extends Migration
                 "business_price" => 18.99
             ],
             [
-                "description" => 'One of the worst Financial crisis happened in 2008 which brought the whole world economy to its knees. Lewis Raneiri, a bond trader at solomon brothers changed banking forever with his one simple idea of Mortgaged Backed Securities (M.B.S). Little did he know his one simple yet brilliant idea would mutate into a monstrosity that will leave millions homeless.',
+                "description" => 'One of the worst Financial crisis happened in 2008 which brought the whole world economy to its knees. Lewis Raneiri, a bond trader at solomon brothers changed banking forever with his one simple idea of Mortgaged Backed Securities (M.B.S).',
                 "id" => 'soci_4',
                 "name" => 'Financial crisis',
                 "author" => 'FinHead',
@@ -546,7 +546,7 @@ class SeedData extends Migration
                 "business_price" => 77.77
             ],
             [
-                "description" => 'How sociology defines family and the different terms used to describe specific types of family. We’ll look at marriage in different societies, as well as marital residential patterns and patterns of descent. And, of course, we’ll go over the three sociological schools of thought on the societal role of marriage and family.',
+                "description" => 'How sociology defines family and the different terms used to describe specific types of family. We’ll look at marriage in different societies, as well as marital residential patterns and patterns of descent.',
                 "id" => 'soci_5',
                 "name" => 'Family & Marriage',
                 "author" => 'CrashCourse',
@@ -660,7 +660,7 @@ class SeedData extends Migration
                 "business_price" => 77.77
             ],
             [
-                "description" => 'Creating a modern logo design can be hard. So in this video I\'m giving you a sneaky look into a new logo design course! ',
+                "description" => 'There are many products that are well designed, but don\'t get the traction they deserve because the color\'s not right. Research has shown that the average human attention span has fallen to eight seconds- one second less than that of the goldfish.',
                 "id" => 'graph_6',
                 "name" => 'Color In Sight',
                 "author" => 'Tealeaves',

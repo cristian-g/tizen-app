@@ -1,5 +1,7 @@
 'use strict';
+//APP
 var myVideoApp = {
+		/* VARIABLES */
     _CATEGORY : CONSTANT.CATEGORY,
     _DEPTH : {
         INDEX: 1,
@@ -33,24 +35,8 @@ var myVideoApp = {
     },
     isPreview: false,
     videoControls: undefined,
-    initCategoryListData: function(callback){
-        var focusController = $.caph.focus.controllerProvider.getInstance();
-        setTimeout(function(){
-            var welcomeElement = $('.welcome');
-            /*this.updateCategoryListData(CONSTANT.PREPARED_DATA.COLORS, this._CATEGORY.COLORS, true);
-            this.updateCategoryListData(CONSTANT.PREPARED_DATA.ALPHABETS, this._CATEGORY.ALPHABETS, true);
-            this.updateCategoryListData(CONSTANT.PREPARED_DATA.NUMBERS, this._CATEGORY.NUMBERS, true);
-            welcomeElement.addClass('fade-out');
-            focusController.focus($('#' + this._CATEGORY.COLORS + '-' + CONSTANT.PREPARED_DATA.COLORS[0].id));*/
-            
-            this.updateCategoryListData(CONSTANT.VIDEOS.TECHNOLOGY, this._CATEGORY.TECHNOLOGY, true);
-            this.updateCategoryListData(CONSTANT.PREPARED_DATA.ALPHABETS, this._CATEGORY.ALPHABETS, true);
-            this.updateCategoryListData(CONSTANT.PREPARED_DATA.NUMBERS, this._CATEGORY.NUMBERS, true);
-            welcomeElement.addClass('fade-out');
-            focusController.focus($('#' + this._CATEGORY.COLORS + '-' + CONSTANT.PREPARED_DATA.COLORS[0].id));
-            callback && callback();
-        }.bind(this), 0);//3000);
-    },
+    
+    /* FUNCIONS */
     updateCategoryListData: function(response, category, reload){
         this._dataCategory[category] = response;
     },
@@ -64,6 +50,7 @@ var myVideoApp = {
             container.removeClass('opacity-dark');
         }
     },
+    //canviar pantalla de l'app
     changeDepth: function(depth){
         for(var dth in this._DEPTH){
             if(this._DEPTH[dth] !== depth){
@@ -103,6 +90,7 @@ var myVideoApp = {
 				$('.noti-advise').hide();
 				$('#NotiOpt').hide();
 			}
+			//carregar pàgina d'inici
 			this.loadHomePage(function(){
 	        	var focusHandler = function($event, category){
 	                var currentItem = myVideoApp._dataCategory[category][$($event.target).data('index')];
@@ -217,6 +205,7 @@ var myVideoApp = {
 			this.lastDepth = this.currentDepth;
 		break;
 		case this._DEPTH.RECOMMEND:
+			//carregar usuaris
 			this.loadRecommendUser(function(){
 	        	var focusHandler = function($event, category){
 	                myVideoApp.setOverviewDark(false);
@@ -355,6 +344,7 @@ var myVideoApp = {
             }
         }
     },
+    //focus a una fila
     setListContainer: function($event, category){
         if(myVideoApp.currentDepth === myVideoApp._DEPTH.INDEX){
             $('#list-category > .list-area').addClass('list-fadeout'); // fade-out for each list
@@ -382,6 +372,7 @@ var myVideoApp = {
             myVideoApp.currentCategory = category;
         }
     },
+    //focus a una llista d'usuaris
     setUserListContainer: function($event, category){
         if(myVideoApp.currentDepth === myVideoApp._DEPTH.RECOMMEND){
             $('#list-users > .list-area').addClass('list-fadeout'); // fade-out for each list
@@ -403,11 +394,13 @@ var myVideoApp = {
             myVideoApp.currentUsers = category;
         }
     },
+    //carregar descripció
     updateOverview: function(item){
         $('.overview > .font-header').html(item.name).css('color', item.color);
         $('.desc').html(item.description);
         $('#wrapper').css('borderColor', item.color);
     },
+    //carregar llista de relacionats
     updateRelatedPlaylist: function(category){
     	$.ajax({
             url: 'http://ztudy.tk/api/category/' + category,
@@ -433,44 +426,7 @@ var myVideoApp = {
         });
 
     },
-    initDialogSetting: function(){ // Initialize the setting dialog box.
-        var _this = this;
-        if(!this.dialogSetting){
-            this.dialogSetting = $('#dialogSetting').caphDialog({
-                position: {x:551, y:287},
-                focusOption: {
-                    depth: myVideoApp._DEPTH.SETTING
-                },
-                onSelectButton: function(buttonIndex, event){
-                    _this.dialogSetting.caphDialog('close');
-                }
-            });
-            $('#chkAutoPlay').caphCheckbox({
-                focusOption: {
-                    depth: myVideoApp._DEPTH.SETTING
-                },
-                checked: _this.playSetting.chkAutoPlay,
-                onSelected :function(){
-                    _this.playSetting.chkAutoPlay = !_this.playSetting.chkAutoPlay;
-                }
-            });
-            $('#chkSubTitle').caphCheckbox({
-                focusOption: {
-                    depth: myVideoApp._DEPTH.SETTING
-                },
-                checked: _this.playSetting.chkSubTitle,
-                onSelected :function(){
-                    _this.playSetting.chkSubTitle = !_this.playSetting.chkSubTitle;
-                }
-            });
-        }
-    },
-    openDialogSetting: function(){
-        if(!this.dialogSetting){
-            this.initDialogSetting();
-        }
-        this.dialogSetting.caphDialog('open');
-    },
+    //inicialitzar player
     initVideoPlayer: function(){ // Initialize video plugin using caphMedia.
         var btnPlay = $('#btnPlayerPlay .btn-icon-player');
         var _this = this;
@@ -528,6 +484,7 @@ var myVideoApp = {
             this.back()
         }.bind(this));
     },
+    //mostrar player
     launchPlayer: function(){
         if(this.playSetting.chkSubTitle){
             this.player[0].caphMedia.subTitle(true);
@@ -537,6 +494,7 @@ var myVideoApp = {
         }
         $.caph.focus.controllerProvider.getInstance().focus('btnPlayerPlay');
     },
+    //carregar i mostrar detall de vídeo
     showDetail: function(video){
     	var videoId = video.id;
     	var headers = {};
@@ -587,9 +545,17 @@ var myVideoApp = {
             	myVideoApp.updateRelatedPlaylist(video.category.key);
             	
             	myVideoApp.changeDepth(2);
-            	$.caph.focus.controllerProvider.getInstance().focus(
-                        $('#btnPreview')
-                 );
+            	
+            	if(myVideoApp.currentVideo.purchased){
+            		$.caph.focus.controllerProvider.getInstance().focus(
+                            $('#btnPlay')
+                     );
+            	}else{
+            		$.caph.focus.controllerProvider.getInstance().focus(
+                            $('#btnPreview')
+                     );
+            	}
+            	
             	myVideoApp.loadVideo();
             },
 
@@ -603,6 +569,7 @@ var myVideoApp = {
 
     	
     },
+    //carregar vídeo al visualitzador
     loadVideo: function(){
     	$('#videoSource').attr("src", myVideoApp.currentVideo.source);
     	$('#caphPlayer video').load()
@@ -621,6 +588,7 @@ var myVideoApp = {
     	    $('#currentDuration').html(myVideoApp.sec2MMSS(Math.round(this.currentTime)));
         });
     },
+    //tornar enrere
     back: function(){
         if(this.currentDepth === this._DEPTH.INDEX){
             return;
@@ -665,22 +633,26 @@ var myVideoApp = {
         }
         this.changeDepth(targetDepth);
     },
+    //mostrar select de categories
     showCategoryList: function(){
     	$('#ctgOpt').css('opacity','1');
     	$('#description').css('opacity','0.1');
     	$('.rotate').addClass("down"); 
     },
+    //amagar select de categories
     hideCategoryList: function(){
     	$('#ctgOpt').css('opacity','0');
     	$('#description').css('opacity','1');
     	$('.rotate').removeClass("down"); 
     },
+    //log Out
     logOut: function(){
     	localStorage.removeItem('id_token');
     	$('.groupLogged').hide();
 		$('.groupNotLogged').show();
 		this.changeDepth(1);
     },
+    //carregar pàgina inicial
     loadHomePage: function(callback) {
         var headers = {};
         if (localStorage.getItem("id_token") !== null) {
@@ -703,7 +675,6 @@ var myVideoApp = {
                     myVideoApp._dataCategory[myVideoApp._CATEGORY.RECOMMENDED] = undefined;
                     
             	}else{
-    	            console.log(response);
     	            
 	            	if(response[0].continue_watching.length != 0){
     	            	myVideoApp._dataCategory[myVideoApp._CATEGORY.WATCHING] = response[0].continue_watching;
@@ -734,6 +705,7 @@ var myVideoApp = {
         });
         
     },
+    //carregar pàgina de usuaris
     loadRecommendUser: function(callback){
     	 $.ajax({
              url: 'http://ztudy.tk/api/contacts',
@@ -744,7 +716,6 @@ var myVideoApp = {
                  "Authorization": "Bearer " + localStorage.getItem("id_token")
              },
              success: function(response) {
-                 console.log(response);
      	            
             	if(response[0].frequent_contacts.length != 0){
  	            	myVideoApp._dataUsers[0] = response[0].frequent_contacts;
@@ -767,6 +738,7 @@ var myVideoApp = {
              }
          });
     },
+    //canviar i mostrar la categoria seleccionada
     changeCategory: function(category){
     	$('#category-title').html(category);
     	var url;
@@ -873,6 +845,7 @@ var myVideoApp = {
             }
         });
     },
+    //funció auxiliar per mostrar el temps del vídeo
     sec2MMSS: function(secs){
 	    var sec_num = parseInt(secs, 10); // don't forget the second param
 	    var minutes = Math.floor(sec_num / 60);
@@ -882,6 +855,7 @@ var myVideoApp = {
 	    if (seconds < 10) {seconds = "0"+seconds;}
 	    return minutes+':'+seconds;
     },
+    //actualitzar les característiques del vídeo al detall
     updateVideoDetails: function(videoId) {
         var headers = {};
         if (localStorage.getItem("id_token") !== null) {
@@ -905,6 +879,7 @@ var myVideoApp = {
             }
         });
     },
+    //guardar temps vídeo
     registerVideoView: function(videoId, timeToResume) {
         if (localStorage.getItem("id_token") === null) return;
         $.ajax({
@@ -927,6 +902,7 @@ var myVideoApp = {
             }
         });
     },
+    //registrar visita de vídeo
     completeVideoView: function(videoId) {
         if (localStorage.getItem("id_token") === null) return;
         $.ajax({
@@ -946,6 +922,7 @@ var myVideoApp = {
             }
         });
     },
+    //enviar recomanació
     storeRecommendation: function(videoId, userId) {
         $.ajax({
             url: 'http://ztudy.tk/api/recommendation',
@@ -959,7 +936,6 @@ var myVideoApp = {
                 user_id: userId
             },
             success: function(response) {
-                console.log(response);
                 $('#recommended').html('Video successfully recommended to ' + myVideoApp.userRecommended + ', select another user to recommend again this video or select BACK to continue using Ztudy.')
             },
 
@@ -968,6 +944,7 @@ var myVideoApp = {
             }
         });
     },
+    //mostrar notificació
     showNotification: function(){
     	$('#not-msg').html(myVideoApp.notification.origin_user.name + " has recommended you '" + myVideoApp.notification.video.name + "'.");
         $('#NotiOpt').on('focused', function(){
@@ -990,6 +967,7 @@ var myVideoApp = {
         $('#NotiOpt').show();
         $('.noti-advise').show();
     },
+    //mostrar notícies RSS
     configureRSS: function(category){
     	var url;
     	switch(category){
@@ -1021,7 +999,6 @@ var myVideoApp = {
     	      url: "https://api.rss2json.com/v1/api.json?rss_url=" + url,
     	      dataType: 'jsonp',
     	      success: function(data) {
-    	        console.log(data);
     	        if(data.items.length != 0){
     	        	var i = 0;    	        	
     	        	$('#news-msg').html(data.items[i].title);

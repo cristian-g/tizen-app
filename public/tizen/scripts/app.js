@@ -7,9 +7,8 @@ $('document').ready(function(){
         $.caph.focus.activate(function(nearestFocusableFinderProvider, controllerProvider) {
             controllerProvider.setInitialDepth(1);
         });
-        //myVideoApp.initDialogSetting();
         
-        //auth
+        //Llibreria PubNub
         var pubnub = new PubNub({
             subscribeKey: "sub-c-e3a6b7dc-ff1f-11e8-a399-32ec39b2e34f",
             publishKey: "pub-c-94083343-a5ff-4f4b-90d3-d88866bf799b",
@@ -25,7 +24,6 @@ $('document').ready(function(){
                     displayProfile(message.message.userInfo);
                 }
                 if (message.message.action === 'paid_video') {
-                	console.log('paid');
                     myVideoApp.showDetail(myVideoApp.currentVideo);
                 }
                 if (message.message.action === 'logout') {
@@ -40,7 +38,6 @@ $('document').ready(function(){
                             "Authorization": "Bearer " + localStorage.getItem("id_token")
                         },
                         success: function(response) {
-                            console.log(response);
                             localStorage.setItem('image', response.user.picture);
                             document.querySelector('#profile-view img').src = response.user.picture;
                             $('#picture-modal img').attr('src', response.user.picture);
@@ -63,7 +60,6 @@ $('document').ready(function(){
                              "Authorization": "Bearer " + localStorage.getItem("id_token")
                          },
                          success: function(response) {
-                             console.log(response);
                              myVideoApp.notification = response.notifications[0]
                              myVideoApp.showNotification();
                          },
@@ -73,7 +69,6 @@ $('document').ready(function(){
                          }
                      });
                 }
-            	console.log(message);
 
             },
             presence: function(presenceEvent) {
@@ -82,6 +77,7 @@ $('document').ready(function(){
             }
         });
 
+        //funcionalitats botons
         $('#btnLogIn').on('focused', function(){
             myVideoApp.setOverviewDark(false);
         }).on('selected',function() {
@@ -92,9 +88,6 @@ $('document').ready(function(){
                 data: {
                     action_code: 'auth'
                 },
-                /*headers: {
-                    "Authorization": "Bearer " + accessToken
-                },*/
 
                 success: function(response) {
                     $('#auth-link-message').html('Visit <span class="auth-url">ztudy.tk/' + response.code + '</span> using your smartphone');
@@ -140,6 +133,7 @@ $('document').ready(function(){
         	myVideoApp.hideCategoryList();
         });
         
+        //funcionalitats select categories
         $('#ctg1').on('focused', function(){
         	$('.select-opt').removeClass('opt-focused');
         	$('#ctg1').addClass('opt-focused');
@@ -233,7 +227,6 @@ $('document').ready(function(){
                             },
                             function (status, response) {
                                 // handle status, response
-                                console.log(response);
                             }
                         );
                         document.querySelector('#barcodeBuy').addEventListener('load', function(){
@@ -286,89 +279,11 @@ $('document').ready(function(){
             
         });
         
+        //mostrar pantalla inici
         myVideoApp.changeDepth(myVideoApp._DEPTH.INDEX);
         
-        /*
-        myVideoApp.initCategoryListData(function(){
-            var focusHandler = function($event, category){
-                var currentItem = myVideoApp._dataCategory[category][$($event.target).data('index')];
-                myVideoApp.setOverviewDark(false);
-                myVideoApp.updateOverview(currentItem);
-                myVideoApp.setListContainer($event, category);
-            };
-
-            var selectHandler = function(category){
-                myVideoApp.setOverviewDark(false);
-                myVideoApp.changeDepth(myVideoApp._DEPTH.DETAIL);
-                updateRelatedPlaylist(myVideoApp._dataCategory[category]);
-            };
-
-            var blurHandler = function(){
-                if(myVideoApp.currentDepth === myVideoApp._DEPTH.INDEX){
-                    myVideoApp.setOverviewDark(true);
-                }
-            };
-
-            $('#category_0').caphList({
-                items: myVideoApp._dataCategory[myVideoApp._CATEGORY.TECHNOLOGY],
-                template: 'playlist',
-                containerClass: 'list-container',
-                wrapperClass: "list-scroll-wrapper"
-            }).on('focused', function($event){
-                focusHandler($event, myVideoApp._CATEGORY.TECHNOLOGY);
-            }).on('selected', function(){
-                selectHandler(myVideoApp._CATEGORY.TECHNOLOGY);
-            }).on('blurred', function(){
-                blurHandler();
-            });
-
-            $('#category_1').caphList({
-                items: myVideoApp._dataCategory[myVideoApp._CATEGORY.ALPHABETS],
-                template: 'playlist',
-                containerClass: 'list-container',
-                wrapperClass: "list-scroll-wrapper"
-            }).on('focused', function($event){
-                focusHandler($event, myVideoApp._CATEGORY.ALPHABETS);
-            }).on('blurred', function(){
-                blurHandler();
-            }).on('selected', function($event){
-                selectHandler(myVideoApp._CATEGORY.ALPHABETS);
-            });
-
-            $('#category_2').caphList({
-                items: myVideoApp._dataCategory[myVideoApp._CATEGORY.NUMBERS],
-                template: 'playlistSm',
-                containerClass: 'list-container',
-                wrapperClass: "list-scroll-wrapper"
-            }).on('focused', function($event){
-                focusHandler($event, myVideoApp._CATEGORY.NUMBERS)
-            }).on('blurred', function(){
-                blurHandler();
-            }).on('selected', function($event){
-                selectHandler(myVideoApp._CATEGORY.NUMBERS);
-            });
-
-            relatedPlaylistItems = myVideoApp._dataCategory[myVideoApp._CATEGORY.TECHNOLOGY];
-            $('#related-play-list').caphList({
-                items: relatedPlaylistItems,
-                template: 'relatedPlaylist',
-                containerClass: 'list-container',
-                wrapperClass: 'list-scroll-wrapper'
-            }).on('selected', function(){
-                setMediaControllerTimer();
-                myVideoApp.changeDepth(myVideoApp._DEPTH.PLAYER);
-                myVideoApp.launchPlayer();
-            });
-
-            myVideoApp.changeDepth(myVideoApp._DEPTH.INDEX);
-
-            $.caph.focus.controllerProvider.getInstance().focus(
-                $('#' + CONSTANT.VIDEOS.TECHNOLOGY[0].id)
-            );
-            myVideoApp.setListContainer(null, myVideoApp._CATEGORY.TECHNOLOGY);
-        });*/
     });
-
+    //funcionalitats player
     var relatedPlaylistItems = [];
 
     myVideoApp.initVideoPlayer(); // Initialize video plugin.
@@ -416,21 +331,9 @@ $('document').ready(function(){
         }
     });
     
-    var url= 'http://feeds.feedburner.com/gadgets360-latest';
-    $.ajax({
-      type: 'GET',
-      url: "https://api.rss2json.com/v1/api.json?rss_url=" + url,
-      dataType: 'jsonp',
-      success: function(data) {
-        console.log(data.feed.description);    
-        console.log(data);
-      }
-    });
 });
 
-//------------------------------------------------------
-// START OF AUTH BLOCK
-// ------------------------------------------------------
+//funció d'autentificació
 function displayProfile(userProfile) {
     // display the profile
     document.querySelector(
@@ -444,8 +347,3 @@ function displayProfile(userProfile) {
 
 }
 
-
-
-// ------------------------------------------------------
-// END OF AUTH BLOCK
-// ------------------------------------------------------
