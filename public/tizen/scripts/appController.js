@@ -570,7 +570,9 @@ var myVideoApp = {
             		$('#btnPlay').show();
             		$('#btnRecommend').show();
             		$('#logBuyMsg').hide();
+            		$('#btnPreview').hide();
             	}else{
+            		$('#btnPreview').show();
             		$('#btnPlay').hide();
             		$('#price').html(video.price);
             		$('#btnBuy').show();
