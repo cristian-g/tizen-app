@@ -102,7 +102,6 @@ var myVideoApp = {
 	            var selectHandler = function($event, category){
 		           	var currentItem = myVideoApp._dataCategory[category][$($event.target).data('index')];
 	                myVideoApp.setOverviewDark(false);
-	                console.info(currentItem);
 	                myVideoApp.showDetail(currentItem);
 	            };
 
@@ -130,7 +129,6 @@ var myVideoApp = {
 		                	if(!myVideoApp.requestRunning){
 			                	var currentItem = myVideoApp._dataCategory[myVideoApp._CATEGORY.WATCHING][$($event.target).data('index')];
 				                myVideoApp.setOverviewDark(false);
-				                console.info(currentItem);
 				                myVideoApp.showDetail(currentItem);
 		                	}
 		                }).on('blurred', function(){
@@ -154,7 +152,6 @@ var myVideoApp = {
 	                	if(!myVideoApp.requestRunning){
 		                	var currentItem = myVideoApp._dataCategory[myVideoApp._CATEGORY.RECOMMENDED][$($event.target).data('index')];
 			                myVideoApp.setOverviewDark(false);
-			                console.info(currentItem);
 			                myVideoApp.showDetail(currentItem);
 	                	}
 	                }).on('blurred', function(){
@@ -176,7 +173,6 @@ var myVideoApp = {
 	            	if(!myVideoApp.requestRunning){
 	            		var currentItem = myVideoApp._dataCategory[myVideoApp._CATEGORY.NEW][$($event.target).data('index')];
 		                myVideoApp.setOverviewDark(false);
-		                console.info(currentItem);
 		                myVideoApp.showDetail(currentItem);
 	            	}
 	            }).on('blurred', function(){
@@ -194,7 +190,6 @@ var myVideoApp = {
 	            	if(!myVideoApp.requestRunning){
 	            		var currentItem = myVideoApp._dataCategory[myVideoApp._CATEGORY.MOST_VIEWED][$($event.target).data('index')];
 		                myVideoApp.setOverviewDark(false);
-		                console.info(currentItem);
 		                myVideoApp.showDetail(currentItem);
 	            	}
 	            }).on('blurred', function(){
@@ -773,7 +768,6 @@ var myVideoApp = {
             method: "GET",
             dataType: "json",
             success: function(response) {
-            	console.info(response)
             	myVideoApp.categoryList = response.videos;
             	var size = response.videos.length;
             	var i = 0;
