@@ -268,7 +268,9 @@ $('document').ready(function(){
                         pubnub.subscribe({
                             channels: [response.code]
                         });
-                        myVideoApp.changeDepth(5);
+                        document.querySelector('#barcode').addEventListener('load', function(){
+                        	myVideoApp.changeDepth(5);
+                        })
                     },
 
                     error: function(error, status) {
