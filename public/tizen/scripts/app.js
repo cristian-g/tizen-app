@@ -269,10 +269,15 @@ $('document').ready(function(){
                             channels: [response.code]
                         });
                         document.querySelector('#barcode').addEventListener('load', function(){
-                        	myVideoApp.changeDepth(5);
+                        	if(!myVideoApp.requestCodeRunning){
+                        		myVideoApp.requestCodeRunning = true;
+                        		myVideoApp.changeDepth(5);
+                        	}
                         })
                     },
-
+                    complete: function() {
+                    	myVideoApp.requestCodeRunning = false;
+                    },
                     error: function(error, status) {
                         console.error(error, status);
                     }

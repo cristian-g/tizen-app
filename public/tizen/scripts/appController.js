@@ -25,6 +25,7 @@ var myVideoApp = {
     userRecommended: undefined,
     currentVideo: undefined,
     requestRunning: false,
+    requestCodeRunning: false,
     dialogSetting: undefined,
     playSetting: {
         chkAutoPlay: true,
