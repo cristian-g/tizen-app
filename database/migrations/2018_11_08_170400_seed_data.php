@@ -359,6 +359,20 @@ class SeedData extends Migration
                 "price" => 3.50,
                 "business_price" => 19.50
             ],
+            [
+                "description" => 'How networks grew from small groups of connected computers on LAN networks to eventually larger worldwide networks like the ARPANET and even the Internet we know today. We\'ll also discuss how many technologies like Ethernet, MAC addresses, IP Addresses, packet switching, network switches, and TCP/IP were implemented to new problems as our computers became ever-increasingly connected.',
+                "id" => 'tech_6',
+                "name" => 'Computer Networks',
+                "author" => 'Crash course',
+                "date" => '13/11/2017',
+                "duration" => '12:19',
+                "source" => 'https://www.dropbox.com/s/665rzab3myjgfmw/Network-Tech.mp4?dl=1',
+                "photo_urls_size" => '240x180',
+                "photo_urls_url" => 'https://www.dropbox.com/s/5bz3o5mye8uyv4c/networks.png?dl=1',
+                "color" => 'rgba(255, 0, 0, .3)',
+                "price" => 2.50,
+                "business_price" => 15.50
+            ],
         ];
         $videosCategoryBiologyInfo = [
             [
@@ -418,33 +432,47 @@ class SeedData extends Migration
                 "business_price" => 16.99
             ],
             [
-                "description" => 'Description.',
+                "description" => 'There are two main types of diabetes, known as Type 1 and Type 2. Both types of diabetes are lifelong health conditions. There are 4.05 million people diagnosed with diabetes in the UK and an estimated 549,000 people who have the condition but don\'t know it.',
                 "id" => 'bio_4',
-                "name" => 'Name.',
-                "author" => 'Author',
-                "date" => '12/03/2012',
-                "duration" => '77:77',
-                "source" => 'https://www.dropbox.com/s/xdphjb1gpypo4jb/ATP-Bio.mp4?dl=1',
+                "name" => 'Diabetes',
+                "author" => 'Diabetes UK',
+                "date" => '03/11/2013',
+                "duration" => '08:44',
+                "source" => 'https://www.dropbox.com/s/rlj58rezw3noiw9/Diabetes-Bio.mp4?dl=1',
                 "photo_urls_size" => '240x180',
-                "photo_urls_url" => 'https://www.dropbox.com/s/yqdi3bvffsbgsfl/atp.png?dl=1',
+                "photo_urls_url" => 'https://www.dropbox.com/s/ukfbqhmytymrd66/diabates.png?dl=1',
                 "color" => 'rgba(255, 0, 0, .3)',
-                "price" => 7.77,
-                "business_price" => 77.77
+                "price" => 4.77,
+                "business_price" => 27.77
             ],
             [
-                "description" => 'Description.',
+                "description" => 'Osmosis of water (or any solvent) from area of lower solute concentration to areas of higher solute concentration through a semipermeable membrane.',
                 "id" => 'bio_5',
-                "name" => 'Name.',
-                "author" => 'Author',
-                "date" => '12/03/2012',
-                "duration" => '77:77',
-                "source" => 'https://www.dropbox.com/s/xdphjb1gpypo4jb/ATP-Bio.mp4?dl=1',
+                "name" => 'Osmosis',
+                "author" => 'Khan Academy',
+                "date" => '30/07/2015',
+                "duration" => '08:03',
+                "source" => 'https://www.dropbox.com/s/rlj58rezw3noiw9/Diabetes-Bio.mp4?dl=1',
                 "photo_urls_size" => '240x180',
-                "photo_urls_url" => 'https://www.dropbox.com/s/yqdi3bvffsbgsfl/atp.png?dl=1',
+                "photo_urls_url" => 'https://www.dropbox.com/s/ukfbqhmytymrd66/diabates.png?dl=1',
                 "color" => 'rgba(255, 0, 0, .3)',
-                "price" => 7.77,
-                "business_price" => 77.77
+                "price" => 1.27,
+                "business_price" => 10.55
             ],
+            [
+                "description" => 'This animation by Nucleus shows you the function of plant and animal cells for middle school and high school biology, including organelles like the nucleus, nucleolus, DNA (chromosomes), ribosomes, mitochondria, etc. Also included are ATP molecules, cytoskeleton, cytoplasm, microtubules, proteins, chloroplasts, chlorophyll, cell walls, cell membrane, cilia, flagellae, etc.',
+                "id" => 'bio_6',
+                "name" => 'Cell Structure',
+                "author" => 'Nucleus Medical Media',
+                "date" => '18/03/2015',
+                "duration" => '07:21',
+                "source" => 'https://www.dropbox.com/s/jwcfkhod4gn0z8y/Cell-Bio.mp4?dl=1',
+                "photo_urls_size" => '240x180',
+                "photo_urls_url" => 'https://www.dropbox.com/s/r0heo2f5x3n6443/cell.png?dl=1',
+                "color" => 'rgba(255, 0, 0, .3)',
+                "price" => 3.50,
+                "business_price" => 77.77
+            ]
         ];
         $videosCategorySociologyInfo = [
             [
@@ -504,32 +532,46 @@ class SeedData extends Migration
                 "business_price" => 18.99
             ],
             [
-                "description" => 'Description.',
+                "description" => 'One of the worst Financial crisis happened in 2008 which brought the whole world economy to its knees. Lewis Raneiri, a bond trader at solomon brothers changed banking forever with his one simple idea of Mortgaged Backed Securities (M.B.S). Little did he know his one simple yet brilliant idea would mutate into a monstrosity that will leave millions homeless.',
                 "id" => 'soci_4',
-                "name" => 'Name.',
-                "author" => 'Author',
+                "name" => 'Financial crisis',
+                "author" => 'FinHead',
                 "date" => '12/03/2012',
-                "duration" => '77:77',
-                "source" => 'https://www.dropbox.com/s/xdphjb1gpypo4jb/ATP-Bio.mp4?dl=1',
+                "duration" => '05:17',
+                "source" => 'https://www.dropbox.com/s/bhuj7mgxf5umo84/Crisis-Soci.mp4?dl=1',
                 "photo_urls_size" => '240x180',
-                "photo_urls_url" => 'https://www.dropbox.com/s/yqdi3bvffsbgsfl/atp.png?dl=1',
+                "photo_urls_url" => 'https://www.dropbox.com/s/int6qmyfv7t7em2/crisis.png?dl=1',
                 "color" => 'rgba(255, 0, 0, .3)',
-                "price" => 7.77,
+                "price" => 3.17,
                 "business_price" => 77.77
             ],
             [
-                "description" => 'Description.',
+                "description" => 'How sociology defines family and the different terms used to describe specific types of family. We’ll look at marriage in different societies, as well as marital residential patterns and patterns of descent. And, of course, we’ll go over the three sociological schools of thought on the societal role of marriage and family.',
                 "id" => 'soci_5',
-                "name" => 'Name.',
-                "author" => 'Author',
-                "date" => '12/03/2012',
-                "duration" => '77:77',
-                "source" => 'https://www.dropbox.com/s/xdphjb1gpypo4jb/ATP-Bio.mp4?dl=1',
+                "name" => 'Family & Marriage',
+                "author" => 'CrashCourse',
+                "date" => '11/09/2018',
+                "duration" => '10:59',
+                "source" => 'https://www.dropbox.com/s/mz5j2or3badcl6m/Family-Soci.mp4?dl=1',
                 "photo_urls_size" => '240x180',
-                "photo_urls_url" => 'https://www.dropbox.com/s/yqdi3bvffsbgsfl/atp.png?dl=1',
+                "photo_urls_url" => 'https://www.dropbox.com/s/2jb14veo1cd7qkh/family.png?dl=1',
                 "color" => 'rgba(255, 0, 0, .3)',
-                "price" => 7.77,
-                "business_price" => 77.77
+                "price" => 4.70,
+                "business_price" => 22.77
+            ],
+            [
+                "description" => 'What is the mass media? What kind of influence does it have on our lives?',
+                "id" => 'soci_6',
+                "name" => 'Mass Media',
+                "author" => 'Brooke Miller',
+                "date" => '11/12/2014',
+                "duration" => '05:55',
+                "source" => 'https://www.dropbox.com/s/fx5oy2zcxc585us/MassMedia-Soci.mp4?dl=1',
+                "photo_urls_size" => '240x180',
+                "photo_urls_url" => 'https://www.dropbox.com/s/nrhhb771agj1ww1/massmedia.png?dl=1',
+                "color" => 'rgba(255, 0, 0, .3)',
+                "price" => 3.80,
+                "business_price" => 22.77
             ],
         ];
         $videosCategoryGraphicDesignInfo = [
@@ -604,17 +646,31 @@ class SeedData extends Migration
                 "business_price" => 15.60
             ],
             [
-                "description" => 'Description.',
+                "description" => 'Creating a modern logo design can be hard. So in this video I\'m giving you a sneaky look into a new logo design course! ',
                 "id" => 'graph_5',
-                "name" => 'Name.',
-                "author" => 'Author',
-                "date" => '12/03/2012',
-                "duration" => '77:77',
-                "source" => 'https://www.dropbox.com/s/xdphjb1gpypo4jb/ATP-Bio.mp4?dl=1',
+                "name" => 'Modern Logo',
+                "author" => 'Will Paterson',
+                "date" => '06/06/2017',
+                "duration" => '13:48',
+                "source" => 'https://www.dropbox.com/s/khkgqvs1209hzxc/Logo-Graph.mp4?dl=1',
                 "photo_urls_size" => '240x180',
-                "photo_urls_url" => 'https://www.dropbox.com/s/yqdi3bvffsbgsfl/atp.png?dl=1',
+                "photo_urls_url" => 'https://www.dropbox.com/s/go9yzppzx8ppdtk/logo.png?dl=1',
                 "color" => 'rgba(255, 0, 0, .3)',
-                "price" => 7.77,
+                "price" => 2.50,
+                "business_price" => 77.77
+            ],
+            [
+                "description" => 'Creating a modern logo design can be hard. So in this video I\'m giving you a sneaky look into a new logo design course! ',
+                "id" => 'graph_6',
+                "name" => 'Color In Sight',
+                "author" => 'Tealeaves',
+                "date" => '05/12/2016',
+                "duration" => '21:31',
+                "source" => 'https://www.dropbox.com/s/oofzw9i2ihla5yf/Color-Graph.mp4?dl=1',
+                "photo_urls_size" => '240x180',
+                "photo_urls_url" => 'https://www.dropbox.com/s/aoy96s5ofrxlwpz/color.png?dl=1',
+                "color" => 'rgba(255, 0, 0, .3)',
+                "price" => 5.50,
                 "business_price" => 77.77
             ],
         ];
