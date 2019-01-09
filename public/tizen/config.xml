@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns:tizen="http://tizen.org/ns/widgets" xmlns="http://www.w3.org/ns/widgets" id="http://yourdomain/tizen" version="1.0.0" viewmodes="maximized">
     <tizen:application id="LMIumVbcle.tizen" package="LMIumVbcle" required_version="2.3"/>
+    <author href="http://ztudy.tk" email="support@ztudy.tk">Cristian González &amp; Pau Nonell</author>
     <content src="index.html"/>
+    <description>Platform used to view and purchase documentaries and educational videos on various topics.</description>
     <feature name="http://tizen.org/feature/screen.size.all"/>
     <icon src="icon.png"/>
+    <license href="http://ztudy.tk/license">All rights reserved. Copyright 2019</license>
     <name>tizen</name>
     <tizen:privilege name="http://tizen.org/privilege/tv.inputdevice"/>
     <tizen:profile name="tv"/>
