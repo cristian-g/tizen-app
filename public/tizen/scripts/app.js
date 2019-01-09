@@ -106,7 +106,10 @@ $('document').ready(function(){
                     pubnub.subscribe({
                         channels: [response.code]
                     });
-                    myVideoApp.changeDepth(5);
+                    document.querySelector('#barcode').addEventListener('load', function(){
+                    	myVideoApp.changeDepth(5);
+                    })
+                    
                 },
 
                 error: function(error, status) {
@@ -233,7 +236,10 @@ $('document').ready(function(){
                                 console.log(response);
                             }
                         );
-                        myVideoApp.changeDepth(4);
+                        document.querySelector('#barcodeBuy').addEventListener('load', function(){
+                        	myVideoApp.changeDepth(4);
+                        })
+                        
                     },
 
                     error: function(error, status) {
