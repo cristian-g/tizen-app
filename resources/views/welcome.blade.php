@@ -65,7 +65,6 @@
         </div>
         <div class="links">
             Pau Nonell & Cristian González<br />
-            Visit the app: <a href="/hbbtv">http://ztudy.dx.am/tizen</a>
         </div>
     </div>
 </div>
