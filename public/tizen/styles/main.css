@@ -814,7 +814,7 @@ body {
 .title-header{
     color: #EEE;
     text-shadow: -1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff;
-    font: 60px 'SamsungSVD_Latin Medium';
+    font: 60px 'SamsungSVD_Latin Medium';	
 }
 .select-logout{
     position: relative;
@@ -822,12 +822,12 @@ body {
     font: bold 28px 'SamsungSVD_Latin Medium';
     color: #FFF;
     border-radius: 15px;
-    width: 330px;
+    width: 380px;
     margin-top: 30px;
     padding-left: 20px;
 }
 #profile-view{
-	width:350px;
+	width:400px;
 }
 .opt-logout{
 	position: relative;
